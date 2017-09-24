@@ -16,6 +16,20 @@ class OrangeLeaf {
 	}
 }
 
+class OrangeBranch {
+	constructor(x, y, z) {
+		this.type = 'OrangeBranch';
+		this.mesh = new THREE.Object3D();
+		var material = new THREE.MeshLambertMaterial({color:0x666633});
+		var geometry = new THREE.CylinderGeometry(0.66, 0.33, 4);
+		var mesh = new THREE.Mesh(geometry, material);
+		this.mesh.add(mesh);
+		this.mesh.position.set(x, y+5, z);
+		scene.add(this.mesh);
+		return this.mesh;
+	}
+}
+
 class Orange {
 	constructor(x, y, z) {
 		this.type = 'Orange';
@@ -29,17 +43,3 @@ class Orange {
 		return this.mesh;
 	}
 }
-
-	class OrangeBranch {
-		constructor(x, y, z) {
-			this.type = 'OrangeBranch';
-			this.mesh = new THREE.Object3D();
-			var material = new THREE.MeshLambertMaterial({color:0x666633});
-			var geometry = new THREE.CylinderGeometry(0.66, 0.33, 4);
-			var mesh = new THREE.Mesh(geometry, material);
-			this.mesh.add(mesh);
-			this.mesh.position.set(x, y+5, z);
-			scene.add(this.mesh);
-			return this.mesh;
-		}
-	}
