@@ -19,10 +19,6 @@ function render() {
 function createScene() {
 	scene = new THREE.Scene();
 	//scene.add(new THREE.AxisHelper(10));
-	//table = new Table(0, 0, 0); //Adds a Table (custom object).
-	//ball = new Ball(0, 0, 15); //Adds a Ball (custom object).
-	var orangeLeaf = new OrangeLeaf(0, 0, 0);
-	var orangeBranch = new OrangeBranch(0, 0, 0);
 	var orange = new Orange(0, 0, 0);
 	//var car = new Car1(0, 0, 0);
 }
