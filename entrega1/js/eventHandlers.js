@@ -1,5 +1,6 @@
 function onResize() {
 	'use strict';
+
 	renderer.setSize(window.innerWidth, window.innerHeight);
 	if (window.innerHeight > 0 && window.innerWidth > 0) {
 		camera.aspect = renderer.getSize().width / renderer.getSize().height;
@@ -9,6 +10,7 @@ function onResize() {
 
 function onKeyDown(e) {
 	'use strict';
+
 	switch(e.keyCode) {
 	case 65: //A
 	case 97: //a

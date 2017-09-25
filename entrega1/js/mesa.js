@@ -3,6 +3,7 @@ var table, ball
 
 function createCamera() {
 	'use strict';
+
 	var screenRatio = window.innerWidth / window.innerHeight;
 	camera = new THREE.PerspectiveCamera(70, screenRatio, 1, 1000);
 	camera.position.set(50, 50, 50);
@@ -11,6 +12,7 @@ function createCamera() {
 
 function render() {
 	'use strict';
+
 	if (ball.userData.jumping) {
 		ball.userData.step += 0.04;
 		ball.position.y = Math.abs(30 * (Math.sin(ball.userData.step)));
@@ -22,6 +24,7 @@ function render() {
 
 function createScene() {
 	'use strict';
+
 	scene = new THREE.Scene();
 	scene.add(new THREE.AxisHelper(10));
 	table = new Table(0, 0, 0); //Adds a Table (custom object).
@@ -37,6 +40,7 @@ function createLights() {
 
 function init() {
 	'use strict';
+
 	renderer = new THREE.WebGLRenderer({antialias:true});
 	renderer.setSize(window.innerWidth, window.innerHeight);
 	document.body.appendChild(renderer.domElement);
@@ -44,6 +48,7 @@ function init() {
 	createLights(); //Adds the lights.
 	createCamera(); //Adds the camera.
 	render(); //Renders the scene.
+
 	//Adds event handlers.
 	window.addEventListener('resize', onResize);
 	window.addEventListener('keydown', onKeyDown);
