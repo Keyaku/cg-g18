@@ -4,7 +4,7 @@ var board, track, car
 function createCamera() {
 	var screenRatio = window.innerWidth / window.innerHeight;
 	camera = new THREE.PerspectiveCamera(70, screenRatio, 1, 5000);
-	camera.position.set(10, 500, 50);
+	camera.position.set(-30, 20, -30);
 	camera.lookAt(scene.position);
 	controls = new THREE.OrbitControls(camera);
 }
@@ -21,7 +21,7 @@ function createScene() {
 	
 	board = new Board(0, -5, 0) //Adds the Table
 	track = new Track() //Adds the Race Track
-	car = new Car1(0, 2, 0) //Add the Car
+	car = new Car1(20, 2, -5) //Add the Car
 }
 
 function createLights() {
