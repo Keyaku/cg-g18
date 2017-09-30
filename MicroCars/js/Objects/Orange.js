@@ -1,3 +1,5 @@
+/**
+Buggy class with dictionary code on App.js
 class OrangeLeaf {
 	constructor(obj, x, y, z) {
 		this.type = 'OrangeLeaf';
@@ -15,6 +17,7 @@ class OrangeLeaf {
 		return this.mesh;
 	}
 }
+*/
 
 class OrangeBranch {
 	constructor(obj, x, y, z) {
@@ -45,12 +48,13 @@ class OrangeFruit {
 }
 
 class Orange {
-	constructor(x, y, z) {
+	constructor(orangeName, x, y, z) {
 		this.type = 'Orange';
 		this.mesh = new THREE.Object3D();
+		this.name = orangeName;
 		var orangeFruit = new OrangeFruit(this.mesh, x, y, z);
 		var orangeBranch = new OrangeBranch(this.mesh, x, y, z);
-		var orangeLeaf = new OrangeLeaf(this.mesh, x, y, z);
+		// var orangeLeaf = new OrangeLeaf(this.mesh, x, y, z);
 		this.mesh.position.set(x, y, z);
 		scene.add(this.mesh);
 		return this.mesh;

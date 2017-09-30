@@ -1,5 +1,10 @@
-var renderer, scene, camera, controls
-var board, track, car
+/**
+* edibleObjects is a dictionary with interactable objects such as oranges.
+*/
+var edibleObjects = {};
+var board, track, car;
+var renderer, scene, camera, controls;
+
 /**
 * This method creates a perspective camera. Switching between perspective and
 * orthographic cameras is also possible due to event listeners.
@@ -7,6 +12,7 @@ var board, track, car
 this.createCamera = function() {
 	if (camera instanceof THREE.PerspectiveCamera) {
 		// OrthographicCamera params: Left, Right, Top, Bottom, Near, Far
+		// FIXME @FranciscoKlogan
 		camera = new THREE.OrthographicCamera( - window.innerWidth / 2, window.innerWidth / 2, window.innerHeight / 2, - window.innerHeight / 2, 0.01, 1250);
 		camera.position.x = 0;
 		camera.position.y = 1200;
@@ -43,9 +49,46 @@ function createScene() {
 	scene = new THREE.Scene();
 	// The X axis is red, Y is green and Z is blue.
 	scene.add(new THREE.AxisHelper(600));
-	board = new Board(0, -10, 0)
-	track = new Track()
-	car = new Car(20, 2, -5)
+	board = new Board(0, -10, 0);
+	track = new Track();
+	car = new Car(20, 2, -5);
+	createEdible('FirstOrange', 200, 5, 40);
+	createEdible('SecondOrange', 100, 5, 80);
+	createEdible('ThirdOrange', 0, 5, 500);
+	/**
+	// TODO @Keyaku
+	createEdible('FirstButter', 0, 5, 0);
+	createEdible('SecondButter', 0, 5, 0);
+	createEdible('ThirdButter', 0, 5, 0);
+	createEdible('FourthButter', 0, 5, 0);
+	createEdible('FifthButter', 0, 5, 0);
+	*/
+}
+
+/*******************************************************************************
+* Helper methods
+*******************************************************************************/
+
+/**
+* Adds a new edible of type Object3D with subtype Orange or Butter to a dictionary
+* whose keys are the desired Object3D name passed as a String
+*/
+function createEdible(edibleName, x, y, z) {
+	if (edibleName.includes('Orange')) {
+		edibleObjects[edibleName] = new Orange(edibleName, x, y, z);
+	} else {
+		edibleObjects[edibleName] = new Butter(x, y, z);
+	}
+}
+
+function getEdible(edibleName) {
+	return edibleObjects[edibleName];
+}
+
+function deleteEdible(edibleName) {
+	var obj = scene.getObjectByName(edibleName);
+	scene.remove(obj);
+	delete edibleObjects[edibleName];
 }
 
 /**
@@ -53,10 +96,13 @@ function createScene() {
 * of the first class.
 */
 function createLights() {
-	scene.add(new THREE.AmbientLight(0xffffff, 0.2));
-	var light = new THREE.DirectionalLight(0xffffff, 1);
-	light.position.set(0, 4, 10).normalize();
-	scene.add(light);
+	var sunLight = new THREE.DirectionalLight(0xffffff, 1);
+	var hemisphereLight = new THREE.HemisphereLight( 0xAEEEEE, 0xFFFFFF, 0.6 );
+	sunLight.position.set(0, 0, 600).normalize();
+	hemisphereLight.position.set( 0, 500, 0 );
+	scene.add(new THREE.AmbientLight(0xFFFFFF, 0.2));
+	scene.add(sunLight);
+	scene.add(hemisphereLight);
 }
 
 /**
