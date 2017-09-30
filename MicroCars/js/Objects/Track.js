@@ -40,53 +40,58 @@ class Track {
 		]);
 		var extrudeSettings = {steps:2000, bevelEnabled:false, extrudePath:closedSpline}
 		var geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings);
-		var material = new THREE.MeshLambertMaterial({color:0x00ff00})
+		var material = new THREE.MeshLambertMaterial({color:0x13294B})
 		var track = new THREE.Mesh(geometry, material)
 		this.mesh.add(track)
-
 
 		var vertices = track.geometry.vertices
 		var verticesOut = 4010
 		var verticesIn = 1992
 		var inSpacing = 6
 		var outSpacing = parseInt(inSpacing / (verticesIn / verticesOut))
-
-		material = new THREE.MeshLambertMaterial({color:0xffffff, wireframe:true});		
-		for (var i = 0; i < verticesOut; i += outSpacing) {
-			var p = vertices[i]
-			this.addTorus(this.mesh, material, p.x, p.y, p.z)
-		}
-		for (var i = verticesOut; i < vertices.length; i += inSpacing) {
-			var p = vertices[i]
-			this.addTorus(this.mesh, material, p.x, p.y, p.z)
-		}
+		for (i = 0; i < verticesOut; i += outSpacing)
+			new Tire(this.mesh, 'black', vertices[i])
+		for (i = verticesOut; i < vertices.length; i += inSpacing)
+			new Tire(this.mesh, 'white', vertices[i])
 		
 		scene.add(this.mesh)
 		return this
 	}
-
-	addTorus(obj, material, x, y, z) {
-		/*var geometry = new THREE.SphereGeometry(4, 10, 10);
-		var meshb = new THREE.Mesh(geometry, material);
-		meshb.position.set(x, y, z)
-		obj.add(meshb)*/
-		var m = new Tire(obj, 'red', x, y, z)
-	}
 }
 
 class Tire {
-	constructor(obj, color, x, y, z) {
+	constructor(obj, color, p) {
 		this.type = 'Tire'
 		this.mesh = new THREE.Object3D()
 
-		var geometry = new THREE.TorusGeometry(2, 0.5, 5, 15)
-		var material = new THREE.MeshBasicMaterial()
-		var mesh = new THREE.Mesh(geometry, material)
+		var material1 = new THREE.MeshPhongMaterial({
+			color:0xaa1111,
+			emissive:0xaa1111,
+			specular:0x111111,
+			shininess:10,
+		});
+		var material2 = new THREE.MeshPhongMaterial({
+			color:0x161616,
+			emissive:0x161616,
+			specular:0x111111,
+			shininess:10,
+		});
+		var material
+		for (var j = 0; j < 4; j++) {
+			var geometry = new THREE.TorusGeometry(2.5, 1, 5, 16)	
+			if (j % 2 == 0) material = material1
+			else material = material2
+			var mesh = new THREE.Mesh(geometry, material)
+			mesh.position.set(p.x, p.y + j * 2, p.z)
+			mesh.rotation.set(3.14 / 2, 0, 0)
+			this.mesh.add(mesh)
+		}
 
-		if (color != 'white') mesh.material.color.set(color)
-		this.mesh.add(mesh)
-		this.mesh.position.set(x, y, z)
-		this.mesh.rotation.set(3.14 / 2, 0, 0)
+		
+		//var material = new THREE.MeshBasicMaterial()
+		//var material = new THREE.MeshLambertMaterial({color:0xffffff, wireframe:false});
+		
+		//if (color != 'white') mesh.material.color.set(color)
 		obj.add(this.mesh)
 	}
 }
