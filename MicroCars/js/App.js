@@ -1,6 +1,5 @@
 var renderer, scene, camera, controls
 var board, track, car
-
 /**
 * This method creates a perspective camera. Switching between perspective and
 * orthographic cameras is also possible due to event listeners.
@@ -8,10 +7,10 @@ var board, track, car
 this.createCamera = function() {
 	if (camera instanceof THREE.PerspectiveCamera) {
 		// OrthographicCamera params: Left, Right, Top, Bottom, Near, Far
-		camera = new THREE.OrthographicCamera( window.innerWidth / - 16, window.innerWidth / 16, window.innerHeight / 16, window.innerHeight / - 16, 1, 500 );
-		camera.position.x = 600;
-		camera.position.y = 50;
-		camera.position.z = 600;
+		camera = new THREE.OrthographicCamera( - window.innerWidth / 2, window.innerWidth / 2, window.innerHeight / 2, - window.innerHeight / 2, 0.01, 1250);
+		camera.position.x = 0;
+		camera.position.y = 1200;
+		camera.position.z = 0;
 		camera.lookAt(scene.position);
 		this.perspective = "Orthographic";
 		controls = new THREE.OrbitControls(camera);
@@ -42,7 +41,8 @@ function render() {
 */
 function createScene() {
 	scene = new THREE.Scene();
-	scene.add(new THREE.AxisHelper(10));
+	// The X axis is red, Y is green and Z is blue.
+	scene.add(new THREE.AxisHelper(600));
 	board = new Board(0, -10, 0)
 	track = new Track()
 	car = new Car(20, 2, -5)
