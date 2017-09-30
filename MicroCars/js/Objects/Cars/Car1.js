@@ -1,8 +1,8 @@
-class Car1 {
+class Car {
 	constructor(x, y, z) {
-		this.type = 'Car1';
+		this.type = 'Car';
 		this.mesh = new THREE.Object3D();
-		
+
 		var matBody = new THREE.MeshPhongMaterial({
 			color:0x2194ce,
 			//emissive: 0x2194ce,
@@ -13,34 +13,34 @@ class Car1 {
 		});
 		var materialWheels = new THREE.MeshLambertMaterial({color:0x222222});
 		var materialAxel = new THREE.MeshLambertMaterial({color:0x8002e8, wireframe:false});
-		
+
 		var extrSettings = {amount:8, bevelEnabled:false};
 
-		var c1 = new Car1Square(this.mesh, matBody, extrSettings, 3, 5, 0, 0)
-		var c2 = new Car1Square(this.mesh, matBody, extrSettings, 8, 3, 3, 2);
-		var c3 = new Car1Square(this.mesh, matBody, extrSettings, 7, 2, 11, 0);
-		var c5 = new Car1Square(this.mesh, matBody, extrSettings, 12, 6, 11, 2);
+		var c1 = new CarSquare(this.mesh, matBody, extrSettings, 3, 5, 0, 0)
+		var c2 = new CarSquare(this.mesh, matBody, extrSettings, 8, 3, 3, 2);
+		var c3 = new CarSquare(this.mesh, matBody, extrSettings, 7, 2, 11, 0);
+		var c5 = new CarSquare(this.mesh, matBody, extrSettings, 12, 6, 11, 2);
 
-		var t1 = new Car1Triangle(this.mesh, matBody, extrSettings, -2, 2.5, 0, 0, 2.5, 0, 0, 5, 0);
-		var t2 = new Car1Triangle(this.mesh, matBody, extrSettings, -2, 2.5, 0, 0, 0, 0, 0, 2.5, 0);
-		var t3 = new Car1Triangle(this.mesh, matBody, extrSettings, 3, 0, 0, 4, 2, 0, 3, 2, 0);
-		var t4 = new Car1Triangle(this.mesh, matBody, extrSettings, 9, 2, 0, 11, 0, 0, 11, 2, 0);
-		var t5 = new Car1Triangle(this.mesh, matBody, extrSettings, 8.5, 5, 0, 11, 5, 0, 11, 8, 0);
-		var t6 = new Car1Triangle(this.mesh, matBody, extrSettings, 18, 0, 0, 19, 2, 0, 18, 2, 0);
-		var t7 = new Car1Triangle(this.mesh, matBody, extrSettings, 22, 2, 0, 23, 0, 0, 23, 2, 0);
-		var t8 = new Car1Triangle(this.mesh, matBody, extrSettings, 23, 0, 0, 24, 5, 0, 23, 5, 0);
-		var t9 = new Car1Triangle(this.mesh, matBody, extrSettings, 23, 5, 0, 24, 5, 0, 23, 8, 0);
+		var t1 = new CarTriangle(this.mesh, matBody, extrSettings, -2, 2.5, 0, 0, 2.5, 0, 0, 5, 0);
+		var t2 = new CarTriangle(this.mesh, matBody, extrSettings, -2, 2.5, 0, 0, 0, 0, 0, 2.5, 0);
+		var t3 = new CarTriangle(this.mesh, matBody, extrSettings, 3, 0, 0, 4, 2, 0, 3, 2, 0);
+		var t4 = new CarTriangle(this.mesh, matBody, extrSettings, 9, 2, 0, 11, 0, 0, 11, 2, 0);
+		var t5 = new CarTriangle(this.mesh, matBody, extrSettings, 8.5, 5, 0, 11, 5, 0, 11, 8, 0);
+		var t6 = new CarTriangle(this.mesh, matBody, extrSettings, 18, 0, 0, 19, 2, 0, 18, 2, 0);
+		var t7 = new CarTriangle(this.mesh, matBody, extrSettings, 22, 2, 0, 23, 0, 0, 23, 2, 0);
+		var t8 = new CarTriangle(this.mesh, matBody, extrSettings, 23, 0, 0, 24, 5, 0, 23, 5, 0);
+		var t9 = new CarTriangle(this.mesh, matBody, extrSettings, 23, 5, 0, 24, 5, 0, 23, 8, 0);
 
-		var w1 = new Car1Torus(this.mesh, materialWheels, 2.5, 1.7, 10, 16, 5.5, -1, -2);
-		var w2 = new Car1Torus(this.mesh, materialWheels, 2.5, 1.7, 10, 16, 20.5, -1, -2);
-		var w3 = new Car1Torus(this.mesh, materialWheels, 2.5, 1.7, 10, 16, 5.5, -1, 10);
-		var w4 = new Car1Torus(this.mesh, materialWheels, 2.5, 1.7, 10, 16, 20.5, -1, 10);
+		var w1 = new CarTorus(this.mesh, materialWheels, 2.5, 1.7, 10, 16, 5.5, -1, -2);
+		var w2 = new CarTorus(this.mesh, materialWheels, 2.5, 1.7, 10, 16, 20.5, -1, -2);
+		var w3 = new CarTorus(this.mesh, materialWheels, 2.5, 1.7, 10, 16, 5.5, -1, 10);
+		var w4 = new CarTorus(this.mesh, materialWheels, 2.5, 1.7, 10, 16, 20.5, -1, 10);
 
-		var cy1 = new Car1Cylinder(this.mesh, materialAxel, 0.5, 12, 8, 1, 5.5, -1, 4, 90, 0, 0);
-		var cy2 = new Car1Cylinder(this.mesh, materialAxel, 0.5, 12, 8, 1, 20.5, -1, 4, 90, 0, 0);
-		var cy3 = new Car1Cylinder(this.mesh, materialAxel, 0.5, 3, 8, 1, 5.5, 0.5, 4, 0, 0, 0);
-		var cy4 = new Car1Cylinder(this.mesh, materialAxel, 0.5, 3, 8, 1, 20.5, 0.5, 4, 0, 0, 0);
-		var cy5 = new Car1Cylinder(this.mesh, materialAxel, 0.5, 15, 8, 1, 13, -1, 4, 0, 0, 90);
+		var cy1 = new CarCylinder(this.mesh, materialAxel, 0.5, 12, 8, 1, 5.5, -1, 4, 90, 0, 0);
+		var cy2 = new CarCylinder(this.mesh, materialAxel, 0.5, 12, 8, 1, 20.5, -1, 4, 90, 0, 0);
+		var cy3 = new CarCylinder(this.mesh, materialAxel, 0.5, 3, 8, 1, 5.5, 0.5, 4, 0, 0, 0);
+		var cy4 = new CarCylinder(this.mesh, materialAxel, 0.5, 3, 8, 1, 20.5, 0.5, 4, 0, 0, 0);
+		var cy5 = new CarCylinder(this.mesh, materialAxel, 0.5, 15, 8, 1, 13, -1, 4, 0, 0, 90);
 
 		/*
 		this.acc = 2;
@@ -63,7 +63,7 @@ class Car1 {
 }
 
 
-class Car1Triangle {
+class CarTriangle {
 	constructor(obj, material, extrSettings, x1, y1, z1, x2, y2, z2, x3, y3, z3) {
 		var geometry = new THREE.Shape();
 		geometry.moveTo(x1, y1);
@@ -89,7 +89,7 @@ class Car1Triangle {
 	}
 }
 
-class Car1Square {
+class CarSquare {
 	constructor(obj, material, extrSettings, cubeL1, cubeL2, x, y) {
 		var geometry = new THREE.Shape();
 		geometry.moveTo(x, y);
@@ -111,7 +111,7 @@ class Car1Square {
 	}
 }
 
-class Car1Torus {
+class CarTorus {
 	constructor(obj, material, radius, tube, rSeg, tSeg, x, y, z) {
 		var geometry = new THREE.TorusGeometry(radius, tube, rSeg, tSeg);
 		var mesh = new THREE.Mesh(geometry, material);
@@ -125,7 +125,7 @@ class Car1Torus {
 	}
 }
 
-class Car1Cylinder {
+class CarCylinder {
 	constructor(obj, material, radius, h, rSeg, hSeg, x, y, z, rotx, roty, rotz) {
 		var geometry = new THREE.CylinderGeometry(radius, radius, h, rSeg, hSeg);
 		var mesh = new THREE.Mesh(geometry, material);

@@ -15,12 +15,10 @@ function onKeyDown(e) {
 				node.material.wireframe = !node.material.wireframe;
 		});
 		break;
-
 	case 83: //S
 	case 115: //s
-		ball.userData.jumping = !ball.userData.jumping;
+		createCamera();
 		break;
-
 	case 37: //left arrow
 	case 38: //up arrow
 	case 39: //right arrow

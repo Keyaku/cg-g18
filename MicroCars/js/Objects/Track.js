@@ -66,13 +66,13 @@ class Tire {
 	constructor(obj, color, p) {
 		this.type = 'Tire'
 		this.mesh = new THREE.Object3D()
-		var material1 = new THREE.MeshBasicMaterial({
+		var material1 = new THREE.MeshPhongMaterial({
 			color:0xAA1111,
 			emissive:0xAA1111,
 			specular:0xAA1111,
 			shininess:2,
 		});
-		var material2 = new THREE.MeshBasicMaterial({
+		var material2 = new THREE.MeshPhongMaterial({
 			color:0xFEFEFE,
 			emissive:0xFEFEFE,
 			specular:0x111111,
