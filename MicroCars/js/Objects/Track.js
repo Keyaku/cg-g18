@@ -3,28 +3,30 @@ class Track {
 		this.type = 'Track';
 		this.mesh = new THREE.Object3D();
 
-		var trackWidth = 20;
+		// trackWidth takes an int value that defines how large the road is
+		var trackWidth = 45;
+		// These points are used to generate the track and it's aspect
 		var points = [
 			{x:0, z:0},
-			{x:100, z:0},
-			{x:140, z:40},
-			{x:400, z:40},
+			{x:200, z:0},
+			{x:280, z:80},
+			{x:800, z:80},
+			{x:800, z:400},
+			{x:400, z:1000},
+			{x:200, z:1000},
+			{x:240, z:600},
+			{x:400, z:480},
 			{x:400, z:200},
-			{x:200, z:500},
-			{x:100, z:500},
-			{x:120, z:300},
-			{x:200, z:240},
-			{x:200, z:100},
-			{x:70, z:100},
-			{x:70, z:270},
-			{x:50, z:500},
-			{x:0, z:500},
-			{x:0, z:300},
-			{x:40, z:240},
+			{x:140, z:200},
+			{x:140, z:540},
+			{x:100, z:1000},
+			{x:0, z:1000},
+			{x:0, z:600},
+			{x:80, z:480},
+			{x:0, z:400},
 			{x:0, z:200},
-			{x:0, z:100},
 			//{x:0, z:0},
-		];		
+		];
 		for (var i = 0; i < points.length; i++) {
 			var p = points[i]
 			points[i] = new THREE.Vector3(p.x, 0, p.z)
@@ -42,6 +44,7 @@ class Track {
 		var geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings);
 		var material = new THREE.MeshLambertMaterial({color:0x13294B})
 		var track = new THREE.Mesh(geometry, material)
+
 		this.mesh.add(track)
 
 		var vertices = track.geometry.vertices
@@ -53,7 +56,7 @@ class Track {
 			new Tire(this.mesh, 'black', vertices[i])
 		for (i = verticesOut; i < vertices.length; i += inSpacing)
 			new Tire(this.mesh, 'white', vertices[i])
-		
+
 		scene.add(this.mesh)
 		return this
 	}
@@ -63,22 +66,23 @@ class Tire {
 	constructor(obj, color, p) {
 		this.type = 'Tire'
 		this.mesh = new THREE.Object3D()
-
-		var material1 = new THREE.MeshPhongMaterial({
-			color:0xaa1111,
-			emissive:0xaa1111,
-			specular:0x111111,
-			shininess:10,
+		var material1 = new THREE.MeshBasicMaterial({
+			color:0xAA1111,
+			emissive:0xAA1111,
+			specular:0xAA1111,
+			shininess:2,
 		});
-		var material2 = new THREE.MeshPhongMaterial({
-			color:0x161616,
-			emissive:0x161616,
+		var material2 = new THREE.MeshBasicMaterial({
+			color:0xFEFEFE,
+			emissive:0xFEFEFE,
 			specular:0x111111,
-			shininess:10,
+			shininess: 2,
 		});
 		var material
-		for (var j = 0; j < 4; j++) {
-			var geometry = new THREE.TorusGeometry(2.5, 1, 5, 16)	
+
+		// Generates a pile of three tires, two red and one white
+		for (var j = 0; j < 3; j++) {
+			var geometry = new THREE.TorusGeometry(2.5, 0.8, 5, 16)
 			if (j % 2 == 0) material = material1
 			else material = material2
 			var mesh = new THREE.Mesh(geometry, material)
@@ -87,11 +91,6 @@ class Tire {
 			this.mesh.add(mesh)
 		}
 
-		
-		//var material = new THREE.MeshBasicMaterial()
-		//var material = new THREE.MeshLambertMaterial({color:0xffffff, wireframe:false});
-		
-		//if (color != 'white') mesh.material.color.set(color)
 		obj.add(this.mesh)
 	}
 }

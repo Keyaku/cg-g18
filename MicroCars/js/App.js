@@ -18,8 +18,8 @@ function render() {
 function createScene() {
 	scene = new THREE.Scene();
 	scene.add(new THREE.AxisHelper(10));
-	
-	board = new Board(0, -5, 0) //Adds the Table
+
+	board = new Board(0, -10, 0) //Adds the Table
 	track = new Track() //Adds the Race Track
 	car = new Car1(20, 2, -5) //Add the Car
 }
