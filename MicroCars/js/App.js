@@ -1,12 +1,11 @@
-var camera, scene, renderer;
-var table, ball;
-var controls;
+var renderer, scene, camera, controls
+var board, track, car
 
 function createCamera() {
 	var screenRatio = window.innerWidth / window.innerHeight;
-	camera = new THREE.PerspectiveCamera(70, screenRatio, 1, 1000);
-	camera.position.set(10, 0, 50);
-	//camera.lookAt(scene.position);
+	camera = new THREE.PerspectiveCamera(70, screenRatio, 1, 5000);
+	camera.position.set(10, 500, 50);
+	camera.lookAt(scene.position);
 	controls = new THREE.OrbitControls(camera);
 }
 
@@ -18,16 +17,15 @@ function render() {
 
 function createScene() {
 	scene = new THREE.Scene();
-	//scene.add(new THREE.AxisHelper(10));
-	var obj = new Tire(0, 0, 0, 0xFFFFFF);
+	scene.add(new THREE.AxisHelper(10));
+	
+	board = new Board(0, -5, 0) //Adds the Table
+	track = new Track() //Adds the Race Track
+	car = new Car1(0, 2, 0) //Add the Car
 }
 
 function createLights() {
 	scene.add(new THREE.AmbientLight(0xffffff, 0.2));
-	var lightPoint = new THREE.PointLight(0xffffff, 0);
-	lightPoint.position.set(26, 20, -30);
-	//scene.add(lightPoint);
-
 	var light = new THREE.DirectionalLight(0xffffff, 1);
 	light.position.set(0, 4, 10).normalize();
 	scene.add(light);
