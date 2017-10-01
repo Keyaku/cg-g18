@@ -139,15 +139,16 @@ function createSun() {
 	sunLight.position.y = Math.random()*100 + 800;
 	sunLight.position.z = Math.random()*100 + 800;
 	sunLight.castShadow = true;
-	sunLight.shadowCameraVisible = false;
-	sunLight.shadowCameraNear = 1;
-	sunLight.shadowCameraFar = frustumSize;
-	sunLight.shadowCameraLeft = -frustumSize / 2;
-	sunLight.shadowCameraRight = frustumSize / 2;
-	sunLight.shadowCameraTop = frustumSize / 2;
-	sunLight.shadowCameraBottom = -frustumSize / 2;
-	sunLight.shadowMapWidth = 1000;
-	sunLight.shadowMapHeight = 1000;
+	var shadowHelper = new THREE.CameraHelper(sunLight.shadow.camera);
+	sunLight.shadow.camera.near = 1;
+	sunLight.shadow.camera.far = frustumSize;
+	sunLight.shadow.camera.left = -frustumSize / 2;
+	sunLight.shadow.camera.right = frustumSize / 2;
+	sunLight.shadow.camera.top = frustumSize / 2;
+	sunLight.shadow.camera.bottom = -frustumSize / 2;
+	sunLight.shadow.mapSize.width = 1000;
+	sunLight.shadow.mapSize.height = 1000;
+	scene.add(shadowHelper);
 	scene.add(sunLight);
 }
 // Calls all other light instanciating methods
@@ -170,7 +171,7 @@ function init() {
 	renderer.setSize(window.innerWidth, window.innerHeight);
 	// Background color
 	renderer.setClearColor(0x6698FF, 1);
-	renderer.shadowMapEnabled = true;
+	renderer.shadowMap.enabled = true;
 	document.body.appendChild(renderer.domElement);
 	createScene();
 	createLights();
