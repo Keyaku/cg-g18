@@ -91,9 +91,9 @@ function createScene() {
 	gameBoard = new Board(0, -10, 0);
 	raceTrack = new Track();
 	car = new Car(20, 2, -5);
-	createEdible('FirstOrange', 200, 5, 40);
-	createEdible('SecondOrange', 100, 5, 80);
-	createEdible('ThirdOrange', 0, 5, 500);
+	createEdible('FirstOrange', 150, 5, 80);
+	createEdible('SecondOrange', -200, 5, -100);
+	createEdible('ThirdOrange', 0, 5, 50);
 	/**
 	// TODO @Keyaku
 	createEdible('FirstButter', 0, 5, 0);
