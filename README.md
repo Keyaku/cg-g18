@@ -1,18 +1,18 @@
-# cg-g18
+# CG_2017/2018
 
-/** TODO:
-* António Sarmento 
-* - Pacote de Manteiga
-* - Colocação dos toros recorrendo a linhas ortogonais a pista em cada ponto
-* - Unir os toros com linhas de modo a usar uma textura que simule o esfalto
-*
-* Francisco Barros
-* - Criar toros cortados ao meio (done, could be better)
-* - Finalizar a board sobre a qual assenta a pista (done)
-* - Fazer setup da camera
-* 
-* Rafael Ribeiro
-* - Finalizar movimento dos carros
-*
-* Próxima reunião de CG: 28/09/2017 - Sexta-feira
+@António Sarmento 
+[ ] Present sketches of Butter
+[ ] Fix wheels that don't enable wireframe when 'A' is pressed
+
+@Francisco Barros
+[ ] Present sketches of Orange
+[ ] Fix: the camera's aspect ratio should remain the same when the windows is resized
+[ ] Fix: the entire track should remain visible when the windows is resized
+ 
+@Rafael Ribeiro
+[ ] Present sketches of Car
+[ ] Present sketches of Track
+[ ] Add correct physical to the Car
+
+## Next group meetin: 02/10/2017
  
