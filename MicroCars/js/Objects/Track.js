@@ -90,31 +90,6 @@ class Tire {
 	constructor(obj, p) {
 		this.type = 'Tire'
 		this.mesh = new THREE.Object3D()
-		/*
-		var material1 = new THREE.MeshPhongMaterial({
-			color:0xAA1111,
-			emissive:0xAA1111,
-			specular:0xAA1111,
-			shininess:2,
-		});
-		var material2 = new THREE.MeshPhongMaterial({
-			color:0xFEFEFE,
-			emissive:0xFEFEFE,
-			specular:0x111111,
-			shininess: 2,
-		});
-		var material
-		// Generates a pile of three tires, two red and one white
-		for (var j = 0; j < 3; j++) {
-			var geometry = new THREE.TorusGeometry(2.5, 0.8, 5, 16)
-			if (j % 2 == 0) material = material1
-			else material = material2
-			var mesh = new THREE.Mesh(geometry, material)
-			mesh.position.set(p.x, p.y + j * 2, p.z)
-			mesh.rotation.set(3.14 / 2, 0, 0)
-			this.mesh.add(mesh)
-		}
-		*/
 		//Creates the torus geometry.
 		var geometry = new THREE.TorusGeometry(2.5, 0.8, 5, 16)
 		//Creates the torus material.
