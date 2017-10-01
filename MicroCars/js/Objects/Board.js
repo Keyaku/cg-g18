@@ -9,11 +9,10 @@ class Board {
 		//Loads the image from a server. (locally DOESN'T work).
 		var grassTexture = textureLoader.load('https://i.imgur.com/J4sDs4b.jpg')
 		var material = new THREE.MeshBasicMaterial({map:grassTexture})
-		var geometry = new THREE.BoxGeometry(1200, 1200, 5)
+		var geometry = new THREE.BoxGeometry(1000, 1000, 5)
 		var mesh = new THREE.Mesh(geometry, material)
-
-		var floorSide = 1400
-		mesh.position.set(floorSide / 2 - 250, -3, floorSide / 2 - 175)
+		mesh.position.set(x, y, z);
+		// rotates the cube along the X axis by 90º
 		mesh.rotation.x = 3.14 / 2;
 		this.mesh.add(mesh)
 
