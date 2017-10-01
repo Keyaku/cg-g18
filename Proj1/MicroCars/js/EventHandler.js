@@ -30,10 +30,20 @@ function onKeyDown(e) {
 		case 115: //s
 			createCamera();
 			break;
-		case 37: //left arrow
-		case 38: //up arrow
-		case 39: //right arrow
-		case 40: //down arrow
+
+		//Up arrow
+		case 38: 
+			clock.start()
+			break
+		//Down arrow
+		case 40:
+
+		//Left arrow
+		case 37:
+			clock.stop()
+			break
+		 //Right arrow
+		case 39:
 		break;
 	}
 }
