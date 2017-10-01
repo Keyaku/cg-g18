@@ -1,10 +1,10 @@
 /**
 * edibleObjects is a dictionary with interactable objects such as oranges.
 */
-var controls;
+var renderer, scene, camera, controls;
 var gameBoard, raceTrack, car;
 var stats;
-var renderer, scene, camera;
+
 var edibleObjects = {};
 const frustumSize = 1000;
 
