@@ -3,7 +3,7 @@
 */
 var renderer, scene, camera, controls;
 var gameBoard, raceTrack, car;
-var stats;
+var clock = new THREE.Clock()
 
 var edibleObjects = {};
 const frustumSize = 1000;
@@ -41,6 +41,15 @@ this.createCamera = function() {
 * Render method allows system to handle all the rendering.
 */
 function render() {
+	//Gets how much time has passed since the clock started.
+	//var time = clock.getElapsedTime()
+	//Gets how much time has passed since the last frame.
+	//var delta = clock.getDelta()
+	//Calculates how much the car needs to move.
+	//var v = car.carPhysics.getDisplacement(time, delta)
+	//Moves the car.
+	//car.mesh.position.set(v.x, 0, v.z)
+
 	renderer.render(scene, camera);
 	controls.update()
 	requestAnimationFrame(render);
