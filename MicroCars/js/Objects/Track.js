@@ -74,16 +74,18 @@ class Track {
 		var inSpacing = 6
 		var outSpacing = parseInt(inSpacing / (verticesIn / verticesOut))
 		for (var i = 0; i < verticesOut; i += outSpacing)
-			new Tire(obj, 'black', vertices[i])
+			new Tire(obj, vertices[i])
 		for (var i = verticesOut; i < vertices.length; i += inSpacing)
-			new Tire(obj, 'white', vertices[i])
+			new Tire(obj, vertices[i])
 	}
+
 }
 
 class Tire {
-	constructor(obj, color, p) {
+	constructor(obj, p) {
 		this.type = 'Tire'
 		this.mesh = new THREE.Object3D()
+		/*
 		var material1 = new THREE.MeshPhongMaterial({
 			color:0xAA1111,
 			emissive:0xAA1111,
@@ -97,7 +99,6 @@ class Tire {
 			shininess: 2,
 		});
 		var material
-
 		// Generates a pile of three tires, two red and one white
 		for (var j = 0; j < 3; j++) {
 			var geometry = new THREE.TorusGeometry(2.5, 0.8, 5, 16)
@@ -108,7 +109,13 @@ class Tire {
 			mesh.rotation.set(3.14 / 2, 0, 0)
 			this.mesh.add(mesh)
 		}
-
+		*/
+		var geometry = new THREE.TorusGeometry(2.5, 0.8, 5, 16)
+		var material = new THREE.MeshBasicMaterial({color:0xAA1111})
+		var mesh = new THREE.Mesh(geometry, material)
+		mesh.position.set(p.x, p.y, p.z)
+		mesh.rotation.set(3.14 / 2, 0, 0)
+		this.mesh.add(mesh)
 		obj.add(this.mesh)
 	}
 }
