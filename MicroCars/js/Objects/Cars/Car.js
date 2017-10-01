@@ -2,25 +2,23 @@ class Car {
 	constructor(x, y, z) {
 		this.type = 'Car';
 		this.mesh = new THREE.Object3D();
-
+		//Creates the material for the car body.
 		var matBody = new THREE.MeshPhongMaterial({
-			color:0x2194ce,
-			//emissive: 0x2194ce,
+			color:0x2194ce, /*Blue*/
 			specular: 0x111111,
 			shininess: 10,
-			flatShading: false,
-			wireframe: false
 		});
+		//Creates the material for the wheels.
 		var materialWheels = new THREE.MeshLambertMaterial({color:0x222222});
-		var materialAxel = new THREE.MeshLambertMaterial({color:0x8002e8, wireframe:false});
-
+		//Creates the material for the axels.
+		var materialAxel = new THREE.MeshBasicMaterial({color:0x960101});
+		//Extrude setting that define the car width.
 		var extrSettings = {amount:8, bevelEnabled:false};
-
+		//Creates the body panels.
 		var c1 = new CarSquare(this.mesh, matBody, extrSettings, 3, 5, 0, 0)
 		var c2 = new CarSquare(this.mesh, matBody, extrSettings, 8, 3, 3, 2);
 		var c3 = new CarSquare(this.mesh, matBody, extrSettings, 7, 2, 11, 0);
 		var c5 = new CarSquare(this.mesh, matBody, extrSettings, 12, 6, 11, 2);
-
 		var t1 = new CarTriangle(this.mesh, matBody, extrSettings, -2, 2.5, 0, 0, 2.5, 0, 0, 5, 0);
 		var t2 = new CarTriangle(this.mesh, matBody, extrSettings, -2, 2.5, 0, 0, 0, 0, 0, 2.5, 0);
 		var t3 = new CarTriangle(this.mesh, matBody, extrSettings, 3, 0, 0, 4, 2, 0, 3, 2, 0);
@@ -30,12 +28,12 @@ class Car {
 		var t7 = new CarTriangle(this.mesh, matBody, extrSettings, 22, 2, 0, 23, 0, 0, 23, 2, 0);
 		var t8 = new CarTriangle(this.mesh, matBody, extrSettings, 23, 0, 0, 24, 5, 0, 23, 5, 0);
 		var t9 = new CarTriangle(this.mesh, matBody, extrSettings, 23, 5, 0, 24, 5, 0, 23, 8, 0);
-
+		//Creates the wheels.
 		var w1 = new CarTorus(this.mesh, materialWheels, 2.5, 1.7, 10, 16, 5.5, -1, -2);
 		var w2 = new CarTorus(this.mesh, materialWheels, 2.5, 1.7, 10, 16, 20.5, -1, -2);
 		var w3 = new CarTorus(this.mesh, materialWheels, 2.5, 1.7, 10, 16, 5.5, -1, 10);
 		var w4 = new CarTorus(this.mesh, materialWheels, 2.5, 1.7, 10, 16, 20.5, -1, 10);
-
+		//Creates the axels.
 		var cy1 = new CarCylinder(this.mesh, materialAxel, 0.5, 12, 8, 1, 5.5, -1, 4, 90, 0, 0);
 		var cy2 = new CarCylinder(this.mesh, materialAxel, 0.5, 12, 8, 1, 20.5, -1, 4, 90, 0, 0);
 		var cy3 = new CarCylinder(this.mesh, materialAxel, 0.5, 3, 8, 1, 5.5, 0.5, 4, 0, 0, 0);
@@ -50,87 +48,74 @@ class Car {
 		this.forwardVector = fv.normalize();
 		*/
 
+		//Positions the car.
 		this.mesh.position.set(x, y, z)
+		//Rotates the car.
 		this.mesh.rotation.set(0, 3.14, 0);
+		//Scales the car.
 		this.mesh.scale.set(0.5, 0.5, 0.5);
-
+		//Adds the car to the scene.
 		scene.add(this.mesh);
 		return this;
 	}
-
-	get acceleration() { return this.acc; }
-	animate() { }
 }
-
 
 class CarTriangle {
 	constructor(obj, material, extrSettings, x1, y1, z1, x2, y2, z2, x3, y3, z3) {
+		//Creates the side panel's geometry - triangle.
 		var geometry = new THREE.Shape();
 		geometry.moveTo(x1, y1);
 		geometry.lineTo(x2, y2);
 		geometry.lineTo(x3, y3);
 		geometry.lineTo(x1, y1);
+		//Extrudes the side panel to create volume.
 		var geometry = new THREE.ExtrudeGeometry(geometry, extrSettings);
+		//Creates the side panel's mesh.
 		var mesh = new THREE.Mesh(geometry, material);
-/*		var geometry = new THREE.Geometry();
-		var v1 = new THREE.Vector3(x1, y1, z3);
-		var v2 = new THREE.Vector3(x2, y2, z2);
-		var v3 = new THREE.Vector3(x3, y3, z3);
-		geometry.vertices.push(v1, v2, v3);
-		geometry.faces.push(new THREE.Face3(0, 1, 2));
-		geometry.computeFaceNormals();
-		//var extrudeGeometry = new THREE.ExtrudeGeometry(geometry, {amount:5, bevelEnabled:false});
-		var mesh = new THREE.Mesh(geometry, material);
-		obj.add(mesh); */
-		var geometryE = new THREE.EdgesGeometry(mesh.geometry);
-		var materialE = new THREE.LineBasicMaterial({color:0xffffff, linewidth:4});
-		var wireframe = new THREE.LineSegments(geometryE, materialE);
-		obj.add(mesh, wireframe);
+		obj.add(mesh);
+		return mesh;
 	}
 }
-
 class CarSquare {
 	constructor(obj, material, extrSettings, cubeL1, cubeL2, x, y) {
+		//Creates the side panel's geometry - square.
 		var geometry = new THREE.Shape();
 		geometry.moveTo(x, y);
 		geometry.lineTo(x, y + cubeL2);
 		geometry.lineTo(x + cubeL1, y + cubeL2);
 		geometry.lineTo(x + cubeL1, y);
 		geometry.lineTo(x, y);
+		//Extrudes the side panel to create volume.
 		var extrudeGeometry = new THREE.ExtrudeGeometry(geometry, extrSettings);
+		//Creates the side panel's mesh.
 		var mesh = new THREE.Mesh(extrudeGeometry, material);
-/*		var geometry = new THREE.CubeGeometry(cubeL1, cubeL2, cubeL3);
-		//var extrudeGeometry = new THREE.ExtrudeGeometry(geometry, {amount:5, bevelEnabled:false});
-		var mesh = new THREE.Mesh(geometry, material);
-		mesh.position.set(x + cubeL1 / 2, y + cubeL2 / 2, z);
-		obj.add(mesh); */
-		var geometryE = new THREE.EdgesGeometry(mesh.geometry);
-		var materialE = new THREE.LineBasicMaterial({color:0xffffff, linewidth:4});
-		var wireframe = new THREE.LineSegments(geometryE, materialE);
-		obj.add(mesh, wireframe);
-	}
-}
-
-class CarTorus {
-	constructor(obj, material, radius, tube, rSeg, tSeg, x, y, z) {
-		var geometry = new THREE.TorusGeometry(radius, tube, rSeg, tSeg);
-		var mesh = new THREE.Mesh(geometry, material);
-		mesh.position.set(x, y, z);
-		var geometryE = new THREE.EdgesGeometry( mesh.geometry );
-		var materialE = new THREE.LineBasicMaterial({color:0xffffff, linewidth:2});
-		var wireframe = new THREE.LineSegments(geometryE, materialE);
-		wireframe.position.set(x, y, z);
-		obj.add(mesh, wireframe);
+		obj.add(mesh);
 		return mesh;
 	}
 }
-
+class CarTorus {
+	constructor(obj, material, radius, tube, rSeg, tSeg, x, y, z) {
+		//Creates the wheel's geometry - torus.
+		var geometry = new THREE.TorusGeometry(radius, tube, rSeg, tSeg);
+		//Creates the wheel's mesh.
+		var mesh = new THREE.Mesh(geometry, material);
+		//Positions the wheel.
+		mesh.position.set(x, y, z);
+		obj.add(mesh);
+		return mesh;
+	}
+}
 class CarCylinder {
 	constructor(obj, material, radius, h, rSeg, hSeg, x, y, z, rotx, roty, rotz) {
+		//Creates the axel's geometry - cylinder.
 		var geometry = new THREE.CylinderGeometry(radius, radius, h, rSeg, hSeg);
+		//Creates the axel's mesh.
 		var mesh = new THREE.Mesh(geometry, material);
+		//Positions the axel.
 		mesh.position.set(x, y, z);
-		mesh.rotation.set(rotx*3.14/180, roty*3.14/180, rotz*3.14/180);
+		//Rotates the axel.
+		mesh.rotation.set(rotx * 3.14 / 180, roty * 3.14 / 180, rotz * 3.14 / 180);
 		obj.add(mesh);
+		return mesh
 	}
 }
