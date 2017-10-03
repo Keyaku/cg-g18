@@ -20,24 +20,24 @@ this.createCamera = function() {
 		if (windowHeight > windowWidth) {
 			aspectRatio = windowHeight / windowWidth;
 		}
-		var left	 	= (frustumSize * aspectRatio) / (-2);
-		var right 	= (frustumSize * aspectRatio) / 2;
-		var top 		= frustumSize / 2;
-		var bottom 	= frustumSize / (-2);
+		var left   = (frustumSize * aspectRatio) / (-2);
+		var right  = (frustumSize * aspectRatio) / 2;
+		var top    = frustumSize / 2;
+		var bottom = frustumSize / (-2);
+		this.perspective = "Orthographic";
 		camera = new THREE.OrthographicCamera(left, right, top, bottom, 0.1, 2000 );
 		camera.position.x = 0;
 		camera.position.y = 1000;
 		camera.position.z = 0;
-		this.perspective = "Orthographic";
 		camera.lookAt(scene.position);
 	} else {
 		// PerspectiveCamera params: Field of View, Aspect Ratio, Near, Far
+		this.perspective  = "Perspective";
 		camera = new THREE.PerspectiveCamera(75, aspectRatio, 0.1, 1800);
 		camera.position.x = -250;
 		camera.position.y = 600;
 		camera.position.z = -250
 		camera.lookAt(scene.position);
-		this.perspective = "Perspective";
 	}
 	controls = new THREE.OrbitControls(camera);
 };
