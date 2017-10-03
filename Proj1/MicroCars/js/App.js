@@ -13,8 +13,13 @@ const frustumSize = 1000;
 * orthographic cameras is also possible due to event listeners.
 */
 this.createCamera = function() {
+	var windowWidth = window.innerWidth;
+	var windowHeight = window.innerHeight;
 	var aspectRatio = window.innerWidth / window.innerHeight;
 	if (camera instanceof THREE.PerspectiveCamera) {
+		if (windowHeight > windowWidth) {
+			aspectRatio = windowHeight / windowWidth;
+		}
 		var left	 	= (frustumSize * aspectRatio) / (-2);
 		var right 	= (frustumSize * aspectRatio) / 2;
 		var top 		= frustumSize / 2;
@@ -97,9 +102,9 @@ function createScene() {
 	// scene.add(new THREE.GridHelper(size, divisions) );
 	scene.add(new THREE.AxisHelper(size / 2));
 	scene.background = new THREE.Color(0xAEEEEE);
-	gameBoard = new Board(0, -10, 0);
+	gameBoard = new Board(0, -3.5, 0);
 	raceTrack = new Track();
-	car = new Car(20, 2, -5);
+	car = new Car(20, 2.66, -5);
 	createEdible('FirstOrange', 150, 5, 80);
 	createEdible('SecondOrange', -200, 5, -100);
 	createEdible('ThirdOrange', 0, 5, 50);
