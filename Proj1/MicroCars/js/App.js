@@ -11,6 +11,8 @@ const frustumSize = 1000;
 /**
 * This method creates a perspective camera. Switching between perspective and
 * orthographic cameras is also possible due to event listeners.
+* OrthographicCamera params: Left, Right, Top, Bottom, Near, Far
+* PerspectiveCamera params: Field of View, Aspect Ratio, Near, Far
 */
 this.createCamera = function() {
 	var windowWidth = window.innerWidth;
@@ -31,7 +33,6 @@ this.createCamera = function() {
 		camera.position.z = 0;
 		camera.lookAt(scene.position);
 	} else {
-		// PerspectiveCamera params: Field of View, Aspect Ratio, Near, Far
 		this.perspective  = "Perspective";
 		camera = new THREE.PerspectiveCamera(75, aspectRatio, 0.1, 1800);
 		camera.position.x = -250;
@@ -61,31 +62,6 @@ function render() {
 }
 
 /*******************************************************************************
-* Object Oriented - Helper methods
-*******************************************************************************/
-/**
-* Adds a new edible of type Object3D with subtype Orange or Butter to a dictionary
-* whose keys are the desired Object3D name passed as a String
-*/
-function createEdible(edibleName, x, y, z) {
-	if (edibleName.includes('Orange')) {
-		edibleObjects[edibleName] = new Orange(edibleName, x, y, z);
-	} else {
-		edibleObjects[edibleName] = new Butter(x, y, z);
-	}
-}
-
-function getEdible(edibleName) {
-	return edibleObjects[edibleName];
-}
-
-function deleteEdible(edibleName) {
-	var obj = scene.getObjectByName(edibleName);
-	scene.remove(obj);
-	delete edibleObjects[edibleName];
-}
-
-/*******************************************************************************
 * Scene related - Helper methods
 *******************************************************************************/
 /**
@@ -105,9 +81,9 @@ function createScene() {
 	gameBoard = new Board(0, -3.5, 0);
 	raceTrack = new Track();
 	car = new Car(20, 2.66, -5);
-	createEdible('FirstOrange', 150, 5, 80);
-	createEdible('SecondOrange', -200, 5, -100);
-	createEdible('ThirdOrange', 0, 5, 50);
+	createEdible("FirstOrange", 150, 5, 80);
+	createEdible("SecondOrange", -200, 5, -100);
+	createEdible("ThirdOrange", 0, 5, 50);
 	/**
 	// TODO @Keyaku
 	createEdible('FirstButter', 0, 5, 0);
