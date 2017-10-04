@@ -2,7 +2,7 @@ class Butter {
 	constructor(name, x, y, z) {
 		this.type = 'Butter';
 		this.mesh = new THREE.Object3D();
-		this.name = name;
+		this.mesh.name = name;
 		// FIXME: Apply different textures to different sides
 		var tex = TextureLoader.load('butter_side.png');
 		var material = new THREE.MeshBasicMaterial({ map: tex });
