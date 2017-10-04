@@ -15,10 +15,9 @@ this.createCamera = function() {
 	var windowHeight = window.innerHeight;
 	var aspectRatio = windowWidth / windowHeight;
 	var near = 0.1;
-	var far;
+	var far = 2000;
 
 	if (camera instanceof THREE.PerspectiveCamera) {
-		far = 2000;
 		if (windowHeight > windowWidth) {
 			aspectRatio = windowHeight / windowWidth;
 		}
@@ -28,7 +27,6 @@ this.createCamera = function() {
 		camera.position.y = 1000;
 		camera.position.z = 0;
 	} else {
-		far = 1800;
 		this.perspective  = "Perspective";
 		camera = new THREE.PerspectiveCamera(75, aspectRatio, near, far);
 		camera.position.x = -250;
@@ -36,10 +34,8 @@ this.createCamera = function() {
 		camera.position.z = -250
 	}
 	camera.lookAt(scene.position);
-
 	// Adding orbiting controls through our camera lens
 	controls = new THREE.OrbitControls(camera);
-
 	// Updating camera data
 	updateCamera();
 };
@@ -48,7 +44,6 @@ function updateCamera() {
 	var windowWidth = window.innerWidth;
 	var windowHeight = window.innerHeight;
 	var aspectRatio = windowWidth / windowHeight;
-
 	if (camera instanceof THREE.PerspectiveCamera) {
 		camera.aspect = renderer.getSize().width / renderer.getSize().height;
 	} else {
@@ -64,7 +59,6 @@ function updateCamera() {
 			camera.top    =   frustumSize / 2;
 			camera.bottom = - frustumSize / 2;
 		}
-
 	}
 	camera.updateProjectionMatrix();
 }
