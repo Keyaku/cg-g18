@@ -5,8 +5,6 @@ var renderer, controls;
 var gameBoard, raceTrack, car;
 var clock = new THREE.Clock()
 
-const frustumSize = 1000;
-
 var TextureLoader = new THREE.TextureLoader();
 TextureLoader.setPath('textures/');
 

@@ -21,15 +21,16 @@ function createScene() {
 	gameBoard = new Board(0, -3.5, 0);
 	raceTrack = new Track();
 	car = new Car(20, 2.66, -5);
-	createEdible("FirstOrange", 150, 5, 80);
-	createEdible("SecondOrange", -200, 5, -100);
-	createEdible("ThirdOrange", 0, 5, 50);
-	/**
-	// TODO @Keyaku
-	createEdible('FirstButter', 0, 5, 0);
-	createEdible('SecondButter', 0, 5, 0);
-	createEdible('ThirdButter', 0, 5, 0);
-	createEdible('FourthButter', 0, 5, 0);
-	createEdible('FifthButter', 0, 5, 0);
-	*/
+
+	// Adding our edibles
+	var ediblesY = 5;
+
+	// Adding oranges
+	createEdible(Orange, "Orange1", 150, ediblesY, 80);
+	createEdible(Orange, "Orange2", -200, ediblesY, -100);
+	createEdible(Orange, "Orange3", 0, 5, 50);
+	// Adding apples. I mean, butters.
+	createEdible(Butter, "Butter1", 100, ediblesY, -100);
+	createEdible(Butter, "Butter2", -100, ediblesY, -100);
+	createEdible(Butter, "Butter3", 50, ediblesY, 70);
 }

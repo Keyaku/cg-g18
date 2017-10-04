@@ -2,6 +2,7 @@
 * Camera-related code
 */
 var camera;
+const frustumSize = 1000;
 
 /**
 * This method creates a perspective camera. Switching between perspective and

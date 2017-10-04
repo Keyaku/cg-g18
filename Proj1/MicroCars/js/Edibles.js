@@ -2,19 +2,21 @@
 * Edibles - Helper methods
 *******************************************************************************/
 /**
-* Adds a new edible of type Object3D with subtype Orange or Butter to a dictionary
+* edibleObjects is a dictionary with interactable objects such as oranges.
+*/
+var edibleObjects = {};
+
+/**
+* Adds a new edible of supertype Object3D with to a dictionary
 * whose keys are the desired Object3D name passed as a String
 */
-function createEdible(edibleName, x, y, z) {
-	if (edibleName.includes('Orange')) {
-		edibleObjects[edibleName] = new Orange(edibleName, x, y, z);
-	} else {
-		edibleObjects[edibleName] = new Butter(x, y, z);
-	}
+function createEdible(Edible, name, x, y, z) {
+	edibleObjects[name] = new Edible(name, x, y, z);
 }
 
 function getEdible(edibleName) {
-	console.log(edibleObjects[edibleName].name());
+	var edible = edibleObjects[edibleName];
+	console.log(edibleName);
 }
 
 function deleteEdible(edibleName) {
@@ -22,8 +24,3 @@ function deleteEdible(edibleName) {
 	scene.remove(obj);
 	delete edibleObjects[edibleName];
 }
-
-/**
-* edibleObjects is a dictionary with interactable objects such as oranges.
-*/
-var edibleObjects = {};

@@ -23,7 +23,7 @@ function onKeyDown(e) {
 			break;
 		case 68: // D
 		case 100: // d
-			getEdible("FirstOrange");
+			getEdible("Orange1");
 			break;
 
 		case 83: // S
