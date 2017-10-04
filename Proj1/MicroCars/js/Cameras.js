@@ -45,14 +45,26 @@ this.createCamera = function() {
 };
 
 function updateCamera() {
-	var aspectRatio = window.innerWidth / window.innerHeight;
+	var windowWidth = window.innerWidth;
+	var windowHeight = window.innerHeight;
+	var aspectRatio = windowWidth / windowHeight;
+
 	if (camera instanceof THREE.PerspectiveCamera) {
 		camera.aspect = renderer.getSize().width / renderer.getSize().height;
 	} else {
-		camera.left   = - frustumSize * aspectRatio / 2;
-		camera.right  =   frustumSize * aspectRatio / 2;
-		camera.top    =   frustumSize / 2;
-		camera.bottom = - frustumSize / 2;
+		if (windowHeight > windowWidth) {
+			aspectRatio   = windowHeight / windowWidth;
+			camera.left   = - frustumSize / 2;
+			camera.right  =   frustumSize / 2;
+			camera.top    =   frustumSize * aspectRatio / 2;
+			camera.bottom = - frustumSize * aspectRatio / 2;
+		} else {
+			camera.left   = - frustumSize * aspectRatio / 2;
+			camera.right  =   frustumSize * aspectRatio / 2;
+			camera.top    =   frustumSize / 2;
+			camera.bottom = - frustumSize / 2;
+		}
+
 	}
 	camera.updateProjectionMatrix();
 }
