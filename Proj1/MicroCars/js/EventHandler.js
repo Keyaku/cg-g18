@@ -9,23 +9,7 @@ function onWindowResize() {
 		console.log("Error on window resize. Negative size values were detected.");
 		return -1;
 	}
-	if (camera instanceof THREE.PerspectiveCamera) {
-		camera.aspect = renderer.getSize().width / renderer.getSize().height;
-	} else {
-		if (windowHeight > windowWidth) {
-			aspectRatio   = windowHeight / windowWidth;
-			camera.left   = - frustumSize / 2;
-			camera.right  =   frustumSize / 2;
-			camera.top    =   frustumSize * aspectRatio / 2;
-			camera.bottom = - frustumSize * aspectRatio / 2;
-		} else {
-			camera.left   = - frustumSize * aspectRatio / 2;
-			camera.right  =   frustumSize * aspectRatio / 2;
-			camera.top    =   frustumSize / 2;
-			camera.bottom = - frustumSize / 2;
-		}
-	}
-	camera.updateProjectionMatrix();
+	updateCamera();
 }
 
 function onKeyDown(e) {

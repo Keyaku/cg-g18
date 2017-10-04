@@ -1,5 +1,5 @@
 /*******************************************************************************
-* Object Oriented - Helper methods
+* Edibles - Helper methods
 *******************************************************************************/
 /**
 * Adds a new edible of type Object3D with subtype Orange or Butter to a dictionary
@@ -22,3 +22,8 @@ function deleteEdible(edibleName) {
 	scene.remove(obj);
 	delete edibleObjects[edibleName];
 }
+
+/**
+* edibleObjects is a dictionary with interactable objects such as oranges.
+*/
+var edibleObjects = {};
