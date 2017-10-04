@@ -18,7 +18,7 @@ class Track {
 			{x:0, z:400}, {x:0, z:200},
 			//{x:0, z:0},
 		]
-		//Offsets the points to be alligned with the camera and converts them
+		//Offsets the points to be alligned with the camera and converts them 
 		//to be THREE.Vector3 to be used by THREE.CatmullRomCurve3.
 		points = this.pointsOffset(points, 400)
 		//Draws the track.
@@ -63,14 +63,14 @@ class Track {
 		return mesh
 	}
 	trackAddTorus(obj, vertices) {
-		//Number of vertices in the tracks's inside line.
-		var verticesIn = parseInt(vertices.length / 3)
 		//Number of vertices in the tracks's outside line.
-		var verticesOut = verticesIn * 2
+		var verticesOut = 4010
+		//Number of vertices in the tracks's inside line.
+		var verticesIn = 1992
 		/*
 		The spacing of the tori is different in the inside and outside
-		because there are more outside vertices than inside ones. For the
-		tori to be spaced equally on both sides of the track the spacing ratio
+		because there are more outside vertices than inside ones. For the 
+		tori to be spaces equally on both sides of the track the spacing ratio
 		needs to match the vertices amount ratio.
 		*/
 		//Step of the for loop for the tori to be added on the inside line.
