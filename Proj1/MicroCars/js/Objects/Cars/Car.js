@@ -6,10 +6,8 @@ class Car {
 		var matBody = new THREE.MeshPhongMaterial({
 			color:0x2194ce, /*Blue*/ specular: 0x111111, shininess: 10,
 		})
-		//Creates the material for the wheels.
-		var materialWheels = new THREE.MeshLambertMaterial({color:0x222222})
-		//Creates the material for the axels.
-		var materialAxel = new THREE.MeshBasicMaterial({color:0x960101})
+		//Creates the material for the axles.
+		var materialAxle = new THREE.MeshBasicMaterial({color:0x960101})
 		//Extrude setting that define the car width.
 		var extrSettings = {amount:8, bevelEnabled:false}
 		//Creates the body panels.
@@ -27,27 +25,27 @@ class Car {
 		var t8 = new CarTriangle(this.mesh, matBody, extrSettings, 23, 0, 0, 24, 5, 0, 23, 5, 0)
 		var t9 = new CarTriangle(this.mesh, matBody, extrSettings, 23, 5, 0, 24, 5, 0, 23, 8, 0)
 		//Creates the wheels.
-		var w1 = new CarTorus(this.mesh, materialWheels, 2.5, 1.7, 10, 16, 5.5, -1, -2)
-		var w2 = new CarTorus(this.mesh, materialWheels, 2.5, 1.7, 10, 16, 20.5, -1, -2)
-		var w3 = new CarTorus(this.mesh, materialWheels, 2.5, 1.7, 10, 16, 5.5, -1, 10)
-		var w4 = new CarTorus(this.mesh, materialWheels, 2.5, 1.7, 10, 16, 20.5, -1, 10)
-		//Creates the axels.
-		var cy1 = new CarCylinder(this.mesh, materialAxel, 0.5, 12, 8, 1, 5.5, -1, 4, 90, 0, 0)
-		var cy2 = new CarCylinder(this.mesh, materialAxel, 0.5, 12, 8, 1, 20.5, -1, 4, 90, 0, 0)
-		var cy3 = new CarCylinder(this.mesh, materialAxel, 0.5, 3, 8, 1, 5.5, 0.5, 4, 0, 0, 0)
-		var cy4 = new CarCylinder(this.mesh, materialAxel, 0.5, 3, 8, 1, 20.5, 0.5, 4, 0, 0, 0)
-		var cy5 = new CarCylinder(this.mesh, materialAxel, 0.5, 15, 8, 1, 13, -1, 4, 0, 0, 90)
+		var w1 = new CarTorus(this.mesh, 2.5, 1.7, 10, 16, 5.5, -1, -2)
+		var w2 = new CarTorus(this.mesh, 2.5, 1.7, 10, 16, 20.5, -1, -2)
+		var w3 = new CarTorus(this.mesh, 2.5, 1.7, 10, 16, 5.5, -1, 10)
+		var w4 = new CarTorus(this.mesh, 2.5, 1.7, 10, 16, 20.5, -1, 10)
+		//Creates the axles.
+		var cy1 = new CarCylinder(this.mesh, materialAxle, 0.5, 12, 8, 1, 5.5, -1, 4, 90, 0, 0)
+		var cy2 = new CarCylinder(this.mesh, materialAxle, 0.5, 12, 8, 1, 20.5, -1, 4, 90, 0, 0)
+		var cy3 = new CarCylinder(this.mesh, materialAxle, 0.5, 3, 8, 1, 5.5, 0.5, 4, 0, 0, 0)
+		var cy4 = new CarCylinder(this.mesh, materialAxle, 0.5, 3, 8, 1, 20.5, 0.5, 4, 0, 0, 0)
+		var cy5 = new CarCylinder(this.mesh, materialAxle, 0.5, 15, 8, 1, 13, -1, 4, 0, 0, 90)
 		//Positions the car.
 		this.mesh.position.set(x, y, z)
 		//Rotates the car.
 		this.mesh.rotation.set(0, 3.14, 0)
 		//Scales the car.
 		this.mesh.scale.set(0.5, 0.5, 0.5)
-		
+
 		//Creates the car physics
 		var carPhysics = new CarPhysics(2)
 		this.carPhysics = carPhysics
-		
+
 		var p1 = w1.position
 		var p2 = w2.position
 		var fv = new THREE.Vector3(p2.x - p1.x, 0, p2.z - p1.z)
@@ -94,7 +92,8 @@ class CarSquare {
 	}
 }
 class CarTorus {
-	constructor(obj, material, radius, tube, rSeg, tSeg, x, y, z) {
+	constructor(obj, radius, tube, rSeg, tSeg, x, y, z) {
+		var material = new THREE.MeshLambertMaterial({color:0x222222})
 		//Creates the wheel's geometry - torus.
 		var geometry = new THREE.TorusGeometry(radius, tube, rSeg, tSeg)
 		//Creates the wheel's mesh.
@@ -111,9 +110,9 @@ class CarCylinder {
 		var geometry = new THREE.CylinderGeometry(radius, radius, h, rSeg, hSeg)
 		//Creates the axel's mesh.
 		var mesh = new THREE.Mesh(geometry, material)
-		//Positions the axel.
+		//Positions the axle.
 		mesh.position.set(x, y, z)
-		//Rotates the axel.
+		//Rotates the axle.
 		mesh.rotation.set(rotx * 3.14 / 180, roty * 3.14 / 180, rotz * 3.14 / 180)
 		obj.add(mesh)
 		return mesh

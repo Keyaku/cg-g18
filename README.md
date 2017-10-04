@@ -1,12 +1,12 @@
-# CG_2017/2018
+# CG 2017/2018
 
 ## Next group meeting: 06/10/2017
 
 @António Sarmento
-[ ] Present sketches of Butter  
-[ ] Fix wheels that don't enable wireframe when 'A' is pressed  
 
 @Francisco Barros  
+[ ] Object3D.name is not a function. `js/Edibles.js:19`
+[ ] Use line `this.mesh.name = orangeName;` in `js/Objects/Orange.js:51`
 
 @Rafael Ribeiro  
 [ ] Present sketches of Car  
