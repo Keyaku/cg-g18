@@ -30,11 +30,11 @@ class Car {
 		var lfw = new CarTorus(this.mesh, 2.5, 1.7, 10, 16, 5.5, -1, 10);
 		var lrw = new CarTorus(this.mesh, 2.5, 1.7, 10, 16, 20.5, -1, 10);
 		//Creates the axles.
-		var cy1 = new CarCylinder(this.mesh, materialAxle, 0.5, 12, 8, 1, 5.5, -1, 4, 90, 0, 0);
-		var cy2 = new CarCylinder(this.mesh, materialAxle, 0.5, 12, 8, 1, 20.5, -1, 4, 90, 0, 0);
-		var cy3 = new CarCylinder(this.mesh, materialAxle, 0.5, 3, 8, 1, 5.5, 0.5, 4, 0, 0, 0);
-		var cy4 = new CarCylinder(this.mesh, materialAxle, 0.5, 3, 8, 1, 20.5, 0.5, 4, 0, 0, 0);
-		var cy5 = new CarCylinder(this.mesh, materialAxle, 0.5, 15, 8, 1, 13, -1, 4, 0, 0, 90);
+		var cy1 = new CarCylinder(this.mesh, materialAxle, 0.5, 12, 8, 1,  5.5,  -1, 4, 90, 0,  0);
+		var cy2 = new CarCylinder(this.mesh, materialAxle, 0.5, 12, 8, 1, 20.5,  -1, 4, 90, 0,  0);
+		var cy3 = new CarCylinder(this.mesh, materialAxle, 0.5,  3, 8, 1,  5.5, 0.5, 4,  0, 0,  0);
+		var cy4 = new CarCylinder(this.mesh, materialAxle, 0.5,  3, 8, 1, 20.5, 0.5, 4,  0, 0,  0);
+		var cy5 = new CarCylinder(this.mesh, materialAxle, 0.5, 15, 8, 1,    3,   9, 4,  0, 0, 90);
 		//Translates the geometry so the car rotates around it's center.
 		var children = this.mesh.children
 		for (var i = 0; i < children.length; i++) {
@@ -114,10 +114,10 @@ class CarCylinder {
 		var geometry = new THREE.CylinderGeometry(radius, radius, h, rSeg, hSeg)
 		//Creates the axel's mesh.
 		var mesh = new THREE.Mesh(geometry, material)
+		//Rotates the axle.
+		mesh.rotation.set(rotx * TO_RADIANS, roty * TO_RADIANS, rotz * TO_RADIANS)
 		//Positions the axle.
 		mesh.position.set(x, y, z)
-		//Rotates the axle.
-		mesh.rotation.set(rotx * 3.14 / 180, roty * 3.14 / 180, rotz * 3.14 / 180)
 		obj.add(mesh)
 		return mesh
 	}
