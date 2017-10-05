@@ -33,4 +33,6 @@ function createScene() {
 	createEdible(Butter, "Butter1", 100, ediblesY, -100);
 	createEdible(Butter, "Butter2", -100, ediblesY, -100);
 	createEdible(Butter, "Butter3", 50, ediblesY, 70);
+	createEdible(Butter, "Butter4", 150, ediblesY, 90);
+	createEdible(Butter, "Butter5", -50, ediblesY, 70);
 }

@@ -4,9 +4,13 @@
 var renderer, controls;
 var gameBoard, raceTrack, car;
 var clock = new THREE.Clock(false);
-var TextureLoader = new THREE.TextureLoader();
 
-TextureLoader.setPath('textures/');
+var LocalTextures = new THREE.TextureLoader();
+LocalTextures.setPath('textures/');
+var RemoteTextures = new THREE.TextureLoader();
+
+const TO_RADIANS = Math.PI / 180;
+const TO_DEGREES = 180 / Math.PI;
 
 /**
 * Render method allows system to handle all the rendering.
