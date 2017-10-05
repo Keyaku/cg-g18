@@ -12,4 +12,3 @@
 
 @Rafael Ribeiro  
 * [ ] Present sketches of Track  
-* [ ] Fix car's rotation  
