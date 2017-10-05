@@ -1,5 +1,6 @@
 const ROTATION = Math.PI / 16;
 const ACCELERATION = 2;
+const TURN_ASSIST = ACCELERATION / 10;
 var friction = 0.02;
 
 class CarPhysics {
@@ -31,7 +32,8 @@ class CarPhysics {
 		if (this.controls.right && !this.controls.left) {
 			angle = ROTATION;
 		}
-		if (angle != 0 && Math.abs(this.velocity) > 0.02) {
+		if (angle != 0) {
+			angle *= Math.abs(this.velocity) * TURN_ASSIST;
 			/*Rotation Matrix =
 			[cos 	-sin 	0] * [x]
 			[sin 	cos 	0] * [z]
