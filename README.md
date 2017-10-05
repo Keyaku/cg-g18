@@ -3,7 +3,6 @@
 ## Next group meeting: 06/10/2017
 
 @António Sarmento  
-* [ ] Present sketches of Butter
 * [ ] Fix CarPhysics code when both Up and Down are being pressed simultaneously
 
 @Francisco Barros  
@@ -12,6 +11,5 @@
 * [ ] Remove (or move to its appropriate place) lines 21-23 from `js/Camera.js` since it's unused code in its context
 
 @Rafael Ribeiro  
-* [ ] Present sketches of Car
 * [ ] Present sketches of Track  
-* [ ] Add correct physical to the Car  
+* [ ] Fix car's rotation  
