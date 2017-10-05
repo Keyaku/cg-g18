@@ -36,6 +36,7 @@ this.createCamera = function() {
 	camera.lookAt(scene.position);
 	// Adding orbiting controls through our camera lens
 	controls = new THREE.OrbitControls(camera);
+	controls.enableKeys = false
 	// Updating camera data
 	updateCamera();
 };
