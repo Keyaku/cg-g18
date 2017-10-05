@@ -35,14 +35,14 @@ function onKeyDown(e) {
 		case 38:
 			if (!car.carControls.forward) {
 				car.carControls.forward = true;
-				car.carPhysics.currentAcceleration = car.carPhysics.forwardAcceleration;
+				car.carPhysics.currentAcceleration = -car.carPhysics.forwardAcceleration;
 			}
 			break;
 		// Down arrow
 		case 40:
 			if (!car.carControls.backward) {
 				car.carControls.backward = true;
-				car.carPhysics.currentAcceleration = -car.carPhysics.forwardAcceleration;
+				car.carPhysics.currentAcceleration = car.carPhysics.forwardAcceleration;
 			}
 			break;
 		// Left arrow
