@@ -46,12 +46,7 @@ class Car {
 		var fv = new THREE.Vector3(p2.x - p1.x, 0, p2.z - p1.z);
 		this.forwardVector = fv.normalize();
 		this.carPhysics = new CarPhysics(this.forwardVector);
-		this.carControls = {
-			forward:  false,
-			backward: false,
-			left:     false,
-			right:    false
-		};
+
 
 		//Adds the car to the scene.
 		scene.add(this.mesh);

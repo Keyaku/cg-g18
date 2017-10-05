@@ -33,25 +33,25 @@ function onKeyDown(e) {
 
 		// Up arrow
 		case 38:
-			if (!car.carControls.forward) {
-				car.carControls.forward = true;
+			if (!car.carPhysics.carControls.forward) {
+				car.carPhysics.carControls.forward = true;
 				car.carPhysics.currentAcceleration = -car.carPhysics.forwardAcceleration;
 			}
 			break;
 		// Down arrow
 		case 40:
-			if (!car.carControls.backward) {
-				car.carControls.backward = true;
+			if (!car.carPhysics.carControls.backward) {
+				car.carPhysics.carControls.backward = true;
 				car.carPhysics.currentAcceleration = car.carPhysics.forwardAcceleration;
 			}
 			break;
 		// Left arrow
 		case 37:
-			car.carControls.left = true;
+			car.carPhysics.carControls.left = true;
 			break
 		 // Right arrow
 		case 39:
-			car.carControls.right = true;
+			car.carPhysics.carControls.right = true;
 			break;
 	}
 }
@@ -60,21 +60,21 @@ function onKeyUp(e) {
 	switch(e.keyCode) {
 		// Up arrow
 		case 38:
-			car.carControls.forward = false;
+			car.carPhysics.carControls.forward = false;
 			car.carPhysics.currentAcceleration = 0;
 			break
 		// Down arrow
 		case 40:
-			car.carControls.backward = false;
+			car.carPhysics.carControls.backward = false;
 			car.carPhysics.currentAcceleration = 0;
 			break;
 		// Left arrow
 		case 37:
-			car.carControls.left = false;
+			car.carPhysics.carControls.left = false;
 			break
 		 // Right arrow
 		case 39:
-			car.carControls.right = false;
+			car.carPhysics.carControls.right = false;
 			break;
 	}
 }
