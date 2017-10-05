@@ -23,7 +23,7 @@ class CarPhysics {
 	}
 
 	update(delta) {
-		this.velocity += this.currentAcceleration * delta - friction*this.velocity;
+		this.velocity += this.currentAcceleration * delta - friction * this.velocity;
 		var carHeading = this.heading.clone();
 		carHeading.multiplyScalar(this.velocity);
 		car.mesh.position.add(carHeading);
@@ -36,7 +36,7 @@ class CarPhysics {
 		if (car.carControls.right && !car.carControls.left) {
 			angle = ROTATION;
 		}
-		if (angle != 0) {
+		if (angle != 0 && Math.abs(this.velocity) > 0.02) {
 			/*Rotation Matrix =
 			[cos 	-sin 	0] * [x]
 			[sin 	cos 	0] * [z]
