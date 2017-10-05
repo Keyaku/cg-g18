@@ -45,7 +45,7 @@ class Car {
 		var p2 = rrw.position;
 		var fv = new THREE.Vector3(p2.x - p1.x, 0, p2.z - p1.z);
 		this.forwardVector = fv.normalize();
-		this.carPhysics = new CarPhysics(x, y, z, this.forwardVector);
+		this.carPhysics = new CarPhysics(this.forwardVector);
 		this.carControls = {
 			forward:  false,
 			backward: false,
