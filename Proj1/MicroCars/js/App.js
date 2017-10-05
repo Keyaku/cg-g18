@@ -3,8 +3,7 @@
 */
 var renderer, controls;
 var gameBoard, raceTrack, car;
-var clock = new THREE.Clock()
-clock.stop();
+var clock = new THREE.Clock(false);
 var TextureLoader = new THREE.TextureLoader();
 
 TextureLoader.setPath('textures/');
@@ -13,9 +12,8 @@ TextureLoader.setPath('textures/');
 * Render method allows system to handle all the rendering.
 */
 function render() {
-	var time = clock.getElapsedTime();
 	var delta = clock.getDelta();
-	car.update(time, delta);
+	car.update(delta);
 	controls.update();
 	renderer.render(scene, camera);
 	requestAnimationFrame(render);
@@ -44,4 +42,6 @@ function init() {
 	window.addEventListener('resize', onWindowResize, false);
 	window.addEventListener('keydown', onKeyDown);
 	window.addEventListener('keyup', onKeyUp);
+
+	clock.start();
 }

@@ -37,8 +37,6 @@ class Car {
 		var cy5 = new CarCylinder(this.mesh, materialAxle, 0.5, 15, 8, 1, 13, -1, 4, 0, 0, 90);
 		//Positions the car.
 		this.mesh.position.set(x, y, z);
-		//Rotates the car.
-		this.mesh.rotation.set(0, 3.14, 0);
 		//Scales the car.
 		this.mesh.scale.set(0.5, 0.5, 0.5);
 
@@ -49,10 +47,10 @@ class Car {
 		this.forwardVector = fv.normalize();
 		this.carPhysics = new CarPhysics(x, y, z, this.forwardVector);
 		this.carControls = {
-			forward:0,
-			backward:0,
-			left:0,
-			rigth:0
+			forward:  false,
+			backward: false,
+			left:     false,
+			right:    false
 		};
 
 		//Adds the car to the scene.
@@ -60,10 +58,10 @@ class Car {
 		return this
 	}
 
-	update(time, delta) {
-		this.carPhysics.update(time, delta);
+	update(delta) {
+		this.carPhysics.update(delta);
 	}
-	
+
 }
 
 class CarTriangle {
