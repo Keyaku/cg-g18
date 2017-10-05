@@ -35,6 +35,11 @@ class Car {
 		var cy3 = new CarCylinder(this.mesh, materialAxle, 0.5, 3, 8, 1, 5.5, 0.5, 4, 0, 0, 0);
 		var cy4 = new CarCylinder(this.mesh, materialAxle, 0.5, 3, 8, 1, 20.5, 0.5, 4, 0, 0, 0);
 		var cy5 = new CarCylinder(this.mesh, materialAxle, 0.5, 15, 8, 1, 13, -1, 4, 0, 0, 90);
+		//Translates the geometry so the car rotates around it's center.
+		var children = this.mesh.children
+		for (var i = 0; i < children.length; i++) {
+			children[i].geometry.translate(-10, 0, 0 );
+		}
 		//Positions the car.
 		this.mesh.position.set(x, y, z);
 		//Scales the car.
