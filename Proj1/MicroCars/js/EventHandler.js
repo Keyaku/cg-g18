@@ -33,17 +33,54 @@ function onKeyDown(e) {
 
 		// Up arrow
 		case 38:
-			clock.start()
-			break
+			if (car.carControls.forward != 1) {
+				car.carControls.forward = 1;
+				car.carPhysics.currenAcceleration = 50;
+				clock.start();
+			}
+			break;
 		// Down arrow
 		case 40:
-
+			if (car.carControls.backward != 1) {
+				car.carControls.backward = 1;
+				car.carPhysics.currenAcceleration = -50;
+				clock.start();
+			}
+			break;
 		// Left arrow
 		case 37:
-			clock.stop()
+			car.carControls.left = 1;
 			break
 		 // Right arrow
 		case 39:
-		break;
+			car.carControls.rigth = 1;
+			break;
+	}
+}
+
+function onKeyUp(e) {
+	switch(e.keyCode) {
+		// Up arrow
+		case 38:
+			clock.stop()
+			car.carControls.forward = 0;
+			car.carPhysics.lastTime = 0;
+			car.carPhysics.currenAcceleration = 0;
+			break
+		// Down arrow
+		case 40:
+			clock.stop()
+			car.carControls.backward = 0;
+			car.carPhysics.lastTime = 0;
+			car.carPhysics.currenAcceleration = 0;
+			break;
+		// Left arrow
+		case 37:
+			car.carControls.left = 0;
+			break
+		 // Right arrow
+		case 39:
+			car.carControls.rigth = 0;
+			break;
 	}
 }
