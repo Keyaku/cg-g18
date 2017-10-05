@@ -4,25 +4,20 @@
 var renderer, controls;
 var gameBoard, raceTrack, car;
 var clock = new THREE.Clock()
-
+clock.stop();
 var TextureLoader = new THREE.TextureLoader();
+
 TextureLoader.setPath('textures/');
 
 /**
 * Render method allows system to handle all the rendering.
 */
 function render() {
-	//Gets how much time has passed since the clock started.
-	//var time = clock.getElapsedTime()
-	//Gets how much time has passed since the last frame.
-	//var delta = clock.getDelta()
-	//Calculates how much the car needs to move.
-	//var v = car.carPhysics.getDisplacement(time, delta)
-	//Moves the car.
-	//car.mesh.position.set(v.x, 0, v.z)
-
+	var time = clock.getElapsedTime();
+	var delta = clock.getDelta();
+	car.update(time, delta);
+	controls.update();
 	renderer.render(scene, camera);
-	controls.update()
 	requestAnimationFrame(render);
 }
 
@@ -45,6 +40,8 @@ function init() {
 	createLights();
 	createCamera();
 	render();
+
 	window.addEventListener('resize', onWindowResize, false);
 	window.addEventListener('keydown', onKeyDown);
+	window.addEventListener('keyup', onKeyUp);
 }
