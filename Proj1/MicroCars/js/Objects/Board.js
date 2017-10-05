@@ -1,5 +1,5 @@
 class Board {
-	constructor(x, y, z) {
+	constructor(x, y, z, size) {
 		this.type = 'Board';
 		this.mesh = new THREE.Object3D();
 
@@ -9,11 +9,9 @@ class Board {
 		//Loads the image from a server. (locally DOESN'T work).
 		var grassTexture = textureLoader.load('https://i.imgur.com/J4sDs4b.jpg')
 		var material = new THREE.MeshBasicMaterial({map:grassTexture})
-		var geometry = new THREE.BoxGeometry(1000, 1000, 5)
+		var geometry = new THREE.BoxGeometry(size, 5, size)
 		var mesh = new THREE.Mesh(geometry, material)
 		mesh.position.set(x, y, z);
-		// rotates the cube along the X axis by 90º
-		mesh.rotation.x = 3.14 / 2;
 		this.mesh.add(mesh)
 
 		scene.add(this.mesh);
