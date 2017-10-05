@@ -1,10 +1,17 @@
 class CarPhysics {
-	constructor(maxAcc) {
-		this.acceleration = 200
+	constructor(x, y, z, carHeading) {
+		this.lastTime = 0;
+		this.lastPosition = new THREE.Vector3(x, y, z);
 
-		this.currentSpeed = 0
-		this.lastTime = 0
-		this.lastPosition = new THREE.Vector3(0,0,0)
+		this.heading = new THREE.Vector3(carHeading.x, carHeading.y, carHeading.z);
+		this.initialVelocity = new THREE.Vector3(0, 0, 0);
+		this.forwardAcceleration = 50;
+		this.decayAcceleration = 3;
+
+		this.currenAcceleration = 0;
+
+		
+
 
 		//Movement type: Uniformly Accelerated Motion
 		//Law of motion: s(t) = s0 + v0*t + 0.5*a*t^2
@@ -14,35 +21,60 @@ class CarPhysics {
 		//Displacement: s(t2) - s(t1) = 0.5*a*(t2^2 - t1^2)
 	}
 
+	update(time, delta) {
+		var displacement = 0.5 * this.currenAcceleration * (time * time - this.lastTime * this.lastTime);
+		var carPosition = car.mesh.position;
+		var carHeading = this.heading.clone();
+		carHeading.multiplyScalar(displacement);
+		carPosition.add(carHeading);
+		car.mesh.position.set(carPosition.x, carPosition.y, carPosition.z);
+		this.lastTime = time;
 
-	getDisplacement(time, t2) {
-		//Displacement: s(t2) - s(t1) = 0.5*a*(t2^2 - t1^2)
-		var t1 = this.lastTime
-		var p1 = this.lastPosition
-		var dp = 0.5 * this.acceleration * (t2*t2 - t1*t1)
-		var dpV3 = new THREE.Vector3(dp, 0, 0)
-		dpV3.multiplyScalar(10000000)
-		
-		this.lastPosition.add(dpV3)
-		var scal = 1
-		if (dpV3.length() == 0){ 
-			scal = 0
-			console.log(dp)
+		if (car.carControls.left == 1) {
+			//Rotates the heading vector.
+			var angle = - Math.PI / 16;
+			/*Rotation Matrix = 
+			[cos 	-sin 	0] * [x]
+			[sin 	cos 	0] * [z]
+			[0		0		1] * [1]
+			*/
+			var x = this.heading.x, z = this.heading.z
+			var cos = Math.cos(angle);
+			var sin = Math.sin(angle);
+			var xNew = cos * x - sin * z;
+			var zNew = sin * x + cos * z;
+			this.heading = new THREE.Vector3(xNew, 0, zNew);
+			car.mesh.rotation.set(0, car.mesh.rotation.y - angle, 0);
 		}
-		this.lastPosition.multiplyScalar(1.1)
-		this.lastTime = t2
 
-//		console.log(this.lastPosition, dpV3)
+		if (car.carControls.rigth == 1) {
+				//Rotates the heading vector.
+			var angle = Math.PI / 16;
+			/*Rotation Matrix = 
+			[cos 	-sin 	0] * [x]
+			[sin 	cos 	0] * [z]
+			[0		0		1] * [1]
+			*/
+			var x = this.heading.x, z = this.heading.z
+			var cos = Math.cos(angle);
+			var sin = Math.sin(angle);
+			var xNew = cos * x - sin * z;
+			var zNew = sin * x + cos * z;
+			this.heading = new THREE.Vector3(xNew, 0, zNew);
+			car.mesh.rotation.set(0, car.mesh.rotation.y - angle, 0);
+		}
 
-		return this.lastPosition
+
+		/*
+		var displacement = 0.5 * this.currenAcceleration * (time * time - this.lastTime * this.lastTime);
+		var carHeading = this.heading.clone();
+		carHeading.multiplyScalar(displacement);
+		var carPosition = new THREE.Vector3(this.lastPosition.x, this.lastPosition.y, this.lastPosition.z);
+		car.mesh.position.set(carPosition.x + carHeading.x, carPosition.y + carHeading.y, carPosition.z + carHeading.z);
+		
+		this.lastPosition = (carPosition.x + carHeading.x, carPosition.y + carHeading.y, carPosition.z + carHeading.z);
+		
+		this.lastTime = time
+		*/
 	}
 }
-
-
-//Get previous time
-//Get last position
-//Get new time
-//Calculate displacement
-//Add displacement to last position
-//Save new previous time
-//Save new last position
