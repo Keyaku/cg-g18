@@ -52,7 +52,7 @@ class Car {
 	}
 
 	update(delta) {
-		return this.carPhysics.update(delta);
+		this.carPhysics.update(delta);
 	}
 
 }
