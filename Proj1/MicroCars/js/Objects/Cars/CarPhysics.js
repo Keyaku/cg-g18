@@ -9,7 +9,7 @@ class CarPhysics {
 		this.currentAcceleration = 0;
 		this.forwardAcceleration = ACCELERATION;
 		this.decayAcceleration = ACCELERATION / 4;
-		this.carControls = {
+		this.controls = {
 			forward:  false,
 			backward: false,
 			left:     false,
@@ -25,10 +25,10 @@ class CarPhysics {
 
 		//Rotates the heading vector.
 		var angle = 0;
-		if (this.carControls.left && !this.carControls.right) {
+		if (this.controls.left && !this.controls.right) {
 			angle = - ROTATION;
 		}
-		if (this.carControls.right && !this.carControls.left) {
+		if (this.controls.right && !this.controls.left) {
 			angle = ROTATION;
 		}
 		if (angle != 0 && Math.abs(this.velocity) > 0.02) {

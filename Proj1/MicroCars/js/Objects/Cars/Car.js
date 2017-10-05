@@ -50,14 +50,14 @@ class Car {
 		var fv = new THREE.Vector3(p2.x - p1.x, 0, p2.z - p1.z);
 		this.forwardVector = fv.normalize();
 		//Creates the CarPhysics object.
-		this.carPhysics = new CarPhysics(this.forwardVector);
+		this.physics = new CarPhysics(this.forwardVector);
 		//Adds the car to the scene.
 		scene.add(this.mesh);
 		return this;
 	}
 
 	update(delta) {
-		this.carPhysics.update(delta);
+		this.physics.update(delta);
 	}
 
 }
