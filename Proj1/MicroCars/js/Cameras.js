@@ -18,9 +18,6 @@ this.createCamera = function() {
 	var far = 2000;
 
 	if (camera instanceof THREE.PerspectiveCamera) {
-		if (windowHeight > windowWidth) {
-			aspectRatio = windowHeight / windowWidth;
-		}
 		this.perspective = "Orthographic";
 		camera = new THREE.OrthographicCamera(0, 0, 0, 0, near, far);
 		camera.position.x = 0;

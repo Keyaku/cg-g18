@@ -48,7 +48,7 @@ class Orange {
 	constructor(orangeName, x, y, z) {
 		this.type = 'Orange';
 		this.mesh = new THREE.Object3D();
-		this.name = orangeName;
+		this.mesh.name = orangeName
 		var orangeFruit = new OrangeFruit(this.mesh, x, y, z);
 		var orangeBranch = new OrangeBranch(this.mesh, x, y, z);
 		// var orangeLeaf = new OrangeLeaf(this.mesh, x, y, z); Buggy leaf

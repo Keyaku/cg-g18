@@ -16,7 +16,7 @@ function createEdible(Edible, name, x, y, z) {
 
 function getEdible(edibleName) {
 	var edible = edibleObjects[edibleName];
-	console.log(edible.name());
+	console.log(edible.name);
 }
 
 function deleteEdible(edibleName) {
