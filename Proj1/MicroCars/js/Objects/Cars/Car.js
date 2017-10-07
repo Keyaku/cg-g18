@@ -44,13 +44,8 @@ class Car {
 		this.mesh.position.set(x, y, z);
 		//Scales the car.
 		this.mesh.scale.set(0.5, 0.5, 0.5);
-		//Calculates the car's forward vector / heading.
-		var p1 = rfw.position;
-		var p2 = rrw.position;
-		var fv = new THREE.Vector3(p2.x - p1.x, 0, p2.z - p1.z);
-		this.forwardVector = fv.normalize();
 		//Creates the CarPhysics object.
-		this.physics = new CarPhysics(this.forwardVector);
+		this.physics = new CarPhysics();
 		//Adds the car to the scene.
 		scene.add(this.mesh);
 		return this;
