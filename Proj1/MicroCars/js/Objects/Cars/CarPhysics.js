@@ -7,27 +7,33 @@ var friction = 0.02;
 class CarPhysics {
 	constructor() {
 		this.velocity = 0;
-		this.currentAcceleration = 0;
 		this.forwardAcceleration = ACCELERATION;
 		this.decayAcceleration = ACCELERATION / 4;
-		this.controls = {
-			forward:  false,
-			backward: false,
-			left:     false,
-			right:    false
-		};
 	}
 
 	update(delta) {
-		this.velocity += this.currentAcceleration * delta - friction * this.velocity;
+		var left  = Input.is_pressed("ArrowLeft");
+		var right = Input.is_pressed("ArrowRight");
+		var up    = Input.is_pressed("ArrowUp");
+		var down  = Input.is_pressed("ArrowDown");
+
+		var acceleration = 0;
+		if (up && !down) {
+			acceleration = -car.physics.forwardAcceleration;
+		} else if (down && !up) {
+			acceleration = car.physics.forwardAcceleration;
+		}
+
+		// Updating car motion
+		this.velocity += acceleration * delta - friction * this.velocity;
 		car.mesh.translateOnAxis(AXIS_HEADING, this.velocity);
 
 		//Rotates the mesh
 		var angle = 0;
-		if (this.controls.left && !this.controls.right) {
+		if (left && !right) {
 			angle = - ROTATION;
 		}
-		if (this.controls.right && !this.controls.left) {
+		if (right && !left) {
 			angle = ROTATION;
 		}
 		if (angle != 0) {

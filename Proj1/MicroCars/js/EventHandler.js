@@ -1,18 +1,58 @@
-function onWindowResize() {
-	var windowWidth = window.innerWidth;
-	var windowHeight = window.innerHeight;
-	var aspectRatio = windowWidth / windowHeight;
-	if (windowWidth > 0 && windowHeight > 0) {
-		renderer.setSize(windowWidth, windowHeight);
-		renderer.setViewport (0, 0, windowWidth, windowHeight);
-	} else {
-		console.log("Error on window resize. Negative size values were detected.");
-		return -1;
-	}
-	updateCamera();
-}
+/*******************************************************************************
+* EventHandler - and some Input too
+*******************************************************************************/
 
+/**
+*	InputServer
+* A singleton (FIXME: not yet, but HEY, it works like this) accessed via Input.
+* Creates scoping for Input, to allow more strict OOP and allow less clutter code
+* all-in-one file.
+*
+* Check keyName values at:
+* https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values
+*/
+class InputServer {
+	constructor() {
+		this.pressed = [];
+		this.keys = [];
+		for (var i = 0; i < 256; i++) {
+			this.pressed[i] = false;
+		}
+	}
+
+	is_key_pressed(keyCode) {
+		return this.pressed[keyCode];
+	}
+
+	is_pressed(keyName) {
+		return this.keys.indexOf(keyName) != -1;
+	}
+
+	press(e) {
+		this.pressed[e.keyCode] = true;
+		if (this.keys.indexOf(e.key) == -1) {
+			this.keys.push(e.key);
+		}
+	}
+
+	release(e) {
+		this.pressed[e.keyCode] = false;
+		var idx = this.keys.indexOf(e.key);
+		if (idx > -1) {
+			this.keys.splice(idx, 1);
+		}
+	}
+}
+const Input = new InputServer();
+
+/**
+*	Keypresses Events (keydown, keyup, keypress)
+*/
 function onKeyDown(e) {
+	// Setting InputServer input for whoever wants to catch it
+	Input.press(e);
+
+	// Setting global input (if any)
 	switch(e.keyCode) {
 		case 65: // A
 		case 97: // a
@@ -30,51 +70,29 @@ function onKeyDown(e) {
 		case 115: // s
 			createCamera();
 			break;
-
-		// Up arrow
-		case 38:
-			if (!car.physics.controls.forward) {
-				car.physics.controls.forward = true;
-				car.physics.currentAcceleration = -car.physics.forwardAcceleration;
-			}
-			break;
-		// Down arrow
-		case 40:
-			if (!car.physics.controls.backward) {
-				car.physics.controls.backward = true;
-				car.physics.currentAcceleration = car.physics.forwardAcceleration;
-			}
-			break;
-		// Left arrow
-		case 37:
-			car.physics.controls.left = true;
-			break
-		 // Right arrow
-		case 39:
-			car.physics.controls.right = true;
-			break;
 	}
 }
 
 function onKeyUp(e) {
-	switch(e.keyCode) {
-		// Up arrow
-		case 38:
-			car.physics.controls.forward = false;
-			car.physics.currentAcceleration = 0;
-			break
-		// Down arrow
-		case 40:
-			car.physics.controls.backward = false;
-			car.physics.currentAcceleration = 0;
-			break;
-		// Left arrow
-		case 37:
-			car.physics.controls.left = false;
-			break
-		 // Right arrow
-		case 39:
-			car.physics.controls.right = false;
-			break;
+	// Releasing input from InputServer
+	Input.release(e);
+
+	// Setting global input (if any)
+}
+
+/**
+*	Other EventHandlers
+*/
+function onWindowResize() {
+	var windowWidth = window.innerWidth;
+	var windowHeight = window.innerHeight;
+	var aspectRatio = windowWidth / windowHeight;
+	if (windowWidth > 0 && windowHeight > 0) {
+		renderer.setSize(windowWidth, windowHeight);
+		renderer.setViewport (0, 0, windowWidth, windowHeight);
+	} else {
+		console.log("Error on window resize. Negative size values were detected.");
+		return -1;
 	}
+	updateCamera();
 }
