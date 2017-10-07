@@ -3,12 +3,10 @@
 ## Next group meeting: 06/10/2017
 
 @António Sarmento  
-* [ ] Write universal and simple Physics system
 
 @Francisco Barros  
-* [ ] Orange: Swap `this.` with local variables, store the type in the final Object3D's `userData` object, then return it.
+* [ ] Orange: Swap `this.` with local variables, store the type in the final Object3D's object, then return it. Example: `mesh.type = 'Orange';`
 * [ ] Same for Board
 
 @Rafael Ribeiro  
 * [ ] Present sketches of Track
-* [ ] Car: Swap `this.` with local variables, store the type in the final Object3D's `userData` object, then return it.
