@@ -16,8 +16,11 @@ const TO_DEGREES = 180 / Math.PI;
 * Render method allows system to handle all the rendering.
 */
 function render() {
+	// Animation and physics updating
 	var delta = clock.getDelta();
 	car.update(delta);
+
+	// ThreeJS updates (OrbitControls, renderer)
 	controls.update();
 	renderer.render(scene, camera);
 	requestAnimationFrame(render);

@@ -19,9 +19,9 @@ class CarPhysics {
 
 		var acceleration = 0;
 		if (up && !down) {
-			acceleration = -car.physics.forwardAcceleration;
+			acceleration = -this.forwardAcceleration;
 		} else if (down && !up) {
-			acceleration = car.physics.forwardAcceleration;
+			acceleration = this.forwardAcceleration;
 		}
 
 		// Updating car motion

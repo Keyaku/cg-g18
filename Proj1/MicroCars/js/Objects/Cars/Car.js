@@ -1,5 +1,5 @@
 class Car {
-	constructor(x, y, z) {
+	constructor(x=0, y=0, z=0) {
 		this.type = 'Car';
 		this.mesh = new THREE.Object3D();
 		//Creates the material for the car body.
@@ -14,7 +14,7 @@ class Car {
 		var c1 = new CarSquare(this.mesh, matBody, extrSettings, 3, 5, 0, 0);
 		var c2 = new CarSquare(this.mesh, matBody, extrSettings, 8, 3, 3, 2);
 		var c3 = new CarSquare(this.mesh, matBody, extrSettings, 7, 2, 11, 0);
-		var c5 = new CarSquare(this.mesh, matBody, extrSettings, 12, 6, 11, 2);
+		var c4 = new CarSquare(this.mesh, matBody, extrSettings, 12, 6, 11, 2);
 		var t1 = new CarTriangle(this.mesh, matBody, extrSettings, -2, 2.5, 0, 0, 2.5, 0, 0, 5, 0);
 		var t2 = new CarTriangle(this.mesh, matBody, extrSettings, -2, 2.5, 0, 0, 0, 0, 0, 2.5, 0);
 		var t3 = new CarTriangle(this.mesh, matBody, extrSettings, 3, 0, 0, 4, 2, 0, 3, 2, 0);
