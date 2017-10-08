@@ -37,14 +37,14 @@ class Car extends MotionBody {
 		//Rotates the mesh
 		var angle = 0;
 		if (left && !right) {
-			angle = - ROTATION;
+			angle = ROTATION;
 		}
 		if (right && !left) {
-			angle = ROTATION;
+			angle = -ROTATION;
 		}
 		if (angle != 0) {
 			angle *= Math.abs(this.velocity) * TURN_ASSIST;
-			this.mesh.rotateY(-angle);
+			this.mesh.rotateY(angle);
 		}
 	}
 
