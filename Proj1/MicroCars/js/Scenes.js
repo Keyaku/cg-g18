@@ -18,7 +18,7 @@ function createScene() {
 	// scene.add(new THREE.GridHelper(size, divisions) );
 	scene.add(new THREE.AxisHelper(size / 2));
 	scene.background = new THREE.Color(0xAEEEEE);
-	var table = new Table(0, -1.1, 0, size+20);
+	var table = new Table(0, -1.1, 0, size);
 	gameBoard = new Board(0, -1, 0, size);
 	raceTrack = new Track();
 	car = new Car(20, 2.66, -5);

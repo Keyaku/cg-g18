@@ -8,13 +8,11 @@ class Table {
 		var legDistance = size >> 2;
 		var thickness = 5;
 
-		new TableTop(this.mesh, material, 0, -(halfSize+1), 0, size, size);
-		/* FIXME: remove this if we want a finer table
+		new TableTop(this.mesh, material, 0, -thickness, 0, size, thickness);
 		new TableLeg(this.mesh, material, -legDistance, -1, -legDistance, halfSize);
 		new TableLeg(this.mesh, material, -legDistance, -1, legDistance, halfSize);
 		new TableLeg(this.mesh, material, legDistance, -1, legDistance, halfSize);
 		new TableLeg(this.mesh, material, legDistance, -1, -legDistance, halfSize);
-		*/
 
 		this.mesh.position.set(x, y, z);
 		scene.add(this.mesh);
