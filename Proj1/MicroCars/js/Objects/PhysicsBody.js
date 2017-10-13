@@ -12,7 +12,15 @@ class PhysicsBody extends THREE.Object3D {
 	update(delta) { /* do nothing */ }
 }
 
-// Weighted, non-deformable bodies (useful for Edibles and other props)
+// Complately static, non-moving objects. Useful for Butters
+class StaticBody extends PhysicsBody {
+	constructor() {
+		super();
+	}
+}
+
+
+// Weighted, non-deformable bodies. Useful for Oranges and other props
 class RigidBody extends PhysicsBody {
 	constructor() {
 		super();
@@ -24,7 +32,7 @@ class RigidBody extends PhysicsBody {
 	}
 }
 
-// Bodies that move and can be animated (useful for cars)
+// Bodies that move and can be animated. Useful for cars.
 class MotionBody extends PhysicsBody {
 	constructor() {
 		super();
