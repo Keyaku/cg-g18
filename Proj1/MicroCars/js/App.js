@@ -1,7 +1,7 @@
 /**
 * This is the 'main' JS file. Everything down to globals and runtime happens here.
 */
-var renderer, controls;
+var renderer, cameraManager, controls;
 var gameBoard, raceTrack, car;
 var clock = new THREE.Clock(false);
 
@@ -23,10 +23,9 @@ function render() {
 			node.update(delta);
 		}
 	});
-
 	// ThreeJS updates (OrbitControls, renderer)
 	controls.update();
-	renderer.render(scene, camera);
+	renderer.render(scene, cameraManager.camera);
 	requestAnimationFrame(render);
 }
 
@@ -45,9 +44,11 @@ function init() {
 	renderer.setClearColor(0x6698FF, 1);
 	renderer.shadowMap.enabled = true;
 	document.body.appendChild(renderer.domElement);
+	
 	createScene();
+	cameraManager = new CameraManager();
+	cameraManager.changeToOrthographic();
 	createLights();
-	createCamera();
 	render();
 
 	window.addEventListener('resize', onWindowResize, false);
