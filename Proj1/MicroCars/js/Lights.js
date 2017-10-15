@@ -18,7 +18,7 @@ function createAmbient() {
 function createHorizon() {
 	var horizonLight = new THREE.HemisphereLight(0xFF4444, 0x44FF44, 0.6);
 	horizonLight.name = 'horizonLight';
-	horizonLight.position.set( 0, frustumSize, 0 );
+	horizonLight.position.set( 0, cameraManager.frustumSize, 0 );
 	scene.add(horizonLight);
 }
 
@@ -35,11 +35,11 @@ function createSun() {
 	sunLight.castShadow = true;
 	var shadowHelper = new THREE.CameraHelper(sunLight.shadow.camera);
 	sunLight.shadow.camera.near = 1;
-	sunLight.shadow.camera.far = frustumSize;
-	sunLight.shadow.camera.left = -frustumSize / 2;
-	sunLight.shadow.camera.right = frustumSize / 2;
-	sunLight.shadow.camera.top = frustumSize / 2;
-	sunLight.shadow.camera.bottom = -frustumSize / 2;
+	sunLight.shadow.camera.far = cameraManager.frustumSize;
+	sunLight.shadow.camera.left = -cameraManager.frustumSize / 2;
+	sunLight.shadow.camera.right = cameraManager.frustumSize / 2;
+	sunLight.shadow.camera.top = cameraManager.frustumSize / 2;
+	sunLight.shadow.camera.bottom = -cameraManager.frustumSize / 2;
 	sunLight.shadow.mapSize.width = 1000;
 	sunLight.shadow.mapSize.height = 1000;
 	scene.add(shadowHelper);
