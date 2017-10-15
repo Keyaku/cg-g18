@@ -46,6 +46,8 @@ class Car extends MotionBody {
 			angle *= Math.abs(this.velocity) * TURN_ASSIST;
 			this.mesh.rotateY(angle);
 		}
+
+		cameraManager.updateFollowCamera(this.mesh.position, angle, AXIS_HEADING);
 	}
 
 	move(axis, distance) {
