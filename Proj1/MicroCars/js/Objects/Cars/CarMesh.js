@@ -43,6 +43,8 @@ class CarMesh {
 		mesh.position.set(x, y, z);
 		//Scales the car.
 		mesh.scale.set(0.5, 0.5, 0.5);
+
+		mesh.rotation.set(0, 3.14/2, 0)
 		return mesh;
 	}
 }

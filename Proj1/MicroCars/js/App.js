@@ -23,7 +23,7 @@ function render() {
 			node.update(delta);
 		}
 	});
-	cameraManager.updateFollowCamera(car.mesh.position);
+	cameraManager.updateFollowCamera(car.mesh.position, car.mesh.getWorldDirection());
 	// ThreeJS updates (OrbitControls, renderer)
 	controls.update();
 	renderer.render(scene, cameraManager.camera);

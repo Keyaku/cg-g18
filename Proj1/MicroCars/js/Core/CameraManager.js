@@ -64,6 +64,7 @@ class CameraManager {
 		if (this.cameraNumber == 2) {
 			return;
 		}
+		
 		this.camera = new THREE.PerspectiveCamera(75, this.aspectRatio, this.near, this.far);
 		this.camera.position.set(-20, 50, -25);
 		this.cameraNumber = 2;
@@ -77,19 +78,24 @@ class CameraManager {
 		}
 		this.camera = new THREE.PerspectiveCamera(75, this.aspectRatio, this.near, this.far);
 		this.camera.position.set(-20, 50, -25);
-		this.camera.rotation.set(0, 3.14/2, 0);
+		this.camera.rotation.set(0, 0, 0);
 		this.cameraNumber = 3;
+		var u = this.camera.up
+		console.log(u)
 		this.changeGlobal();
 	}
 
-	updateFollowCamera(carPosition) {
+	updateFollowCamera(carPosition, carDirection) {
 		if (this.cameraNumber != 3) {
 			return;
 		}
-		var x = carPosition.x;
-		var y = carPosition.y + 100;
-		var z = carPosition.z;
+		var offsetX = Math.cos(3.14/2) * carDirection.x - Math.sin(3.14/2) * carDirection.z;
+		var offsetZ = Math.sin(3.14/2) * carDirection.x + Math.cos(3.14/2) * carDirection.z;
+		var x = carPosition.x + offsetX * -40;
+		var y = carPosition.y + 50;
+		var z = carPosition.z + offsetZ * -40;
 		this.camera.position.set(x, y, z);
-		this.camera.lookAt(carPosition)
+		this.camera.lookAt(carPosition);
+		this.changeGlobal();
 	}
 }
