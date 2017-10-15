@@ -9,7 +9,6 @@ class CameraManager {
 		this.frustumSize = 1000;
 
 		this.camera = new THREE.OrthographicCamera(0, 0, 0, 0, this.near, this.far);
-		console.log(this.camera)
 		this.camera.position.set(0, 1000, 0);
 		this.camera.lookAt(scene.position);
 
@@ -47,8 +46,6 @@ class CameraManager {
 	}
 
 	changeGlobal() {
-		//controls = new THREE.OrbitControls(this.camera);
-		//controls.enableKeys = false
 		this.updateCamera();
 	}
 
@@ -85,7 +82,7 @@ class CameraManager {
 		this.changeGlobal();
 	}
 
-	updateFollowCamera(carPosition, angle, axis) {
+	updateFollowCamera(carPosition) {
 		if (this.cameraNumber != 3) {
 			return;
 		}
