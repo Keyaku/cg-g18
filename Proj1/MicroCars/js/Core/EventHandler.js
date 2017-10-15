@@ -54,6 +54,16 @@ function onKeyDown(e) {
 
 	// Setting global input (if any)
 	switch(e.keyCode) {
+		case 49: //1
+			cameraManager.changeToOrthographic();
+			break;
+		case 50: //2
+			cameraManager.changeToPerspectiveWorld();
+			break;
+		case 51: //3
+			cameraManager.changeToPerspectiveFollow();
+			break;
+
 		case 65: // A
 		case 97: // a
 			scene.traverse(function (node) {
@@ -61,14 +71,10 @@ function onKeyDown(e) {
 					node.material.wireframe = !node.material.wireframe;
 			});
 			break;
+		
 		case 68: // D
 		case 100: // d
 			getEdible("Orange1");
-			break;
-
-		case 83: // S
-		case 115: // s
-			createCamera();
 			break;
 	}
 }
@@ -94,5 +100,6 @@ function onWindowResize() {
 		console.log("Error on window resize. Negative size values were detected.");
 		return -1;
 	}
-	updateCamera();
+	cameraManager.updateValues(windowWidth, windowHeight, aspectRatio);
+	cameraManager.updateCamera();
 }
