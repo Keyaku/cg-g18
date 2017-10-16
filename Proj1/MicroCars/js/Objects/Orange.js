@@ -44,7 +44,7 @@ class OrangeFruit {
 	}
 }
 
-class Orange extends PhysicsBody {
+class Orange extends MotionBody {
 	constructor(orangeName, x, y, z) {
 		// Instanciates a new orange with mass 140g
 		super(0.140);

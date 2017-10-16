@@ -5,8 +5,9 @@
 @António Sarmento  
 
 @Francisco Barros  
-* [ ] Orange: Swap `this.` with local variables, store the type in the final Object3D's object, then return it. Example: `mesh.type = 'Orange';`
-* [ ] Same for Board
 
 @Rafael Ribeiro  
-* [ ] Present sketches of Track
+* [ ] **Track**: Use `Math.PI` instead of `3.14`.
+* [ ] **Track**: Apply `Tire extends RigidBody`.
+* [ ] **Track**: By doing `obj.add(this.mesh)`, you're completely ignoring the Class object construction, making this as useful as just another method. After extending Tire from a RigidBody, remove `this.mesh.add(mesh)` and use `obj.add(this)`.
+* [ ] **Track**: You also did this in Track, but that's less relevant so do whatever you wish.

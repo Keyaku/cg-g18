@@ -7,6 +7,7 @@
 class PhysicsBody extends THREE.Object3D {
 	constructor() {
 		super();
+		this.collisionData = undefined;
 	}
 
 	update(delta) { /* do nothing */ }
@@ -38,7 +39,6 @@ class RigidBody extends PhysicsBody {
 class MotionBody extends PhysicsBody {
 	constructor() {
 		super();
-		this.collisionData = undefined;
 	}
 
 	update(delta) {
