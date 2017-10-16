@@ -1,17 +1,11 @@
-const ROTATION = Math.PI / 16;
-const ACCELERATION = 2;
-const TURN_ASSIST = ACCELERATION / 10;
-const AXIS_HEADING = new THREE.Vector3(1); // Move only along the X axis
-var friction = 0.02;
-
 class Car extends MotionBody {
 	constructor(x=0, y=0, z=0) {
 		super();
 		this.type = 'Car';
 		this.mesh = new CarMesh(x, y, z);
 		this.velocity = 0;
-		this.forwardAcceleration = ACCELERATION;
-		this.decayAcceleration = ACCELERATION / 4;
+		this.forwardAcceleration = CAR_ACCELERATION;
+		this.decayAcceleration = CAR_ACCELERATION / 4;
 
 		this.add(this.mesh);
 		scene.add(this);
@@ -31,16 +25,16 @@ class Car extends MotionBody {
 		}
 
 		// Updating car motion
-		this.velocity += acceleration * delta - friction * this.velocity;
-		this.move(AXIS_HEADING, this.velocity);
+		this.velocity += acceleration * delta - FRICTION * this.velocity;
+		this.move(X_AXIS_HEADING, this.velocity);
 
 		//Rotates the mesh
 		var angle = 0;
 		if (left && !right) {
-			angle = ROTATION;
+			angle = WHEEL_ROTATION;
 		}
 		if (right && !left) {
-			angle = -ROTATION;
+			angle = -WHEEL_ROTATION;
 		}
 		if (angle != 0) {
 			angle *= Math.abs(this.velocity) * TURN_ASSIST;

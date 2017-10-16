@@ -9,9 +9,6 @@ var LocalTextures = new THREE.TextureLoader();
 LocalTextures.setPath('textures/');
 var RemoteTextures = new THREE.TextureLoader();
 
-const TO_RADIANS = Math.PI / 180;
-const TO_DEGREES = 180 / Math.PI;
-
 /**
 * Render method allows system to handle all the rendering.
 */
@@ -45,7 +42,7 @@ function init() {
 	renderer.setClearColor(0x6698FF, 1);
 	renderer.shadowMap.enabled = true;
 	document.body.appendChild(renderer.domElement);
-	
+
 	createScene();
 	cameraManager = new CameraManager();
 	cameraManager.changeToOrthographic();
