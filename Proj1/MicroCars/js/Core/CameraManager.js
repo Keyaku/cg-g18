@@ -64,7 +64,7 @@ class CameraManager {
 		if (this.cameraNumber == 2) {
 			return;
 		}
-		
+
 		this.camera = new THREE.PerspectiveCamera(75, this.aspectRatio, this.near, this.far);
 		this.camera.position.set(-20, 50, -25);
 		this.cameraNumber = 2;

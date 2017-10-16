@@ -1,5 +1,5 @@
 class Table {
-	constructor(x=0, y=0, z=0, size=100) {
+	constructor(x=0, y=0, z=0, size=BOARD_WIDTH) {
 		this.type = 'Table';
 		this.mesh = new THREE.Object3D();
 

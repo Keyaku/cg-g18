@@ -10,12 +10,12 @@ var scene;
 * Object3D of subtype Car to a dictionary
 */
 function createScene() {
-	var size = 1000;
-	var divisions = 100;
+	var size = BOARD_WIDTH;
+	var divisions = BOARD_WIDTH / 10;
 	scene = new THREE.Scene();
 	// The X axis is red, Y is green and Z is blue.
 	// scene.add(new THREE.GridHelper(size, divisions) );
-	scene.add(new THREE.AxisHelper(size / 2));
+	scene.add(new THREE.AxisHelper(HALF_BOARD_WIDTH));
 	scene.background = new THREE.Color(0xAEEEEE);
 	var table = new Table(0, -1.1, 0, size);
 	gameBoard = new Board(0, -1, 0, size);
