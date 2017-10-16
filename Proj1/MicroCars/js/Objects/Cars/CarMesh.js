@@ -39,12 +39,9 @@ class CarMesh {
 		for (var i = 0; i < children.length; i++) {
 			children[i].geometry.translate(-10, 0, 0 );
 		}
-		//Positions the car.
-		mesh.position.set(x, y, z);
 		//Scales the car.
 		mesh.scale.set(0.5, 0.5, 0.5);
 
-		mesh.rotation.set(0, 3.14/2, 0)
 		return mesh;
 	}
 }

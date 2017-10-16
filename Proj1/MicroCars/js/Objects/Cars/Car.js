@@ -5,7 +5,9 @@ class Car extends MotionBody {
 		this.mesh = new CarMesh(x, y, z);
 		this.velocity = 0;
 		this.forwardAcceleration = CAR_ACCELERATION;
-		this.decayAcceleration = CAR_ACCELERATION / 4;
+
+		// Positions the car.
+		this.position.set(x, y, z);
 
 		this.add(this.mesh);
 		scene.add(this);
@@ -38,14 +40,14 @@ class Car extends MotionBody {
 		}
 		if (angle != 0) {
 			angle *= Math.abs(this.velocity) * TURN_ASSIST;
-			this.mesh.rotateY(angle);
+			this.rotateY(angle);
 		}
 	}
 
 	move(axis, distance) {
 		// TODO: Proper motion with Vector3 that points to the next location?
 		var colliding = super.move(axis, distance);
-		this.mesh.translateOnAxis(axis, distance);
+		this.translateOnAxis(axis, distance);
 		return colliding;
 	}
 }
