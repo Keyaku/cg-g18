@@ -49,13 +49,12 @@ class Orange extends PhysicsBody {
 		// Instanciates a new orange with mass 140g
 		super(0.140);
 		this.type = 'Orange';
-		this.mesh = new THREE.Object3D();
-		this.mesh.name = orangeName
-		var orangeFruit = new OrangeFruit(this.mesh, x, y, z);
-		var orangeBranch = new OrangeBranch(this.mesh, x, y, z);
-		this.mesh.position.set(x, y, z);
-		scene.add(this.mesh);
-		return this.mesh;
+		this.name = orangeName
+		var orangeFruit = new OrangeFruit(this, x, y, z);
+		var orangeBranch = new OrangeBranch(this, x, y, z);
+		this.position.set(x, y, z);
+		scene.add(this);
+		return this;
 	}
 
 	update(delta) {
@@ -74,7 +73,7 @@ class Orange extends PhysicsBody {
 	move(axis, distance) {
 		// TODO: Proper motion with Vector3 that points to the next location?
 		var colliding = super.move(axis, distance);
-		this.mesh.translateOnAxis(axis, distance);
+		this.translateOnAxis(axis, distance);
 		return colliding;
 	}
 
@@ -85,8 +84,8 @@ class Orange extends PhysicsBody {
 	*/
 	orangeNeedsRespawn() {
 		// NOTE: This code might not work because the orange is not in board coordinates but in scene coordinates
-		var x = this.mesh.position.x;
-		var z = this.mesh.position.z;
+		var x = this.position.x;
+		var z = this.position.z;
 		if (x >= ((-1) * HALF_BOARD_WIDTH) && x <= (HALF_BOARD_WIDTH) &&
 				z >= ((-1) * HALF_BOARD_LENGHT) && z <= (HALF_BOARD_LENGHT)) {
 			return true;
@@ -102,8 +101,8 @@ class Orange extends PhysicsBody {
 	@return: null
 	*/
 	respawnOrange(spawnLocation, axis, distance) {
-		this.mesh.position.set(spawnLocation);
-		move(X_AXIS_HEADING, distance);
+		this.position.set(spawnLocation);
+		this.move(X_AXIS_HEADING, distance);
 	}
 
 	/** generateSpawnLocation(min, max)
