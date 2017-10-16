@@ -64,6 +64,7 @@ class Orange extends PhysicsBody {
 		var axisDirection = THREE.Vector3(1, 0, 0);
 		var objectMass = 0 			// TODO Get mass of the object that collided with the orange or orange collided with
 		var velocity = 0
+		var acceleration = 0; // TODO Calculate the acceleration of the orange based
 		this.rotation.z += 0.01;
 		this.rotation.x += 0.01;
 		// Updating Orange motion
@@ -86,6 +87,8 @@ class Orange extends PhysicsBody {
 		// NOTE: This code might not work because the orange is not in board coordinates but in scene coordinates
 		var x = this.mesh.position.x;
 		var z = this.mesh.position.z;
+		if (x >= ((-1) * HALF_BOARD_WIDTH) && x <= (HALF_BOARD_WIDTH) &&
+				z >= ((-1) * HALF_BOARD_LENGHT) && z <= (HALF_BOARD_LENGHT)) {
 			return true;
 		} else {
 			return false;
@@ -100,6 +103,7 @@ class Orange extends PhysicsBody {
 	*/
 	respawnOrange(spawnLocation, axis, distance) {
 		this.mesh.position.set(spawnLocation);
+		move(X_AXIS_HEADING, distance);
 	}
 
 	/** generateSpawnLocation(min, max)
