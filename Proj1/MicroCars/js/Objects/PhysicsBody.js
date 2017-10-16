@@ -18,6 +18,7 @@ class PhysicsBody extends THREE.Object3D {
 class StaticBody extends PhysicsBody {
 	constructor() {
 		super();
+		this.matrixAutoUpdate = false; // Object is static, no update is necessary
 	}
 }
 
