@@ -1,77 +1,25 @@
-class OrangeLeaf {
-	constructor(obj, x, y, z) {
-		this.type = 'OrangeLeaf';
-		this.mesh = new THREE.Object3D();
-		var leafShape = new THREE.Shape();
-		leafShape.moveTo( 0, 0 );
-		leafShape.bezierCurveTo( x + 6, y - 6, x + 12, y + 4, x, y );
-		var extrudeSettings = { amount: 0.5, bevelEnabled: false };
-		var geometry = new THREE.ExtrudeGeometry( leafShape, extrudeSettings );
-		var material = new THREE.MeshLambertMaterial({color: 0x009900});
-		var mesh = new THREE.Mesh( geometry, material );
-		this.mesh.add(mesh);
-		this.mesh.position.set(x, y+6.5, z);
-		obj.add(this.mesh);
-		return this.mesh;
-	}
-}
-
-class OrangeBranch {
-	constructor(obj, x, y, z) {
-		this.type = 'OrangeBranch';
-		this.mesh = new THREE.Object3D();
-		var material = new THREE.MeshLambertMaterial({color:0x666633});
-		var geometry = new THREE.CylinderGeometry(0.66, 0.33, 4);
-		var mesh = new THREE.Mesh(geometry, material);
-		this.mesh.add(mesh);
-		this.mesh.position.set(x, y + 5, z);
-		obj.add(this.mesh);
-		return this.mesh;
-	}
-}
-
-class OrangeFruit {
-	constructor(obj, x, y, z) {
-		this.type = 'OrangeFruit';
-		this.mesh = new THREE.Object3D();
-		var material = new THREE.MeshLambertMaterial({color:0xFF9900});
-		var geometry = new THREE.SphereGeometry(5, 15, 15);
-		var mesh = new THREE.Mesh(geometry, material);
-		this.mesh.add(mesh);
-		this.mesh.position.set(x, y, z);
-		obj.add(this.mesh);
-		return this.mesh;
-	}
-}
-
 class Orange extends MotionBody {
 	constructor(orangeName, x, y, z) {
-		// Instanciates a new orange with mass 140g
-		super(0.140);
-		this.type = 'Orange';
-		this.name = orangeName
 		var orangeFruit = new OrangeFruit(this, x, y, z);
 		var orangeBranch = new OrangeBranch(this, x, y, z);
+		this.type = 'Orange';
+		this.name = orangeName
 		this.position.set(x, y, z);
+		super(0.140);
 		scene.add(this);
 		return this;
 	}
 
 	update(delta) {
-		// TODO Everything
-		// movement is done along the X axis, on top of the board
-		var axisDirection = THREE.Vector3(1, 0, 0);
-		var objectMass = 0 			// TODO Get mass of the object that collided with the orange or orange collided with
-		var velocity = 0
-		var acceleration = 0; // TODO Calculate the acceleration of the orange based
-		this.rotation.z += 0.01;
-		this.rotation.x += 0.01;
-		// Updating Orange motion
+		// var angularVelocity = this.collisionDate.velocity / this.radius;
+		var angularVelocity = 15 / this.radius;
+		var theta = angularVelocity * delta;
+		// axis perpendicular ao movimento e paralelo ao chao Oxz
+		// this.rotateOnAxis(/*TODO*/, delta)
 	}
 
 
 	move(axis, distance) {
-		// TODO: Proper motion with Vector3 that points to the next location?
 		var colliding = super.move(axis, distance);
 		this.translateOnAxis(axis, distance);
 		return colliding;
@@ -123,5 +71,51 @@ class Orange extends MotionBody {
 		var z = Math.floor(Math.random() * (max - min + 1)) + min;
 		var spawnLocation = new THREE.Vector3(x, y, z);
 		return spawnLocation;
+	}
+}
+
+class OrangeLeaf {
+	constructor(obj, x, y, z) {
+		this.type = 'OrangeLeaf';
+		this.mesh = new THREE.Object3D();
+		var leafShape = new THREE.Shape();
+		leafShape.moveTo( 0, 0 );
+		leafShape.bezierCurveTo( x + 6, y - 6, x + 12, y + 4, x, y );
+		var extrudeSettings = { amount: 0.5, bevelEnabled: false };
+		var geometry = new THREE.ExtrudeGeometry( leafShape, extrudeSettings );
+		var material = new THREE.MeshLambertMaterial({color: 0x009900});
+		var mesh = new THREE.Mesh( geometry, material );
+		this.mesh.add(mesh);
+		this.mesh.position.set(x, y+6.5, z);
+		obj.add(this.mesh);
+		return this.mesh;
+	}
+}
+
+class OrangeBranch {
+	constructor(obj, x, y, z) {
+		this.type = 'OrangeBranch';
+		this.mesh = new THREE.Object3D();
+		var material = new THREE.MeshLambertMaterial({color:0x666633});
+		var geometry = new THREE.CylinderGeometry(0.66, 0.33, 4);
+		var mesh = new THREE.Mesh(geometry, material);
+		this.mesh.add(mesh);
+		this.mesh.position.set(x, y + 5, z);
+		obj.add(this.mesh);
+		return this.mesh;
+	}
+}
+
+class OrangeFruit {
+	constructor(obj, x, y, z) {
+		this.type = 'OrangeFruit';
+		this.mesh = new THREE.Object3D();
+		var material = new THREE.MeshLambertMaterial({color:0xFF9900});
+		var geometry = new THREE.SphereGeometry(5, 15, 15);
+		var mesh = new THREE.Mesh(geometry, material);
+		this.mesh.add(mesh);
+		this.mesh.position.set(x, y, z);
+		obj.add(this.mesh);
+		return this.mesh;
 	}
 }
