@@ -98,7 +98,7 @@ class Tire {
 		//Positions the torus to be on the track point.
 		mesh.position.set(p.x, p.y, p.z)
 		//Rotates the torus to be horizontal.
-		mesh.rotation.set(3.14 / 2, 0, 0)
+		mesh.rotation.set(NINETY_DEGREES, 0, 0)
 		//Adds the mesh to the track class object.
 		this.mesh.add(mesh)
 		obj.add(this.mesh)

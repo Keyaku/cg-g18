@@ -116,8 +116,8 @@ class CameraManager {
 		if (this.cameraNumber != 3) {
 			return;
 		}
-		var offsetX = Math.cos(3.14/2) * carDirection.x - Math.sin(3.14/2) * carDirection.z;
-		var offsetZ = Math.sin(3.14/2) * carDirection.x + Math.cos(3.14/2) * carDirection.z;
+		var offsetX = Math.cos(NINETY_DEGREES) * carDirection.x - Math.sin(NINETY_DEGREES) * carDirection.z;
+		var offsetZ = Math.sin(NINETY_DEGREES) * carDirection.x + Math.cos(NINETY_DEGREES) * carDirection.z;
 		var x = carPosition.x + offsetX * -40;
 		var y = carPosition.y + 30;
 		var z = carPosition.z + offsetZ * -40;
