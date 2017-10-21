@@ -27,6 +27,7 @@ const Z_AXIS_HEADING = new THREE.Vector3(0, 0, 1);
 const TO_DEGREES = 180 / Math.PI;
 const TO_RADIANS = Math.PI / 180;
 const NINETY_DEGREES = Math.PI / 2;
+const THREE_HUNDRED_SIXTY_DEGREES = 2 * Math.PI;
 
 /*******************************************************************************
 * Helper methods

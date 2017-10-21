@@ -1,21 +1,21 @@
 class OrangeWrapper extends MotionBody {
 	constructor(orangeName, x, y, z, radius = 5) {
-
+		super(0.140);
+		this.concreteOrange = new Orange(orangeName, x, y, z);
+		this.position.set(x, y, z);
+		scene.add(this);
+		return this;
 	}
-	
-	update(delta) {
-		var angular_velocity = 5 / this.radius;								// var angular_velocity = this.collisionData.velocity / this.radius;
-		var movement_direction = new THREE.Vector3(1, 0, 0); 	// var movement_direction = this.collisionData.direction;
-		var x = movement_direction.x;
-		var y = movement_direction.y;
-		var z = movement_direction.z;
-		var rotation_vector = new THREE.Vector3(x, y, z)
 
-		var translation = 15 * delta;
-		this.translateOnAxis(movement_direction, translation);
-		// rotation_vector.applyAxisAngle(Y_AXIS_HEADING, theta);
-		// NOTE: Axis deve ser perpendicular ao movimento e paralelo ao chão
-		// this.rotateOnAxis(rotation_vector, theta);
+	update(delta) {
+		// NOTE: rotation_vector deve ser perpendicular ao movimento e paralelo ao chão
+		var angular_velocity = 30 / this.concreteOrange.radius;								// var angular_velocity = this.collisionData.velocity / this.radius;
+		var displacement = angular_velocity * delta;
+		var movement_direction = new THREE.Vector3(1, 0, 0); 	// var movement_direction = this.collisionData.direction;
+		var rotation_vector = new THREE.Vector3(movement_direction.x, movement_direction.y, movement_direction.z);
+				rotation_vector.applyAxisAngle(Y_AXIS_HEADING, NINETY_DEGREES);
+		this.concreteOrange.rotateOnAxis(rotation_vector, angular_velocity);
+		this.translateOnAxis(movement_direction, displacement);
 	}
 
 	move(axis, distance) {
@@ -29,9 +29,9 @@ class OrangeWrapper extends MotionBody {
 * Concrete Orange class
 *******************************************************************************/
 
-class Orange extends MotionBody {
+class Orange extends THREE.Object3D {
 	constructor(orangeName, x, y, z, radius = 5) {
-		super(0.140);
+		super();
 		var orangeFruit = new OrangeFruit(this, x, y, z, radius);
 		var orangeBranch = new OrangeBranch(this, x, y, z);
 		this.type = 'Orange';

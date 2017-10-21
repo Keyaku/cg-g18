@@ -26,9 +26,9 @@ function createScene() {
 	var ediblesY = 5;
 
 	// Adding oranges
-	createEdible(Orange, "Orange1", 150, ediblesY, 80);
-	createEdible(Orange, "Orange2", -200, ediblesY, -100);
-	createEdible(Orange, "Orange3", 0, ediblesY, 50);
+	createEdible(OrangeWrapper, "Orange1", 150, ediblesY, 80);
+	createEdible(OrangeWrapper, "Orange2", -200, ediblesY, -100);
+	createEdible(OrangeWrapper, "Orange3", 0, ediblesY, 50);
 	// Adding apples. I mean, butters.
 	createEdible(Butter, "Butter1", 100, ediblesY, -100);
 	createEdible(Butter, "Butter2", -100, ediblesY, -100);
