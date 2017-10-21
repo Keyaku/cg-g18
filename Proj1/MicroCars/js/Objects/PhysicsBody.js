@@ -25,7 +25,7 @@ class StaticBody extends PhysicsBody {
 
 // Weighted, non-deformable bodies. Useful for Oranges and other props
 class RigidBody extends PhysicsBody {
-	constructor(mass) {
+	constructor(mass = 1) {
 		super();
 		this.mass = mass;
 	}
@@ -38,8 +38,9 @@ class RigidBody extends PhysicsBody {
 
 // Bodies that move and can be animated. Useful for cars.
 class MotionBody extends PhysicsBody {
-	constructor() {
+	constructor(mass = 1) {
 		super();
+		this.mass = mass;
 	}
 
 	update(delta) {
