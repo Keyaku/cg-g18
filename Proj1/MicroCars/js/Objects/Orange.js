@@ -1,19 +1,22 @@
 class Orange extends MotionBody {
-	constructor(orangeName, x, y, z) {
-		var orangeFruit = new OrangeFruit(this, x, y, z);
+	constructor(orangeName, x, y, z, radius = 5) {
+		super(0.140);
+		var orangeFruit = new OrangeFruit(this, x, y, z, radius);
 		var orangeBranch = new OrangeBranch(this, x, y, z);
 		this.type = 'Orange';
-		this.name = orangeName
+		this.name = orangeName;
+		this.radius = radius;
 		this.position.set(x, y, z);
-		super(0.140);
 		scene.add(this);
 		return this;
 	}
 
 	update(delta) {
-		// var angularVelocity = this.collisionDate.velocity / this.radius;
-		var angularVelocity = 15 / this.radius;
-		var theta = angularVelocity * delta;
+		// var movement_direction = this.collisionData.direction; NOTE: use Object3D.getWorldDirection()
+		// var angular_velocity = this.collisionData.velocity / this.radius;
+		var angular_velocity = 15 / this.radius;
+		var theta = angular_velocity * delta;
+
 		// axis perpendicular ao movimento e paralelo ao chao Oxz
 		// this.rotateOnAxis(/*TODO*/, delta)
 	}
@@ -31,7 +34,7 @@ class Orange extends MotionBody {
 	* @return: Boolean value True if orange is outside of the board. False otherwise
 	*/
 	orangeNeedsRespawn() {
-		// NOTE: This code might not work because the orange is not in board coordinates but in scene coordinates
+		// NOTE: This code might not work because the orange isnt in board coordinates but in scene coordinates
 		var x = this.position.x;
 		var z = this.position.z;
 		if (x >= ((-1) * HALF_BOARD_WIDTH) && x <= (HALF_BOARD_WIDTH) &&
@@ -107,11 +110,11 @@ class OrangeBranch {
 }
 
 class OrangeFruit {
-	constructor(obj, x, y, z) {
+	constructor(obj, x, y, z, radius = 5) {
 		this.type = 'OrangeFruit';
 		this.mesh = new THREE.Object3D();
 		var material = new THREE.MeshLambertMaterial({color:0xFF9900});
-		var geometry = new THREE.SphereGeometry(5, 15, 15);
+		var geometry = new THREE.SphereGeometry(radius, 15, 15);
 		var mesh = new THREE.Mesh(geometry, material);
 		this.mesh.add(mesh);
 		this.mesh.position.set(x, y, z);
