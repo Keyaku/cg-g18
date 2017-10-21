@@ -1,8 +1,9 @@
 class OrangeWrapper extends MotionBody {
 	constructor(orangeName, x, y, z, radius = 5) {
 		super(0.140);
-		this.concreteOrange = new Orange(orangeName, x, y, z);
+		this.concreteOrange = new Orange(orangeName, 0, 0, 0);
 		this.position.set(x, y, z);
+		this.add(this.concreteOrange);
 		scene.add(this);
 		return this;
 	}
@@ -38,7 +39,6 @@ class Orange extends THREE.Object3D {
 		this.name = orangeName;
 		this.radius = radius;
 		this.position.set(x, y, z);
-		scene.add(this);
 		return this;
 	}
 }
