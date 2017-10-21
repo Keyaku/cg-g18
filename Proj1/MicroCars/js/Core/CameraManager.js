@@ -39,6 +39,34 @@ class CameraManager {
 				this.camera.bottom = - this.frustumSize / 2;
 			}
 		}
+
+		/*
+		else if (this.cameraNumber == 2) {
+			this.camera.aspect = renderer.getSize().width / renderer.getSize().height;
+			var dir = this.camera.getWorldDirection();
+			var pos = this.camera.position;
+			var halfBoardWidth = BOARD_WIDTH;
+			var halfCameraFOV = 45;
+			var D = halfBoardWidth / Math.tan(halfCameraFOV);
+			D = D / this.aspectRatio
+			D = D*0.5
+			var displ = {x:dir.x*-D, y:dir.y*-D, z:dir.z*-D};
+			var newPos = {x:0, y:pos.y, z:displ.z+halfBoardWidth};
+			this.camera.position.set(newPos.x, newPos.y, newPos.z)
+		}
+		*/
+		/*
+		else if (this.cameraNumber == 2) {
+			this.camera.aspect = renderer.getSize().width / renderer.getSize().height;
+			var halfBoardWidth = HALF_BOARD_WIDTH;
+			var dCameraBoard = 1000//this.camera.position.z - halfBoardWidth;
+			var halfHorizontalFOV = Math.atan(halfBoardWidth / dCameraBoard);
+			var verticalFOV = halfHorizontalFOV * 100 * this.aspectRatio;
+			console.log(halfHorizontalFOV, this.aspectRatio)
+			this.camera.fov = verticalFOV;
+		}
+		*/
+
 		else {
 			this.camera.aspect = renderer.getSize().width / renderer.getSize().height;
 		}
@@ -47,6 +75,8 @@ class CameraManager {
 
 	changeGlobal() {
 		this.updateCamera();
+		//controls = new THREE.OrbitControls(this.camera);
+		//controls.enableKeys = false
 	}
 
 	changeToOrthographic() {
@@ -64,9 +94,8 @@ class CameraManager {
 		if (this.cameraNumber == 2) {
 			return;
 		}
-
 		this.camera = new THREE.PerspectiveCamera(75, this.aspectRatio, this.near, this.far);
-		this.camera.position.set(-20, 50, -25);
+		this.camera.position.set(0, 600, 550);
 		this.cameraNumber = 2;
 		this.camera.lookAt(scene.position);
 		this.changeGlobal();
@@ -80,8 +109,6 @@ class CameraManager {
 		this.camera.position.set(-20, 50, -25);
 		this.camera.rotation.set(0, 0, 0);
 		this.cameraNumber = 3;
-		var u = this.camera.up
-		console.log(u)
 		this.changeGlobal();
 	}
 
@@ -92,7 +119,7 @@ class CameraManager {
 		var offsetX = Math.cos(3.14/2) * carDirection.x - Math.sin(3.14/2) * carDirection.z;
 		var offsetZ = Math.sin(3.14/2) * carDirection.x + Math.cos(3.14/2) * carDirection.z;
 		var x = carPosition.x + offsetX * -40;
-		var y = carPosition.y + 50;
+		var y = carPosition.y + 30;
 		var z = carPosition.z + offsetZ * -40;
 		this.camera.position.set(x, y, z);
 		this.camera.lookAt(carPosition);
