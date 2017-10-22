@@ -8,6 +8,7 @@ class PhysicsBody extends THREE.Object3D {
 	constructor() {
 		super();
 		this.collisionData = undefined;
+		this.bounds = undefined;
 	}
 
 	update(delta) { /* do nothing */ }

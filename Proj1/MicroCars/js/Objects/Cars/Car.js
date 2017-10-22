@@ -7,31 +7,29 @@ class Car extends MotionBody {
 		this.mesh = new CarMesh();
 		this.add(this.mesh);
 
-		var vertices = this.mesh.children[0].geometry.vertices
-		var xmin = 0, xmax = 0, ymin = 0, ymax = 0, zmin = 0, zmax = 0;
-		for (var vI = 0; vI < vertices.length; vI++) {
-			var k = vertices[vI];
-			if (k.x < xmin) { xmin = k.x; }
-			if (k.y < ymin) { ymin = k.y; }
-			if (k.z < zmin) { zmin = k.z; }
-			if (k.x > xmax) { xmax = k.x; }
-			if (k.y > ymax) { ymax = k.y; }
-			if (k.z > zmax) { zmax = k.z; }
-		}
-		var xcenter = 0.5 * (xmax - xmin) / 2;
-		var ycenter = 0.5 * (ymax - ymin) / 2;
-		var zcenter = 0.5 * (zmax - zmin) / 2;
-
-		var radius = 0.6 * Math.max(0.5*(xmax-xmin), 0.5*(ymax-ymin), 0.5*(zmax-zmin))
-		var geometry = new THREE.SphereGeometry(radius, 10, 10);
-		var material = new THREE.MeshBasicMaterial( {color: 0xffff00, wireframe:true} );
-		var sphere = new THREE.Mesh( geometry, material );
-		sphere.position.set(xcenter, ycenter, zcenter)
-		this.add( sphere );
-		
 		// Creating Bounds
-		//this.bb = new BoundingSphere(this.mesh);
-		//this.add(this.bb);
+		this.bounds = new BoundingSphere(this.mesh);
+
+		/* FIXME: hacked our way through a BoundingSphere for our car */
+		var vertices = this.mesh.children[0].geometry.vertices
+		var min = new THREE.Vector3(0, 0, 0);
+		var max = new THREE.Vector3(0, 0, 0);
+		for (var i = 0; i < vertices.length; i++) {
+			var v = vertices[i];
+			min.min(v);
+			max.max(v);
+		}
+		var radius = 0.6 * Math.max((max.x-min.x), (max.y-min.y), (max.z-min.z))
+
+		var center = max.clone();
+		center.sub(min);
+		center.divideScalar(2);
+		center.multiplyScalar(0.5);
+
+		this.bounds.updateBounds(center, radius);
+		/* FIXME: attempt to remove the code above later */
+
+		this.add(this.bounds);
 
 		// Adding our own data
 		this.velocity = 0;
