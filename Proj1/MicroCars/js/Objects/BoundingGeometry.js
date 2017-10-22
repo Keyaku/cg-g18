@@ -32,5 +32,4 @@ class BoundingSphere extends THREE.Mesh {
 		this.geometry = new THREE.SphereBufferGeometry(radius, 8, 8);
 	}
 
-
 }

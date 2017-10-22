@@ -1,6 +1,6 @@
-class CarMesh {
+class CarMesh extends THREE.Group {
 	constructor(x=0, y=0, z=0) {
-		var mesh = new THREE.Object3D();
+		super();
 
 		/* Creates the body panels */
 		//Creates the material for the car body.
@@ -12,35 +12,36 @@ class CarMesh {
 
 		// Main mesh to merge all CarSquare and CarTriangle meshes
 		var square = new THREE.Mesh(new THREE.Geometry(), matBody);
-		mesh.add(square);
+		this.add(square);
 
-		var c1 = new CarSquare(square, extrSettings, 3, 5, 0, 0);
-		var c2 = new CarSquare(square, extrSettings, 8, 3, 3, 2);
-		var c3 = new CarSquare(square, extrSettings, 7, 2, 11, 0);
+		var c1 = new CarSquare(square, extrSettings,  3, 5,  0, 0);
+		var c2 = new CarSquare(square, extrSettings,  8, 3,  3, 2);
+		var c3 = new CarSquare(square, extrSettings,  7, 2, 11, 0);
 		var c4 = new CarSquare(square, extrSettings, 12, 6, 11, 2);
-		var t1 = new CarTriangle(square, extrSettings, -2, 2.5, 0, 0, 2.5, 0, 0, 5, 0);
-		var t2 = new CarTriangle(square, extrSettings, -2, 2.5, 0, 0, 0, 0, 0, 2.5, 0);
-		var t3 = new CarTriangle(square, extrSettings, 3, 0, 0, 4, 2, 0, 3, 2, 0);
-		var t4 = new CarTriangle(square, extrSettings, 9, 2, 0, 11, 0, 0, 11, 2, 0);
-		var t5 = new CarTriangle(square, extrSettings, 8.5, 5, 0, 11, 5, 0, 11, 8, 0);
-		var t6 = new CarTriangle(square, extrSettings, 18, 0, 0, 19, 2, 0, 18, 2, 0);
-		var t7 = new CarTriangle(square, extrSettings, 22, 2, 0, 23, 0, 0, 23, 2, 0);
-		var t8 = new CarTriangle(square, extrSettings, 23, 0, 0, 24, 5, 0, 23, 5, 0);
-		var t9 = new CarTriangle(square, extrSettings, 23, 5, 0, 24, 5, 0, 23, 8, 0);
+
+		var t1 = new CarTriangle(square, extrSettings,  -2, 2.5, 0,  0, 2.5, 0,  0,   5, 0);
+		var t2 = new CarTriangle(square, extrSettings,  -2, 2.5, 0,  0,   0, 0,  0, 2.5, 0);
+		var t3 = new CarTriangle(square, extrSettings,   3,   0, 0,  4,   2, 0,  3,   2, 0);
+		var t4 = new CarTriangle(square, extrSettings,   9,   2, 0, 11,   0, 0, 11,   2, 0);
+		var t5 = new CarTriangle(square, extrSettings, 8.5,   5, 0, 11,   5, 0, 11,   8, 0);
+		var t6 = new CarTriangle(square, extrSettings,  18,   0, 0, 19,   2, 0, 18,   2, 0);
+		var t7 = new CarTriangle(square, extrSettings,  22,   2, 0, 23,   0, 0, 23,   2, 0);
+		var t8 = new CarTriangle(square, extrSettings,  23,   0, 0, 24,   5, 0, 23,   5, 0);
+		var t9 = new CarTriangle(square, extrSettings,  23,   5, 0, 24,   5, 0, 23,   8, 0);
 
 		/* Creates the wheels */
 		// Contrary to the others, these MUST be separated (to some degree)
-		var rfw = new CarTorus(mesh, 2.5, 1.7, 10, 16, 5.5,  -1, -2);
-		var lfw = new CarTorus(mesh, 2.5, 1.7, 10, 16, 5.5,  -1, 10);
-		var rrw = new CarTorus(mesh,  2.5, 1.7, 10, 16, 20.5, -1, -2);
-		var lrw = new CarTorus(mesh,  2.5, 1.7, 10, 16, 20.5, -1, 10);
+		var rfw = new CarTorus(this, 2.5, 1.7, 10, 16,  5.5, -1, -2);
+		var lfw = new CarTorus(this, 2.5, 1.7, 10, 16,  5.5, -1, 10);
+		var rrw = new CarTorus(this, 2.5, 1.7, 10, 16, 20.5, -1, -2);
+		var lrw = new CarTorus(this, 2.5, 1.7, 10, 16, 20.5, -1, 10);
 
 		/* Creates the axles */
 		//Creates the material for the axles.
 		var materialAxle = new THREE.MeshBasicMaterial({color:0x960101});
 
 		var cylinders = new THREE.Mesh(new THREE.Geometry(), materialAxle);
-		mesh.add(cylinders);
+		this.add(cylinders);
 
 		var cy1 = new CarCylinder(cylinders, 0.5, 12, 8, 1,  5.5,  -1, 4, 90, 0,  0);
 		var cy2 = new CarCylinder(cylinders, 0.5, 12, 8, 1, 20.5,  -1, 4, 90, 0,  0);
@@ -49,9 +50,9 @@ class CarMesh {
 		var cy5 = new CarCylinder(cylinders, 0.5, 15, 8, 1,   13,  -1, 4,  0, 0, 90);
 
 		//Scales the car.
-		mesh.scale.set(0.5, 0.5, 0.5);
+		this.scale.set(0.5, 0.5, 0.5);
 
-		return mesh;
+		return this;
 	}
 }
 
