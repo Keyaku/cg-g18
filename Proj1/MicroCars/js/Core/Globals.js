@@ -45,8 +45,9 @@ const THREE_HUNDRED_SIXTY_DEGREES = 2 * Math.PI;
 function objectNeedsRespawn(vector) {
   var x = vector.x;
   var z = vector.z;
-  if (x >= ((-1) * HALF_BOARD_WIDTH) && x <= (HALF_BOARD_WIDTH) &&
-      z >= ((-1) * HALF_BOARD_LENGHT) && z <= (HALF_BOARD_LENGHT)) {
+  console.log(x, z)
+  if (x <= ((-1) * HALF_BOARD_WIDTH) || x >= (HALF_BOARD_WIDTH) ||
+      z <= ((-1) * HALF_BOARD_LENGHT) || z >= (HALF_BOARD_LENGHT)) {
     return true;
   } else {
     return false;
