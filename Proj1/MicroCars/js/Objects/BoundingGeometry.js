@@ -45,6 +45,4 @@ class BoundingSphere extends THREE.Mesh {
 		this.updateBounds(center, radius);
 	}
 
-	}
-
 }
