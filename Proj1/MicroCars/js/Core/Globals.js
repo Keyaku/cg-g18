@@ -2,6 +2,7 @@
 * Car variables
 *******************************************************************************/
 const CAR_ACCELERATION = 2;
+const ORANGE_ACCELERATION = 0.5;
 const TURN_ASSIST = CAR_ACCELERATION / 32;
 const WHEEL_ROTATION = Math.PI / 16;
 
