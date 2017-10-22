@@ -99,6 +99,6 @@ function respawnObject(obj) {
     obj.position.set(vector.x, vector.y, vector.z);
     obj.heading = heading.normalize();
     obj.visible = true;
-  }, 5000);
+  }, 1000);
 
 }
