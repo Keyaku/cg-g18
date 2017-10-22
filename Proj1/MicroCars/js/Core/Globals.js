@@ -2,9 +2,9 @@
 * Car variables
 *******************************************************************************/
 const CAR_ACCELERATION = 2;
-const MAX_ORANGE_VELOCITY = 300;
-const ORANGE_VELOCITY = 30;
-const ORANGE_ACCELERATION = 3;
+const MAX_ORANGE_VELOCITY = 200;
+const ORANGE_VELOCITY = 20;
+const ORANGE_ACCELERATION = 2;
 const TURN_ASSIST = CAR_ACCELERATION / 32;
 const WHEEL_ROTATION = Math.PI / 16;
 
@@ -106,6 +106,7 @@ function respawnObject(obj) {
 
   setTimeout(function() {
     obj.position.set(vector.x, vector.y, vector.z);
+    obj.concreteOrange.rotation.set(0, 0, 0);
     obj.concreteOrange.position.set(0,0,0);
     obj.heading = heading.normalize();
     obj.visible = true;
