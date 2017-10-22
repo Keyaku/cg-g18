@@ -106,6 +106,7 @@ function respawnObject(obj) {
 
   setTimeout(function() {
     obj.position.set(vector.x, vector.y, vector.z);
+    obj.concreteOrange.position.set(0,0,0);
     obj.heading = heading.normalize();
     obj.visible = true;
   }, 1000);
