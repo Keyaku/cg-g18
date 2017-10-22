@@ -3,8 +3,8 @@
 *******************************************************************************/
 const CAR_ACCELERATION = 2;
 const MAX_ORANGE_VELOCITY = 500;
-const ORANGE_VELOCITY = 15;
-const ORANGE_ACCELERATION = 5;
+const ORANGE_VELOCITY = 50;
+const ORANGE_ACCELERATION = 2;
 const TURN_ASSIST = CAR_ACCELERATION / 32;
 const WHEEL_ROTATION = Math.PI / 16;
 
@@ -16,6 +16,7 @@ const BOARD_LENGHT = 1000;
 const HALF_BOARD_WIDTH  = BOARD_WIDTH  >> 1;
 const HALF_BOARD_LENGHT = BOARD_LENGHT >> 1;
 const FRICTION = 0.02;
+const EDIBLES_Y = 5;
 
 /*******************************************************************************
 * Directional variables
@@ -68,9 +69,8 @@ function generateSpawnLocation(min = 0, max = HALF_BOARD_WIDTH) {
   var signX = Math.random() < 0.5 ? -1 : 1;
   var signZ = Math.random() < 0.5 ? -1 : 1;
   var x = Math.floor(Math.random() * (max - min + 1)) + min;
-  var y = 0;
   var z = Math.floor(Math.random() * (max - min + 1)) + min;
-  var spawnLocation = new THREE.Vector3(x, y, z);
+  var spawnLocation = new THREE.Vector3(x, EDIBLES_Y, z);
   return spawnLocation;
 }
 
@@ -85,11 +85,11 @@ function respawnObject(obj) {
   var z = Math.random() < 0.5 ? -1 : 1;
   var maskDirection = Math.random();
   if (maskDirection >= 0 && maskDirection < 0.33) {
-    heading = new THREE.Vector3(x, 0, z);
+    heading = new THREE.Vector3(x, 0, z).normalize();
   } else if (maskDirection >= 0.33 && maskDirection < 0.66){
-    heading = new THREE.Vector3(x, 0, 0);
+    heading = new THREE.Vector3(x, 0, 0).normalize();
   } else {
-    heading = new THREE.Vector3(0, 0, z);
+    heading = new THREE.Vector3(0, 0, z).normalize();
   }
   obj.position.set(vector.x, vector.y, vector.z);
   obj.heading = heading;
