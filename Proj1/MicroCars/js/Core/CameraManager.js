@@ -29,8 +29,8 @@ class CameraManager {
 			if (this.windowHeight > this.windowWidth) {
 				this.camera.left   = - this.frustumSize / 2;
 				this.camera.right  =   this.frustumSize / 2;
-				this.camera.top    =   this.frustumSize * this.aspectRatio / 2;
-				this.camera.bottom = - this.frustumSize * this.aspectRatio / 2;
+				this.camera.top    =   this.frustumSize / this.aspectRatio / 2;
+				this.camera.bottom = - this.frustumSize / this.aspectRatio / 2;
 			}
 			else {
 				this.camera.left   = - this.frustumSize * this.aspectRatio / 2;
