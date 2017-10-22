@@ -2,9 +2,9 @@
 * Car variables
 *******************************************************************************/
 const CAR_ACCELERATION = 2;
-const MAX_ORANGE_VELOCITY = 500;
-const ORANGE_VELOCITY = 50;
-const ORANGE_ACCELERATION = 2;
+const MAX_ORANGE_VELOCITY = 300;
+const ORANGE_VELOCITY = 30;
+const ORANGE_ACCELERATION = 3;
 const TURN_ASSIST = CAR_ACCELERATION / 32;
 const WHEEL_ROTATION = Math.PI / 16;
 
@@ -79,18 +79,27 @@ function generateSpawnLocation(min = 0, max = HALF_BOARD_WIDTH) {
 * @param distance: How far should the orange travel after respawning
 */
 function respawnObject(obj) {
-  var vector = generateSpawnLocation();
   var heading;
+
+  obj.visible = false;
+
   var x = Math.random() < 0.5 ? -1 : 1;
   var z = Math.random() < 0.5 ? -1 : 1;
   var maskDirection = Math.random();
+  var vector = generateSpawnLocation();
+
   if (maskDirection >= 0 && maskDirection < 0.33) {
-    heading = new THREE.Vector3(x, 0, z).normalize();
+    heading = new THREE.Vector3(x, 0, z);
   } else if (maskDirection >= 0.33 && maskDirection < 0.66){
-    heading = new THREE.Vector3(x, 0, 0).normalize();
+    heading = new THREE.Vector3(x, 0, 0);
   } else {
-    heading = new THREE.Vector3(0, 0, z).normalize();
+    heading = new THREE.Vector3(0, 0, z);
   }
-  obj.position.set(vector.x, vector.y, vector.z);
-  obj.heading = heading;
+
+  setTimeout(function() {
+    obj.position.set(vector.x, vector.y, vector.z);
+    obj.heading = heading.normalize();
+    obj.visible = true;
+  }, 5000);
+
 }
