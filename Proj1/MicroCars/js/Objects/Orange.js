@@ -1,46 +1,68 @@
+/**
+* @class OrangeWrapper
+* @attribute velocity: orange center of mass linear velocity.
+* @attribute acceleration: constant value defined by developters.
+* @attribute heading: vector that defines the heading of the orange.
+* @attribute radius: the orange radius.
+* @attribute position: position of this wrapper in world coordinates.
+*/
 class OrangeWrapper extends MotionBody {
 	constructor(orangeName, x, y, z, radius = 5) {
 		super(0.140);
 		this.concreteOrange = new Orange(orangeName, 0, 0, 0);
+		this.velocity = ORANGE_VELOCITY;
+		this.acceleration = ORANGE_ACCELERATION;
+		this.heading = X_AXIS_HEADING;
+		this.radius = radius;
 		this.position.set(x, y, z);
 		this.add(this.concreteOrange);
 		scene.add(this);
 		return this;
 	}
 
-	/** update
-	* @param delta: time value
-	* @var radius: the orange radius
-	* @var velocity: orange center of mass velocity
-	* @var movement_direction: vector that defines the heading of the orange
-	* @var rotation_vector: copy of movement_direction vector rotated by 90º,
-	* parallel to the ground about which the orange rotates with a known angular_velocity.
-	* @var displacement: orange center of mass displacement
-	* @var angular_velocity: speed at which the orange rotates about it's own center
-	* @var theta: angular_velocity in radians per second.
+	/**
+	* @method update: Recalculates velocity and displacement of this object for the next frame.
+	* @param delta: time interval since last clock.getDelta()
+	* @var displacement: this object center of mass displacement.
 	*/
 	update(delta) {
-		var radius = this.concreteOrange.radius;
-		var velocity = 20 // this.collisionData.velocity;
-		var movement_direction = X_AXIS_HEADING // this.collisionData.direction;
-		var rotation_vector = new THREE.Vector3(movement_direction.x, movement_direction.y, movement_direction.z);
-		var displacement = velocity * delta;
-		var angular_velocity = velocity / radius;
-
-		var theta = (angular_velocity / (radius/2)) * TO_RADIANS;
-		this.move(movement_direction, displacement);
-				rotation_vector.applyAxisAngle(Y_AXIS_HEADING, NINETY_DEGREES);
-		this.concreteOrange.rotateOnAxis(rotation_vector, theta);
-
+		if (this.velocity < MAX_ORANGE_VELOCITY) {
+			this.velocity += ORANGE_ACCELERATION * delta;
+		};
+		var displacement = this.velocity * delta;
+		this.move(this.heading, displacement);
 	}
 
+	/**
+	* @method move: Trnaslate object according to previously calculated or collision values.
+	* @param axis: representing the direction of movement_direction
+	* @param distance: far should the orange travel
+	* @var colliding:
+	*/
 	move(axis, distance) {
 		var colliding = super.move(axis, distance);
+		if (colliding) {
+			this.velocity = this.collisionData.velocity;
+			this.heading = this.collisionData.heading;
+		}
 		this.translateOnAxis(axis, distance);
+		this.rotate(axis);
 		return colliding;
 	}
-}
 
+	/**
+	* @method rotate: rotates this object around an axis specified by rotationAxis
+	* @param axis: current object's direction.
+	* @var angularVelocity: speed at which the orange rotates about it's own center in radians.
+	* @var rotationAxis: direction vector rotated by 90º, parallel to the ground.
+	*/
+	rotate(axis) {
+		var angularVelocity = (this.velocity / this.radius) * TO_RADIANS;
+		var rotationAxis = new THREE.Vector3(axis.x, axis.y, axis.z);
+				rotationAxis.applyAxisAngle(Y_AXIS_HEADING, NINETY_DEGREES);
+		this.concreteOrange.rotateOnAxis(rotationAxis, angularVelocity);
+	}
+}
 /*******************************************************************************
 * Concrete Orange class
 *******************************************************************************/
@@ -52,7 +74,6 @@ class Orange extends THREE.Object3D {
 		var orangeBranch = new OrangeBranch(this, x, y, z);
 		this.type = 'Orange';
 		this.name = orangeName;
-		this.radius = radius;
 		this.position.set(x, y, z);
 		return this;
 	}
