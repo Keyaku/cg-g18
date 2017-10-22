@@ -42,7 +42,9 @@ const THREE_HUNDRED_SIXTY_DEGREES = 2 * Math.PI;
 * @param z: z position of the object subject to verification.
 * @return: Boolean value True if orange is outside of the board. False otherwise
 */
-function objectNeedsRespawn(x, z) {
+function objectNeedsRespawn(vector) {
+  var x = vector.x;
+  var z = vector.z;
   if (x >= ((-1) * HALF_BOARD_WIDTH) && x <= (HALF_BOARD_WIDTH) &&
       z >= ((-1) * HALF_BOARD_LENGHT) && z <= (HALF_BOARD_LENGHT)) {
     return true;
@@ -61,7 +63,7 @@ function objectNeedsRespawn(x, z) {
 @var z: Z coordinate (value calculated randomly based on min-max values)
 @return: Vector3D that defines a new spawn location after orange falls from the table.
 */
-function generateSpawnLocation(min, max) {
+function generateSpawnLocation(min = 0, max = HALF_BOARD_WIDTH) {
   var signX = Math.random() < 0.5 ? -1 : 1;
   var signZ = Math.random() < 0.5 ? -1 : 1;
   var x = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -75,7 +77,19 @@ function generateSpawnLocation(min, max) {
 * @param obj: object that is being respawned
 * @param distance: How far should the orange travel after respawning
 */
-function respawnObject(obj, distance) {
-  obj.position.set(generateSpawnLocation(0, HALF_BOARD_WIDTH));
-  obj.move(X_AXIS_HEADING, distance);
+function respawnObject(obj) {
+  var vector = generateSpawnLocation();
+  var heading;
+  var x = Math.random() < 0.5 ? -1 : 1;
+  var z = Math.random() < 0.5 ? -1 : 1;
+  var maskDirection = Math.random();
+  if (maskDirection >= 0 && maskDirection < 0.33) {
+    heading = new THREE.Vector3(x, 0, z);
+  } else if (maskDirection >= 0.33 && maskDirection < 0.66){
+    heading = new THREE.Vector3(x, 0, 0);
+  } else {
+    heading = new THREE.Vector3(0, 0, z);
+  }
+  obj.position.set(vector.x, vector.y, vector.z);
+  obj.heading = heading;
 }

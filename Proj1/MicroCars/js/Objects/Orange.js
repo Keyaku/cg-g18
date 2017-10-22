@@ -47,6 +47,9 @@ class OrangeWrapper extends MotionBody {
 		}
 		this.translateOnAxis(axis, distance);
 		this.rotate(axis);
+		if (objectNeedsRespawn(this.getWorldPosition)) {
+			respawnObject(this);
+		}
 		return colliding;
 	}
 
