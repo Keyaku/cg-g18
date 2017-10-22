@@ -24,7 +24,16 @@ const EDIBLES_Y = 5;
 const X_AXIS_HEADING = new THREE.Vector3(1, 0, 0);
 const Y_AXIS_HEADING = new THREE.Vector3(0, 1, 0);
 const Z_AXIS_HEADING = new THREE.Vector3(0, 0, 1);
-
+const MX_AXIS_HEADING = new THREE.Vector3(-1, 0, 0);
+const MZ_AXIS_HEADING = new THREE.Vector3(0, 0, -1);
+const XPZP_AXIS_HEADING = new THREE.Vector3(1, 0, 1).normalize();
+const XPZM_AXIS_HEADING = new THREE.Vector3(-1, 0, -1).normalize();
+const XMZP_AXIS_HEADING = new THREE.Vector3(-1, 0, 1).normalize();
+const XMZM_AXIS_HEADING = new THREE.Vector3(-1, 0, 1).normalize();
+const HEADING_ARRAY = [ X_AXIS_HEADING, Z_AXIS_HEADING,
+                        MX_AXIS_HEADING, MZ_AXIS_HEADING,
+                        XPZP_AXIS_HEADING, XPZM_AXIS_HEADING,
+                        XMZP_AXIS_HEADING, XMZM_AXIS_HEADING ];
 /*******************************************************************************
 * Trignometric variables
 *******************************************************************************/
