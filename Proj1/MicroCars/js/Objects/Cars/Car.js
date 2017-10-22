@@ -2,14 +2,23 @@ class Car extends MotionBody {
 	constructor(x=0, y=0, z=0) {
 		super();
 		this.type = 'Car';
-		this.mesh = new CarMesh(x, y, z);
+
+		// Creating mesh
+		this.mesh = new CarMesh();
+		this.add(this.mesh);
+
+		// Creating Bounds
+		this.bb = new BoundingSphere(this.mesh);
+		this.add(this.bb);
+
+		// Adding our own data
 		this.velocity = 0;
 		this.forwardAcceleration = CAR_ACCELERATION;
 
-		// Positions the car.
+		// Positioning the car
 		this.position.set(x, y, z);
 
-		this.add(this.mesh);
+		// Adding to scene graph
 		scene.add(this);
 	}
 
