@@ -62,6 +62,7 @@ class MotionBody extends PhysicsBody {
 		super();
 		this.type = "MotionBody";
 		this.mass = mass;
+		this.velocity = 0;
 	}
 
 	update(delta) {

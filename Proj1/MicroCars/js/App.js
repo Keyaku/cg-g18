@@ -13,14 +13,6 @@ var RemoteTextures = new THREE.TextureLoader();
 * Render method allows system to handle all the rendering.
 */
 function render() {
-	// Animation and physics updates to all visible PhysicsBody
-	var delta = clock.getDelta();
-	scene.traverseVisible(function(node) {
-		if (node instanceof PhysicsBody) {
-			node.update(delta);
-		}
-	});
-
 	// Checking collisions for Car vs. Edibles
 	for (var i in edibleObjects) {
 		var edible = edibleObjects[i];
@@ -28,7 +20,7 @@ function render() {
 			car.velocity = 0;
 		}
 		if (car.hitBody(edible, Orange)) {
-			console.log("hit an orange"); // TODO
+			edible.velocity = car.velocity;
 		}
 	}
 
@@ -39,9 +31,19 @@ function render() {
 		// Checking collisions for Car vs. Torus
 		var torus = raceTrack.children[i];
 		if (car.hitBody(torus, Tire)) {
+			console.log("hit a torus");
+			torus.acceleration = ORANGE_ACCELERATION;
 			torus.move(X_AXIS_HEADING, car.velocity);
 		}
 	}
+
+	// Animation and physics updates to all visible PhysicsBody
+	var delta = clock.getDelta();
+	scene.traverseVisible(function(node) {
+		if (node instanceof PhysicsBody) {
+			node.update(delta);
+		}
+	});
 
 	cameraManager.updateFollowCamera(car.position, car.getWorldDirection());
 	// ThreeJS updates (OrbitControls, renderer)
