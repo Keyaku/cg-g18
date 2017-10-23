@@ -20,6 +20,37 @@ function render() {
 			node.update(delta);
 		}
 	});
+
+	// Checking collisions for Car vs. Edibles
+	for (var i in edibleObjects) {
+		var edible = edibleObjects[i];
+		if (car.hitBody(edible, Butter)) {
+			console.log("hit a butter"); // TODO
+		}
+		if (car.hitBody(edible, Orange)) {
+			console.log("hit an orange"); // TODO
+		}
+	}
+	// Checking collisions for Car vs. Torus
+	for (var i in raceTrack.children) {
+		if (raceTrack.children[i] instanceof THREE.Mesh) { continue; }
+
+		var torus = raceTrack.children[i];
+		if (car.hitBody(torus, Tire)) {
+			console.log("hit a torus"); // TODO
+		}
+		/* FIXME: fix intersects FIRST, then come back here
+		for (var j in raceTrack.children) {
+			if (i == j) { continue; }
+			if (raceTrack.children[j] instanceof THREE.Mesh) { continue; }
+			var otherTorus = raceTrack.children[i];
+			if (torus.hitBody(otherTorus, Tire)) {
+				console.log("cheerio knocking"); // TODO
+			}
+		}
+		*/
+	}
+
 	cameraManager.updateFollowCamera(car.position, car.getWorldDirection());
 	// ThreeJS updates (OrbitControls, renderer)
 	controls.update();

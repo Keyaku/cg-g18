@@ -25,6 +25,10 @@ class PhysicsBody extends THREE.Object3D {
 
 		return this.bounds.intersects(body.bounds)
 	}
+
+	hitBody(obj, Body) {
+		return obj instanceof Body && this.intersects(obj);
+	}
 }
 
 
