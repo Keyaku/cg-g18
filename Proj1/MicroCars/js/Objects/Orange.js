@@ -66,7 +66,7 @@ class OrangeWrapper extends MotionBody {
 	*/
 	rotate(axis) {
 		var angularVelocity = (this.velocity / this.radius) * TO_RADIANS;
-		var rotationAxis = new THREE.Vector3(axis.x, axis.y, axis.z);
+		var rotationAxis = axis.clone();
 		rotationAxis.applyAxisAngle(Y_AXIS_HEADING, NINETY_DEGREES);
 		this.concreteOrange.rotateOnAxis(rotationAxis, angularVelocity);
 	}
