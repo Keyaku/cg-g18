@@ -21,6 +21,10 @@ class Butter extends StaticBody {
 		}
 		this.rotateY(angle);
 
+		// Adding our Bounds
+		this.bounds = new BoundingSphere(this.mesh);
+		this.add(this.bounds);
+
 		scene.add(this);
 		this.updateMatrix(); // Necessary since this is a StaticBody
 		return this;

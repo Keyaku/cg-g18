@@ -18,6 +18,10 @@ class OrangeWrapper extends MotionBody {
 		this.radius = radius;
 		this.position.set(x, y, z);
 
+		// Adding BoundingSphere
+		this.bounds = new BoundingSphere(this.concreteOrange, 5);
+		this.add(this.bounds);
+
 		// Setting up scene graph
 		this.add(this.concreteOrange);
 		scene.add(this);

@@ -92,7 +92,9 @@ class Tire extends RigidBody {
 		this.type = 'Tire'
 
 		//Creates the torus geometry.
-		var geometry = new THREE.TorusGeometry(2.5, 0.8, 5, 16)
+		var radius = 2.5
+		var tube = 0.8
+		var geometry = new THREE.TorusGeometry(radius, tube, 5, 16)
 		//Creates the torus material.
 		var material = new THREE.MeshBasicMaterial({color:0xAA1111})
 		var mesh = new THREE.Mesh(geometry, material)
@@ -100,6 +102,10 @@ class Tire extends RigidBody {
 		this.position.copy(p)
 		//Rotates the torus to be horizontal.
 		this.rotation.set(NINETY_DEGREES, 0, 0)
+
+		// Adding BoundingSphere
+		this.bounds = new BoundingSphere(mesh, radius+tube)
+		this.add(this.bounds)
 
 		//Adds the mesh to the track class object.
 		this.add(mesh)
