@@ -1,7 +1,7 @@
-class Track {
+class Track extends RigidBody {
 	constructor() {
+		super()
 		this.type = 'Track'
-		this.mesh = new THREE.Object3D()
 
 		//Sets how wide the track is.
 		var trackWidth = 45
@@ -22,11 +22,11 @@ class Track {
 		//to be THREE.Vector3 to be used by THREE.CatmullRomCurve3.
 		points = this.pointsOffset(points, 400)
 		//Draws the track.
-		var track = this.trackCreate(this.mesh, points, trackWidth, 0x13294B)
+		var track = this.trackCreate(this, points, trackWidth, 0x13294B)
 		//Adds the tori on the track.
-		this.trackAddTorus(this.mesh, track.geometry.vertices)
+		this.trackAddTorus(this, track.geometry.vertices)
 		//Adds all to the scene.
-		scene.add(this.mesh)
+		scene.add(this)
 		return this
 	}
 
@@ -86,21 +86,20 @@ class Track {
 	}
 }
 
-class Tire {
+class Tire extends THREE.Mesh {
 	constructor(obj, p) {
-		this.type = 'Tire'
-		this.mesh = new THREE.Object3D()
 		//Creates the torus geometry.
 		var geometry = new THREE.TorusGeometry(2.5, 0.8, 5, 16)
 		//Creates the torus material.
 		var material = new THREE.MeshBasicMaterial({color:0xAA1111})
-		var mesh = new THREE.Mesh(geometry, material)
+		super(geometry, material)
+		this.type = 'Tire'
 		//Positions the torus to be on the track point.
-		mesh.position.set(p.x, p.y, p.z)
+		this.position.set(p.x, p.y, p.z)
 		//Rotates the torus to be horizontal.
-		mesh.rotation.set(NINETY_DEGREES, 0, 0)
+		this.rotation.set(NINETY_DEGREES, 0, 0)
 		//Adds the mesh to the track class object.
-		this.mesh.add(mesh)
-		obj.add(this.mesh)
+		obj.add(this)
+		return this
 	}
 }
