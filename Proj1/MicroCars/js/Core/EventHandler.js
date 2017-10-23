@@ -71,11 +71,14 @@ function onKeyDown(e) {
 					node.material.wireframe = !node.material.wireframe;
 			});
 			break;
-		
-		case 68: // D
-		case 100: // d
-			getEdible("Orange1");
-			break;
+
+		case 81:  // Q
+		case 103: // q
+		scene.traverse(function (node) {
+			if (node instanceof PhysicsBody && node.bounds != undefined)
+				node.bounds.toggleVisibility();
+		});
+		break;
 	}
 }
 

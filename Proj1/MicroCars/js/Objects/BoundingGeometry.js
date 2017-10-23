@@ -7,6 +7,7 @@ class BoundingSphere extends THREE.Mesh {
 	constructor(mesh, radius=0, center=new THREE.Vector3()) {
 		super();
 		this.type = "BoundingSphere";
+		this.visible = false;
 
 		if (radius <= 0) { // This generates automatically a sphere around our mesh
 			this.setFromMesh(mesh);
@@ -59,4 +60,8 @@ class BoundingSphere extends THREE.Mesh {
 		this.updateBounds(radius, new THREE.Vector3());
 	}
 
+	// Lifesavers
+	toggleVisibility() {
+		this.visible = !this.visible;
+	}
 }
