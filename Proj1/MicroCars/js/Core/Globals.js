@@ -6,7 +6,7 @@ const MAX_ORANGE_VELOCITY = 200;
 const ORANGE_VELOCITY = 20;
 const ORANGE_ACCELERATION = 2;
 const TURN_ASSIST = CAR_ACCELERATION / 32;
-const WHEEL_ROTATION = Math.PI / 16;
+const WHEEL_ROTATION = Math.PI / 8;
 
 /*******************************************************************************
 * Board variables
