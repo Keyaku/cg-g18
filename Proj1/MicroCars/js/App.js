@@ -19,8 +19,8 @@ function render() {
 		if (car.hitBody(edible, Butter)) {
 			car.velocity = 0;
 		}
-		if (car.hitBody(edible, Orange)) {
-			edible.velocity = car.velocity;
+		if (car.hitBody(edible, OrangeWrapper)) {
+			respawnObject(car);
 		}
 	}
 
