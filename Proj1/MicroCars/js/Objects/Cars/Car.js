@@ -26,7 +26,7 @@ class Car extends MotionBody {
 		center.divideScalar(2);
 		center.multiplyScalar(0.5);
 
-		this.bounds.updateBounds(center, radius);
+		this.bounds.updateBounds(radius, center);
 		/* FIXME: attempt to remove the code above later */
 
 		this.add(this.bounds);

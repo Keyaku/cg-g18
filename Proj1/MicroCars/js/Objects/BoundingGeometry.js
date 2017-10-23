@@ -4,45 +4,59 @@
 *******************************************************************************/
 
 class BoundingSphere extends THREE.Mesh {
-	constructor(mesh) {
+	constructor(mesh, radius=0, center=new THREE.Vector3()) {
 		super();
-		this.name = "BoundingSphere";
-		this.setFromMesh(mesh);
+		this.type = "BoundingSphere";
+
+		if (radius <= 0) { // This generates automatically a sphere around our mesh
+			this.setFromMesh(mesh);
+		} else { // This goes straight to the point and creates the sphere according to our radius
+			this.updateBounds(radius, center)
+		}
 		this.material = new THREE.MeshBasicMaterial({wireframe:true}); // FIXME: do not use wireframe as it affects the 'A' keyDown event
 
 		this.scale.copy(mesh.scale);
 		return this;
 	}
 
-	updateBounds(center=this.position, radius) {
+	updateBounds(radius, center=this.position) {
 		this.geometry = new THREE.SphereBufferGeometry(radius, 8, 8);
 		this.position.copy(center);
 
 		this.geometry.boundingSphere = new THREE.Sphere(center, radius);
-		this.boundingSphere = this.geometry.boundingSphere;
 	}
 
 	// Mesh-altering methods
 	setFromMesh(obj) {
-		var len = obj.children.length;
 		var min = new THREE.Vector3(0, 0, 0);
 		var max = new THREE.Vector3(1, 0, 0);
 
-		for (var i = 0; i < len; i++) {
-			var vertices = obj.children[i].geometry.vertices;
+		var vertices;
+		// Checking mesh's own geometry (if available)
+		if (obj.geometry != undefined) {
+			vertices = obj.geometry.vertices;
 			for (var j = 0; j < vertices.length; j++) {
 				var v = vertices[j];
 				min.min(v);
 				max.max(v);
 			}
 		}
+		// Checking mesh's children (if any)
+		var len = obj.children.length;
+		for (var i = 0; i < len; i++) {
+			var child = obj.children[i];
+			if (child.geometry != undefined) {
+				vertices = obj.children[i].geometry.vertices;
+				for (var j = 0; j < vertices.length; j++) {
+					var v = vertices[j];
+					min.min(v);
+					max.max(v);
+				}
+			}
+		}
 
-		var center = max.clone(); // center = max
-		center.sub(min);          // center = max - min
-		center.divideScalar(2);   // center /= 2
 		var radius = min.distanceTo(max) / 2;
-
-		this.updateBounds(center, radius);
+		this.updateBounds(radius, new THREE.Vector3());
 	}
 
 }
