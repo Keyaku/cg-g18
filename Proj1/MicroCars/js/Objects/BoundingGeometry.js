@@ -26,7 +26,6 @@ class BoundingSphere extends THREE.Mesh {
 		this.geometry.boundingSphere = new THREE.Sphere(center, radius);
 
 		this.radius = radius;
-		this.center = center;
 	}
 
 	// Mesh-altering methods
@@ -74,6 +73,8 @@ class BoundingSphere extends THREE.Mesh {
 		}
 
 		var sum = this.radius + bounds.radius;
-		return this.center.distanceToSquared(bounds.center) <= Math.pow(sum, 2);
+		var centerThis  = this.getWorldPosition();
+		var centerOther = bounds.getWorldPosition();
+		return centerThis.distanceToSquared(centerOther) <= sum*sum;
 	}
 }
