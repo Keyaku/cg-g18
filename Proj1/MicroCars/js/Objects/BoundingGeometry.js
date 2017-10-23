@@ -75,6 +75,6 @@ class BoundingSphere extends THREE.Mesh {
 		var sum = this.radius + bounds.radius;
 		var centerThis  = this.getWorldPosition();
 		var centerOther = bounds.getWorldPosition();
-		return centerThis.distanceTo(centerOther) <= sum - 9;
+		return centerThis.distanceTo(centerOther) <= sum - 5;
 	}
 }

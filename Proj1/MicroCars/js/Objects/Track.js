@@ -86,7 +86,7 @@ class Track extends THREE.Object3D {
 	}
 }
 
-class Tire extends RigidBody {
+class Tire extends MotionBody { // FIXME: use RigidBody when ready
 	constructor(obj, p) {
 		super()
 		this.type = 'Tire'

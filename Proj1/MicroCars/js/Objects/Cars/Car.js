@@ -32,7 +32,6 @@ class Car extends MotionBody {
 		this.add(this.bounds);
 
 		// Adding our own data
-		this.velocity = 0;
 		this.forwardAcceleration = CAR_ACCELERATION;
 
 		// Positioning the car
