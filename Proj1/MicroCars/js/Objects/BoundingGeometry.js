@@ -24,6 +24,9 @@ class BoundingSphere extends THREE.Mesh {
 		this.position.copy(center);
 
 		this.geometry.boundingSphere = new THREE.Sphere(center, radius);
+
+		this.radius = radius;
+		this.center = center;
 	}
 
 	// Mesh-altering methods
@@ -62,5 +65,15 @@ class BoundingSphere extends THREE.Mesh {
 	// Lifesavers
 	toggleVisibility() {
 		this.visible = !this.visible;
+	}
+
+	// Collision methods
+	intersects(bounds) {
+		if (bounds.type != this.type) {
+			return false; // We don't support other BoundingGeometries *yet*
+		}
+
+		var sum = this.radius + bounds.radius;
+		return this.center.distanceToSquared(bounds.center) <= Math.pow(sum, 2);
 	}
 }
