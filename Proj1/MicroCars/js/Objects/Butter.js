@@ -1,6 +1,7 @@
 class Butter extends StaticBody {
 	constructor(name=undefined, x=0, y=0, z=0, angle=undefined) {
 		super();
+		this.type = "Butter";
 
 		if (name == undefined) {
 			name = "Butter" + this.uuid;
