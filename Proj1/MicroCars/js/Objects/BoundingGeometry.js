@@ -14,8 +14,7 @@ class BoundingSphere extends THREE.Mesh {
 		} else { // This goes straight to the point and creates the sphere according to our radius
 			this.updateBounds(radius, center)
 		}
-		this.material = new THREE.MeshBasicMaterial({wireframe:true}); // FIXME: do not use wireframe as it affects the 'A' keyDown event
-
+		this.material = new THREE.MeshBasicMaterial({wireframe:true});
 		this.scale.copy(mesh.scale);
 		return this;
 	}
