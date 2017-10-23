@@ -1,4 +1,4 @@
-class Track extends RigidBody {
+class Track extends THREE.Object3D {
 	constructor() {
 		super()
 		this.type = 'Track'
@@ -86,19 +86,23 @@ class Track extends RigidBody {
 	}
 }
 
-class Tire extends THREE.Mesh {
+class Tire extends RigidBody {
 	constructor(obj, p) {
+		super()
+		this.type = 'Tire'
+
 		//Creates the torus geometry.
 		var geometry = new THREE.TorusGeometry(2.5, 0.8, 5, 16)
 		//Creates the torus material.
 		var material = new THREE.MeshBasicMaterial({color:0xAA1111})
-		super(geometry, material)
-		this.type = 'Tire'
+		var mesh = new THREE.Mesh(geometry, material)
 		//Positions the torus to be on the track point.
 		this.position.copy(p)
 		//Rotates the torus to be horizontal.
 		this.rotation.set(NINETY_DEGREES, 0, 0)
+
 		//Adds the mesh to the track class object.
+		this.add(mesh)
 		obj.add(this)
 		return this
 	}
