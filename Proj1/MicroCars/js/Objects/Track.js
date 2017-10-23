@@ -95,7 +95,7 @@ class Tire extends THREE.Mesh {
 		super(geometry, material)
 		this.type = 'Tire'
 		//Positions the torus to be on the track point.
-		this.position.set(p.x, p.y, p.z)
+		this.position.copy(p)
 		//Rotates the torus to be horizontal.
 		this.rotation.set(NINETY_DEGREES, 0, 0)
 		//Adds the mesh to the track class object.
