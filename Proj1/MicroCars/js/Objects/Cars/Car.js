@@ -76,6 +76,9 @@ class Car extends MotionBody {
 		// TODO: Proper motion with Vector3 that points to the next location?
 		var colliding = super.move(axis, distance);
 		this.translateOnAxis(axis, distance);
+		if (objectNeedsRespawn(this.getWorldPosition())) {
+			respawnObject(this);
+		}
 		return colliding;
 	}
 }

@@ -87,6 +87,14 @@ function generateSpawnLocation(min = 0, max = HALF_BOARD_WIDTH) {
 * @param distance: How far should the orange travel after respawning
 */
 function respawnObject(obj) {
+  if (obj.type == 'Car') {
+    obj.position.set(0, 0, 0);
+    obj.rotation.set(0, 0, 0);
+    obj.velocity = 0;
+    return;
+  }
+
+
   var heading;
 
   obj.visible = false;
