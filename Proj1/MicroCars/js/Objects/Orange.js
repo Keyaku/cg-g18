@@ -9,14 +9,19 @@
 class OrangeWrapper extends MotionBody {
 	constructor(orangeName, x, y, z, radius = 5) {
 		super(0.140);
+
+		// Adding mesh
 		this.concreteOrange = new Orange(orangeName, 0, 0, 0);
 		this.velocity = ORANGE_VELOCITY;
 		this.acceleration = ORANGE_ACCELERATION;
 		this.heading = HEADING_ARRAY[Math.floor((Math.random() * 9))];
 		this.radius = radius;
 		this.position.set(x, y, z);
+
+		// Setting up scene graph
 		this.add(this.concreteOrange);
 		scene.add(this);
+
 		return this;
 	}
 
@@ -62,7 +67,7 @@ class OrangeWrapper extends MotionBody {
 	rotate(axis) {
 		var angularVelocity = (this.velocity / this.radius) * TO_RADIANS;
 		var rotationAxis = new THREE.Vector3(axis.x, axis.y, axis.z);
-				rotationAxis.applyAxisAngle(Y_AXIS_HEADING, NINETY_DEGREES);
+		rotationAxis.applyAxisAngle(Y_AXIS_HEADING, NINETY_DEGREES);
 		this.concreteOrange.rotateOnAxis(rotationAxis, angularVelocity);
 	}
 }
@@ -86,17 +91,16 @@ class Orange extends THREE.Object3D {
 * OrangeFruit class
 *******************************************************************************/
 
-class OrangeFruit {
+class OrangeFruit extends THREE.Mesh {
 	constructor(obj, x, y, z, radius = 5) {
-		this.type = 'OrangeFruit';
-		this.mesh = new THREE.Object3D();
 		var material = new THREE.MeshLambertMaterial({color:0xFF9900});
 		var geometry = new THREE.SphereGeometry(radius, 15, 15);
-		var mesh = new THREE.Mesh(geometry, material);
-		this.mesh.add(mesh);
-		this.mesh.position.set(x, y, z);
-		obj.add(this.mesh);
-		return this.mesh;
+		super(geometry, material);
+		this.type = 'OrangeFruit';
+		this.position.set(x, y, z);
+
+		obj.add(this);
+		return this;
 	}
 }
 
@@ -104,17 +108,16 @@ class OrangeFruit {
 * OrangeBranch class
 *******************************************************************************/
 
-class OrangeBranch {
+class OrangeBranch extends THREE.Mesh {
 	constructor(obj, x, y, z) {
-		this.type = 'OrangeBranch';
-		this.mesh = new THREE.Object3D();
 		var material = new THREE.MeshLambertMaterial({color:0x666633});
 		var geometry = new THREE.CylinderGeometry(0.66, 0.33, 4);
-		var mesh = new THREE.Mesh(geometry, material);
-		this.mesh.add(mesh);
-		this.mesh.position.set(x, y + 5, z);
-		obj.add(this.mesh);
-		return this.mesh;
+		super(geometry, material);
+		this.type = 'OrangeBranch';
+		this.position.set(x, y + 5, z);
+
+		obj.add(this);
+		return this;
 	}
 }
 
@@ -122,20 +125,21 @@ class OrangeBranch {
 * OrangeLeaf class
 *******************************************************************************/
 
-class OrangeLeaf {
+class OrangeLeaf extends THREE.Mesh {
 	constructor(obj, x, y, z) {
-		this.type = 'OrangeLeaf';
-		this.mesh = new THREE.Object3D();
 		var leafShape = new THREE.Shape();
 		leafShape.moveTo( 0, 0 );
 		leafShape.bezierCurveTo( x + 6, y - 6, x + 12, y + 4, x, y );
+
 		var extrudeSettings = { amount: 0.5, bevelEnabled: false };
 		var geometry = new THREE.ExtrudeGeometry( leafShape, extrudeSettings );
 		var material = new THREE.MeshLambertMaterial({color: 0x009900});
-		var mesh = new THREE.Mesh( geometry, material );
-		this.mesh.add(mesh);
-		this.mesh.position.set(x, y+6.5, z);
-		obj.add(this.mesh);
-		return this.mesh;
+
+		super(geometry, material);
+		this.type = 'OrangeLeaf';
+		this.position.set(x, y+6.5, z);
+
+		obj.add(this);
+		return this;
 	}
 }
