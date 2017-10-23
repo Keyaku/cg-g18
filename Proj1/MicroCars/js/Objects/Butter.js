@@ -2,38 +2,37 @@ class Butter extends StaticBody {
 	constructor(name=undefined, x=0, y=0, z=0, angle=undefined) {
 		super();
 
-		this.mesh = new THREE.Object3D();
 		if (name == undefined) {
-			name = "Butter" + mesh.uuid;
+			name = "Butter" + this.uuid;
 		}
-		this.mesh.name = name;
+		this.name = name;
 
 		// FIXME: Apply different textures to different sides
 		var tex = RemoteTextures.load('https://i.imgur.com/KKvp36A.png');
 		var material = new THREE.MeshBasicMaterial({ map: tex });
 
-		var pos = new THREE.Vector3(0, 0, 0)
 		var size = new THREE.Vector3(7, 10, 20);
-		new ButterBox(this.mesh, material, pos, size);
+		this.mesh = new ButterBox(this, material, size);
 
 		// Places it in a given position
-		this.mesh.position.set(x, y, z);
+		this.position.set(x, y, z);
 		if (angle == undefined) {
 			angle = Math.random() + 360 * TO_RADIANS;
 		}
-		this.mesh.rotateY(angle);
-		scene.add(this.mesh);
+		this.rotateY(angle);
+
+		scene.add(this);
+		this.updateMatrix(); // Necessary since this is a StaticBody
 		return this;
 	}
 }
 
-class ButterBox {
-	constructor(obj, material, pos, size) {
+class ButterBox extends THREE.Mesh {
+	constructor(obj, material, size) {
 		var geometry = new THREE.BoxGeometry(size.x, size.y, size.z);
-		var mesh = new THREE.Mesh(geometry, material);
-		mesh.position.copy(pos);
+		super(geometry, material);
 
-		obj.add(mesh);
-		return mesh;
+		obj.add(this);
+		return this;
 	}
 }
