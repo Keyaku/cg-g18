@@ -24,14 +24,13 @@ function render() {
 		}
 	}
 
-	/* FIXME: fix intersects FIRST, then come back here */
+	// Handling Torus collisions
 	for (var i in raceTrack.children) {
 		if (raceTrack.children[i] instanceof THREE.Mesh) { continue; }
 
 		// Checking collisions for Car vs. Torus
 		var torus = raceTrack.children[i];
 		if (car.hitBody(torus, Tire)) {
-			console.log("hit a torus");
 			torus.acceleration = ORANGE_ACCELERATION;
 			torus.move(X_AXIS_HEADING, car.velocity);
 		}
