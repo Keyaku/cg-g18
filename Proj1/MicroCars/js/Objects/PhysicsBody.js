@@ -8,6 +8,8 @@ class PhysicsBody extends THREE.Object3D {
 	constructor() {
 		super();
 		this.collisionData = undefined;
+		this.type = "PhysicsBody";
+
 		this.bounds = undefined;
 	}
 
@@ -19,15 +21,17 @@ class PhysicsBody extends THREE.Object3D {
 class StaticBody extends PhysicsBody {
 	constructor() {
 		super();
+		this.type = "StaticBody";
 		this.matrixAutoUpdate = false; // Object is static, no update is necessary
 	}
 }
 
 
-// Weighted, non-deformable bodies. Useful for Oranges and other props
+// Weighted, non-deformable bodies. Use for props
 class RigidBody extends PhysicsBody {
 	constructor(mass = 1) {
 		super();
+		this.type = "RigidBody";
 		this.mass = mass;
 	}
 
@@ -41,6 +45,7 @@ class RigidBody extends PhysicsBody {
 class MotionBody extends PhysicsBody {
 	constructor(mass = 1) {
 		super();
+		this.type = "MotionBody";
 		this.mass = mass;
 	}
 
