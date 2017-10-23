@@ -14,7 +14,7 @@ class OrangeWrapper extends MotionBody {
 		this.concreteOrange = new Orange(orangeName, 0, 0, 0);
 		this.velocity = ORANGE_VELOCITY;
 		this.acceleration = ORANGE_ACCELERATION;
-		this.heading = HEADING_ARRAY[Math.floor((Math.random() * 9))];
+		this.heading = HEADING_ARRAY[Math.floor((Math.random() * HEADING_ARRAY.length))];
 		this.radius = radius;
 		this.position.set(x, y, z);
 
