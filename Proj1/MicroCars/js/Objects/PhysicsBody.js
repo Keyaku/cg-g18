@@ -13,7 +13,18 @@ class PhysicsBody extends THREE.Object3D {
 		this.bounds = undefined;
 	}
 
+	// Callback for every frame
 	update(delta) { /* do nothing */ }
+
+	intersects(body) {
+		if (!(body instanceof PhysicsBody)) {
+			return false;
+		} else if (this.bounds == undefined || body.bounds == undefined) {
+			return false;
+		}
+
+		return this.bounds.intersects(body.bounds)
+	}
 }
 
 
@@ -54,7 +65,7 @@ class MotionBody extends PhysicsBody {
 	}
 
 	move(axis, distance) {
-		var colliding = PhysicsServer.testCollisions(this.matrixWorld, axis, distance, this.collisionData);
+		var colliding = PhysicsServer.testCollisions(this, axis, distance);
 
 		if (colliding) {
 			// TODO for next assignment: fill collision data

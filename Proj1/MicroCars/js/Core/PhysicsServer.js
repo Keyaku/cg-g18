@@ -2,10 +2,9 @@
 * PhysicsServer singleton - and everything Physics at the core
 *******************************************************************************/
 class PhysicsServer {
-	static testCollisions(transform, axis, distance, collision) {
-		// TODO for next assignment: Check for collisions
-		// TODO: fetch collider data
-		// TODO: collision variable is a structure filled with collision info
+	static testCollisions(body, axis, distance) {
+		// TODO: Use body.matrixWorld + body.bounds
+		// TODO: Update body.collisionData
 		return false;
 	}
 }
