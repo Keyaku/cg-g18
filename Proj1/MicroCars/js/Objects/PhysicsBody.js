@@ -7,9 +7,9 @@
 class PhysicsBody extends THREE.Object3D {
 	constructor() {
 		super();
-		this.collisionData = undefined;
 		this.type = "PhysicsBody";
 
+		this.collisionData = undefined;
 		this.bounds = undefined;
 	}
 
@@ -17,9 +17,7 @@ class PhysicsBody extends THREE.Object3D {
 	update(delta) { /* do nothing */ }
 
 	intersects(body) {
-		if (!(body instanceof PhysicsBody)) {
-			return false;
-		} else if (this.bounds == undefined || body.bounds == undefined) {
+		if (this.bounds == undefined || body.bounds == undefined) {
 			return false;
 		}
 
