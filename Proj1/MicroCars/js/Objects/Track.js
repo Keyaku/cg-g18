@@ -43,45 +43,31 @@ class Track extends THREE.Object3D {
 		var closedSpline = new THREE.CatmullRomCurve3(points)
 		closedSpline.type = 'catmullrom'
 		closedSpline.closed = true
+		width /= 2
 		var shape = new THREE.Shape([
-			new THREE.Vector2(0, -width / 2),
-			new THREE.Vector2(0, width / 2),
+			new THREE.Vector2(0, -width),
+			new THREE.Vector2(0,  width),
 			new THREE.Vector2(1, 0),
 		])
 		//Extrusion settings.
 		//Steps represents the smoothness of the corners.
 		//ExtrudePath extrudes along the curve defined above. This is what gives
 		//the width to the track (instead of being a line).
-		var extrudeSettings = {steps:2000, bevelEnabled:false, extrudePath:closedSpline}
+		var extrudeSettings = {steps:200, bevelEnabled:false, extrudePath:closedSpline}
 		//Creates the track geometry.
 		var geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings)
 		//Creates the track material.
-		var material = new THREE.MeshBasicMaterial({color:color})
+		var material = new THREE.MeshLambertMaterial({color:color})
 		var mesh = new THREE.Mesh(geometry, material)
 		//Adds the mesh to the track class object.
 		obj.add(mesh)
 		return mesh
 	}
 	trackAddTorus(obj, vertices) {
-		//Number of vertices in the tracks's outside line.
-		var verticesOut = 4010
-		//Number of vertices in the tracks's inside line.
-		var verticesIn = 1992
-		/*
-		The spacing of the tori is different in the inside and outside
-		because there are more outside vertices than inside ones. For the
-		tori to be spaces equally on both sides of the track the spacing ratio
-		needs to match the vertices amount ratio.
-		*/
-		//Step of the for loop for the tori to be added on the inside line.
-		var inSpacing = 6
-		//Step of the for loop for the tori to be added on the outside line.
-		var outSpacing = parseInt(inSpacing / (verticesIn / verticesOut))
-		//Adds the tires to the track's outside line.
-		for (var i = 0; i < verticesOut; i += outSpacing)
-			new Tire(obj, vertices[i])
-		//Adds the tires to the track's inside line.
-		for (var i = verticesOut; i < vertices.length; i += inSpacing)
+		//Step of the for loop
+		var step = 2
+		//Adds the tires to the track's sides.
+		for (var i = 0; i < vertices.length; i += step)
 			new Tire(obj, vertices[i])
 	}
 }
@@ -94,9 +80,9 @@ class Tire extends MotionBody { // FIXME: use RigidBody when ready
 		//Creates the torus geometry.
 		var radius = 2.5
 		var tube = 0.8
-		var geometry = new THREE.TorusGeometry(radius, tube, 5, 16)
+		var geometry = new THREE.TorusBufferGeometry(radius, tube, 5, 16)
 		//Creates the torus material.
-		var material = new THREE.MeshBasicMaterial({color:0xAA1111})
+		var material = new THREE.MeshPhongMaterial({color:0xAA1111})
 		var mesh = new THREE.Mesh(geometry, material)
 		//Positions the torus to be on the track point.
 		this.position.copy(p)
