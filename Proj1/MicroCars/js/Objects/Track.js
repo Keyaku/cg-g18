@@ -93,8 +93,6 @@ class Tire extends MotionBody { // FIXME: use RigidBody when ready
 		this.bounds = new BoundingSphere(mesh, radius+tube)
 		this.add(this.bounds)
 
-		this.acceleration = 0;
-
 		//Adds the mesh to the track class object.
 		this.add(mesh)
 		obj.add(this)
@@ -102,8 +100,8 @@ class Tire extends MotionBody { // FIXME: use RigidBody when ready
 	}
 
 	update(delta) {
-		this.acceleration = 0;
-		this.velocity += this.acceleration * delta - FRICTION * this.velocity;
+		var acceleration = 0;
+		this.velocity += acceleration * delta - FRICTION * this.velocity;
 		this.move(X_AXIS_HEADING, this.velocity);
 	}
 

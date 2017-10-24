@@ -31,9 +31,6 @@ class Car extends MotionBody {
 
 		this.add(this.bounds);
 
-		// Adding our own data
-		this.forwardAcceleration = CAR_ACCELERATION;
-
 		// Positioning the car
 		this.position.set(x, y, z);
 		this.userData.initialPosition = this.position.clone();
@@ -50,14 +47,17 @@ class Car extends MotionBody {
 
 		var acceleration = 0;
 		if (up && !down) {
-			acceleration = -this.forwardAcceleration;
+			acceleration = -CAR_ACCELERATION;
 		} else if (down && !up) {
-			acceleration = this.forwardAcceleration;
+			acceleration = CAR_ACCELERATION;
 		}
 
 		// Updating car motion
 		this.velocity += acceleration * delta - FRICTION * this.velocity;
 		this.move(X_AXIS_HEADING, this.velocity);
+		if (objectNeedsRespawn(this.getWorldPosition())) {
+			respawnObject(this);
+		}
 
 		//Rotates the mesh
 		var angle = 0;
@@ -77,9 +77,6 @@ class Car extends MotionBody {
 		// TODO: Proper motion with Vector3 that points to the next location?
 		var colliding = super.move(axis, distance);
 		this.translateOnAxis(axis, distance);
-		if (objectNeedsRespawn(this.getWorldPosition())) {
-			respawnObject(this);
-		}
 		return colliding;
 	}
 }
