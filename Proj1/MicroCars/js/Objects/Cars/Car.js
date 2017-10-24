@@ -36,6 +36,7 @@ class Car extends MotionBody {
 
 		// Positioning the car
 		this.position.set(x, y, z);
+		this.userData.initialPosition = this.position.clone();
 
 		// Adding to scene graph
 		scene.add(this);

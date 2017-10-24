@@ -88,7 +88,7 @@ function generateSpawnLocation(min = 0, max = HALF_BOARD_WIDTH) {
 */
 function respawnObject(obj) {
   if (obj.type == 'Car') {
-    obj.position.set(0, 0, 0);
+    obj.position.copy(obj.userData.initialPosition);
     obj.rotation.set(0, 0, 0);
     obj.velocity = 0;
     return;
