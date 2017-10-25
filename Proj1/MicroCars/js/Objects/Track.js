@@ -72,7 +72,7 @@ class Track extends THREE.Object3D {
 	}
 }
 
-class Tire extends MotionBody { // FIXME: use RigidBody when ready
+class Tire extends RigidBody {
 	constructor(obj, p) {
 		super()
 		this.type = 'Tire'
@@ -101,10 +101,6 @@ class Tire extends MotionBody { // FIXME: use RigidBody when ready
 
 	update(delta) {
 		this.velocity -= FRICTION * this.velocity;
-		this.move(X_AXIS_HEADING, this.velocity);
-	}
-
-	move(axis, distance) {
-		this.translateOnAxis(axis, distance);
+		this.translateX(this.velocity);
 	}
 }

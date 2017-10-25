@@ -13,28 +13,6 @@ var RemoteTextures = new THREE.TextureLoader();
 * Render method allows system to handle all the rendering.
 */
 function render() {
-	// Checking collisions for Car vs. Edibles
-	for (var i in edibleObjects) {
-		var edible = edibleObjects[i];
-		if (car.hitBody(edible, Butter)) {
-			car.velocity = 0;
-		}
-		if (car.hitBody(edible, OrangeWrapper)) {
-			respawnObject(car);
-		}
-	}
-
-	// Handling Torus collisions
-	for (var i in raceTrack.children) {
-		if (!(raceTrack.children[i] instanceof PhysicsBody)) { continue; }
-
-		// Checking collisions for Car vs. Torus
-		var torus = raceTrack.children[i];
-		if (car.hitBody(torus, Tire)) {
-			torus.velocity = car.velocity;
-		}
-	}
-
 	// Animation and physics updates to all visible PhysicsBody
 	var delta = clock.getDelta();
 	scene.traverseVisible(function(node) {

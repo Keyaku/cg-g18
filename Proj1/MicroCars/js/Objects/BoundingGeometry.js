@@ -73,9 +73,9 @@ class BoundingSphere extends THREE.Mesh {
 		}
 
 		var sum = this.radius + bounds.radius;
-		var x = this.getWorldPosition().x - bounds.getWorldPosition().x;
-		var z = this.getWorldPosition().z - bounds.getWorldPosition().z;
+		var d = this.getWorldPosition().clone();
+		d.sub(bounds.getWorldPosition());
 
-		return x*x + z*z <= sum*sum;
+		return sum >= d.length();
 	}
 }

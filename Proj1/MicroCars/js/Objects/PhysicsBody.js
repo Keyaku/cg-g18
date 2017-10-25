@@ -17,15 +17,12 @@ class PhysicsBody extends THREE.Object3D {
 	update(delta) { /* do nothing */ }
 
 	intersects(body) {
+		if (!(body instanceof PhysicsBody)) { return false; }
 		if (this.bounds == undefined || body.bounds == undefined) {
 			return false;
 		}
 
 		return this.bounds.intersects(body.bounds)
-	}
-
-	hitBody(obj, Body) {
-		return obj instanceof Body && this.intersects(obj);
 	}
 }
 
@@ -46,6 +43,7 @@ class RigidBody extends PhysicsBody {
 		super();
 		this.type = "RigidBody";
 		this.mass = mass;
+		this.velocity = 0;
 	}
 
 	update(delta) {
@@ -61,6 +59,14 @@ class MotionBody extends PhysicsBody {
 		this.type = "MotionBody";
 		this.mass = mass;
 		this.velocity = 0;
+
+		// Creating event for collision
+		this.addEventListener('collided', function(event) {
+			if (event.body instanceof RigidBody) {
+				// FIXME: apply proper physics to both bodies (when applied)
+				event.body.velocity = this.velocity;
+			}
+		});
 	}
 
 	update(delta) {
@@ -68,12 +74,6 @@ class MotionBody extends PhysicsBody {
 	}
 
 	move(axis, distance) {
-		var colliding = PhysicsServer.testCollisions(this, axis, distance);
-
-		if (colliding) {
-			// TODO for next assignment: fill collision data
-		}
-
-		return colliding;
+		// TODO: remove this?
 	}
 }

@@ -40,6 +40,7 @@ class Car extends MotionBody {
 	}
 
 	update(delta) {
+		// Handling input
 		var left  = Input.is_pressed("ArrowLeft");
 		var right = Input.is_pressed("ArrowRight");
 		var up    = Input.is_pressed("ArrowUp");
@@ -54,12 +55,8 @@ class Car extends MotionBody {
 
 		// Updating car motion
 		this.velocity += acceleration * delta - FRICTION * this.velocity;
-		this.move(X_AXIS_HEADING, this.velocity);
-		if (objectNeedsRespawn(this.getWorldPosition())) {
-			respawnObject(this);
-		}
 
-		//Rotates the mesh
+		// Rotates the mesh
 		var angle = 0;
 		if (left && !right) {
 			angle = WHEEL_ROTATION;
@@ -71,12 +68,35 @@ class Car extends MotionBody {
 			angle *= Math.abs(this.velocity) * TURN_ASSIST;
 			this.rotateY(angle);
 		}
+
+		// Handling collisions
+		scene.traverseVisible(function(node) {
+			if (node == car) { return; }
+
+			if (car.intersects(node)) {
+				// Fire the main event
+				car.dispatchEvent({type: 'collided', body: node});
+
+				// Stop the car if it's a StaticBody
+				if (node instanceof StaticBody) {
+					car.velocity = 0;
+				}
+
+				// Respawn the car if it's an Orange
+				if (node instanceof OrangeWrapper) {
+					respawnObject(car);
+				}
+			}
+		});
+
+		// Moving our car
+		this.move(X_AXIS_HEADING, this.velocity);
+		if (objectNeedsRespawn(this.getWorldPosition())) {
+			respawnObject(this);
+		}
 	}
 
 	move(axis, distance) {
-		// TODO: Proper motion with Vector3 that points to the next location?
-		var colliding = super.move(axis, distance);
 		this.translateOnAxis(axis, distance);
-		return colliding;
 	}
 }
