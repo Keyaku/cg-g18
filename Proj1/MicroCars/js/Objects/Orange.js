@@ -38,22 +38,12 @@ class OrangeWrapper extends MotionBody {
 		if (this.velocity < MAX_ORANGE_VELOCITY) {
 			this.velocity += ORANGE_ACCELERATION * delta;
 		};
-		var displacement = this.velocity * delta;
-		this.move(this.heading, displacement);
-		this.rotate(this.heading);
-	}
-
-	/**
-	* @method move: Trnaslate object according to previously calculated or collision values.
-	* @param axis: representing the direction of movement_direction
-	* @param distance: far should the orange travel
-	* @var colliding:
-	*/
-	move(axis, distance) {
-		this.translateOnAxis(this.heading, distance);
+		var distance = this.velocity * delta;
+		this.move(distance);
 		if (objectNeedsRespawn(this.getWorldPosition())) {
 			respawnObject(this);
 		}
+		this.rotate(this.heading);
 	}
 
 	/**

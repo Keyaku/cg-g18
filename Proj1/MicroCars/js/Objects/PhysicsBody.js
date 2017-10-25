@@ -73,7 +73,12 @@ class MotionBody extends PhysicsBody {
 		// TODO for next assignment: fill with gravitational force
 	}
 
-	move(axis, distance) {
-		// TODO: remove this?
+	/**
+	* @method move: Trnaslate object according to previously calculated or collision values.
+	* @param axis: representing the direction of movement_direction
+	* @param distance: how far should the body travel
+	*/
+	move(distance) {
+		this.translateX(distance);
 	}
 }

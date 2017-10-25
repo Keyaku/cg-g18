@@ -90,13 +90,9 @@ class Car extends MotionBody {
 		});
 
 		// Moving our car
-		this.move(X_AXIS_HEADING, this.velocity);
+		this.move(this.velocity);
 		if (objectNeedsRespawn(this.getWorldPosition())) {
 			respawnObject(this);
 		}
-	}
-
-	move(axis, distance) {
-		this.translateOnAxis(axis, distance);
 	}
 }
