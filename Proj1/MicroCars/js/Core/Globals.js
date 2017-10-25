@@ -53,14 +53,15 @@ const THREE_HUNDRED_SIXTY_DEGREES = 2 * Math.PI;
 * @return: Boolean value True if orange is outside of the board. False otherwise
 */
 function objectNeedsRespawn(vector) {
-  var x = vector.x;
-  var z = vector.z;
-  if (x <= ((-1) * HALF_BOARD_WIDTH) || x >= (HALF_BOARD_WIDTH) ||
-      z <= ((-1) * HALF_BOARD_LENGHT) || z >= (HALF_BOARD_LENGHT)) {
-    return true;
-  } else {
-    return false;
-  }
+	var x = vector.x;
+	var z = vector.z;
+	if (x <= ((-1) * HALF_BOARD_WIDTH) || x >= (HALF_BOARD_WIDTH) ||
+		z <= ((-1) * HALF_BOARD_LENGHT) || z >= (HALF_BOARD_LENGHT)
+	) {
+		return true;
+	} else {
+		return false;
+	}
 }
 
 /** generateSpawnLocation(min, max)
@@ -74,12 +75,12 @@ function objectNeedsRespawn(vector) {
 @return: Vector3D that defines a new spawn location after orange falls from the table.
 */
 function generateSpawnLocation(min = 0, max = HALF_BOARD_WIDTH) {
-  var signX = Math.random() < 0.5 ? -1 : 1;
-  var signZ = Math.random() < 0.5 ? -1 : 1;
-  var x = Math.floor(Math.random() * (max - min + 1)) + min;
-  var z = Math.floor(Math.random() * (max - min + 1)) + min;
-  var spawnLocation = new THREE.Vector3(x, EDIBLES_Y, z);
-  return spawnLocation;
+	var signX = Math.random() < 0.5 ? -1 : 1;
+	var signZ = Math.random() < 0.5 ? -1 : 1;
+	var x = Math.floor(Math.random() * (max - min + 1)) + min;
+	var z = Math.floor(Math.random() * (max - min + 1)) + min;
+	var spawnLocation = new THREE.Vector3(x, EDIBLES_Y, z);
+	return spawnLocation;
 }
 
 /** respawnObject(spawnLocation, axis, distance)
@@ -87,37 +88,37 @@ function generateSpawnLocation(min = 0, max = HALF_BOARD_WIDTH) {
 * @param distance: How far should the orange travel after respawning
 */
 function respawnObject(obj) {
-  if (obj.type == 'Car') {
-    obj.position.copy(obj.userData.initialPosition);
-    obj.rotation.set(0, 0, 0);
-    obj.velocity = 0;
-    return;
-  }
+	if (obj.type == 'Car') {
+		obj.position.copy(obj.userData.initialPosition);
+		obj.rotation.set(0, 0, 0);
+		obj.velocity = 0;
+		return;
+	}
 
 
-  var heading;
+	var heading;
 
-  obj.visible = false;
+	obj.visible = false;
 
-  var x = Math.random() < 0.5 ? -1 : 1;
-  var z = Math.random() < 0.5 ? -1 : 1;
-  var maskDirection = Math.random();
-  var vector = generateSpawnLocation();
+	var x = Math.random() < 0.5 ? -1 : 1;
+	var z = Math.random() < 0.5 ? -1 : 1;
+	var maskDirection = Math.random();
+	var vector = generateSpawnLocation();
 
-  if (maskDirection >= 0 && maskDirection < 0.33) {
-    heading = new THREE.Vector3(x, 0, z);
-  } else if (maskDirection >= 0.33 && maskDirection < 0.66){
-    heading = new THREE.Vector3(x, 0, 0);
-  } else {
-    heading = new THREE.Vector3(0, 0, z);
-  }
+	if (maskDirection >= 0 && maskDirection < 0.33) {
+		heading = new THREE.Vector3(x, 0, z);
+	} else if (maskDirection >= 0.33 && maskDirection < 0.66){
+		heading = new THREE.Vector3(x, 0, 0);
+	} else {
+		heading = new THREE.Vector3(0, 0, z);
+	}
 
-  setTimeout(function() {
-    obj.position.set(vector.x, vector.y, vector.z);
-    obj.concreteOrange.rotation.set(0, 0, 0);
-    obj.concreteOrange.position.set(0,0,0);
-    obj.heading = heading.normalize();
-    obj.visible = true;
-  }, 1000);
+	setTimeout(function() {
+		obj.position.set(vector.x, vector.y, vector.z);
+		obj.concreteOrange.rotation.set(0, 0, 0);
+		obj.concreteOrange.position.set(0,0,0);
+		obj.heading = heading.normalize();
+		obj.visible = true;
+	}, 1000);
 
 }

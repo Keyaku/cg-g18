@@ -40,6 +40,7 @@ class OrangeWrapper extends MotionBody {
 		};
 		var displacement = this.velocity * delta;
 		this.move(this.heading, displacement);
+		this.rotate(this.heading);
 	}
 
 	/**
@@ -49,17 +50,10 @@ class OrangeWrapper extends MotionBody {
 	* @var colliding:
 	*/
 	move(axis, distance) {
-		var colliding = super.move(axis, distance);
-		if (colliding) {
-			this.velocity = this.collisionData.velocity;
-			this.heading = this.collisionData.heading;
-		}
 		this.translateOnAxis(this.heading, distance);
 		if (objectNeedsRespawn(this.getWorldPosition())) {
 			respawnObject(this);
 		}
-		this.rotate(axis);
-		return colliding;
 	}
 
 	/**
