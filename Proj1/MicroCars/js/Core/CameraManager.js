@@ -34,10 +34,26 @@ class CameraManager {
 
 		// Creating 3rd camera: Perspective Chase
 		camera = new THREE.PerspectiveCamera(75, this.aspectRatio, this.near, this.far);
-		camera.position.set(-20, 50, -25);
-		camera.rotation.set(0, 0, 0);
-		camera.lookAt(car.position);
+		this.attachCameraTo(camera, car);
+		camera.position.set(40, 30, 1); // FIXME: remove these values whenever possible
 		this.cameras.push(camera);
+	}
+
+	attachCameraTo(camera, obj) {
+		obj.add(camera);
+
+		var direction = obj.getWorldDirection();
+		var position  = obj.getWorldPosition();
+		var offsetX = Math.cos(NINETY_DEGREES) * direction.x - Math.sin(NINETY_DEGREES) * direction.z;
+		var offsetZ = Math.sin(NINETY_DEGREES) * direction.x + Math.cos(NINETY_DEGREES) * direction.z;
+
+		var x = position.x + offsetX * -40;
+		var y = position.y + 30;
+		var z = position.z + offsetZ * -40;
+
+		camera.position.set(x, y, z);
+		camera.rotation.set(0, 0, 0);
+		camera.lookAt(obj.position);
 	}
 
 	getCurrentCamera() {
@@ -120,20 +136,5 @@ class CameraManager {
 
 	changeToPerspectiveFollow() {
 		this.changeTo(3);
-	}
-
-	updateFollowCamera(position, direction) {
-		if (this.cameraNumber != 3) {
-			return;
-		}
-		var camera = this.getCurrentCamera();
-		var offsetX = Math.cos(NINETY_DEGREES) * direction.x - Math.sin(NINETY_DEGREES) * direction.z;
-		var offsetZ = Math.sin(NINETY_DEGREES) * direction.x + Math.cos(NINETY_DEGREES) * direction.z;
-		var x = position.x + offsetX * -40;
-		var y = position.y + 30;
-		var z = position.z + offsetZ * -40;
-		camera.position.set(x, y, z);
-		camera.lookAt(position);
-		this.updateCamera();
 	}
 }
