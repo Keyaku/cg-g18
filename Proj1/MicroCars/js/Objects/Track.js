@@ -100,8 +100,7 @@ class Tire extends MotionBody { // FIXME: use RigidBody when ready
 	}
 
 	update(delta) {
-		var acceleration = 0;
-		this.velocity += acceleration * delta - FRICTION * this.velocity;
+		this.velocity -= FRICTION * this.velocity;
 		this.move(X_AXIS_HEADING, this.velocity);
 	}
 

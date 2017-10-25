@@ -38,9 +38,6 @@ class CameraManager {
 		camera.rotation.set(0, 0, 0);
 		camera.lookAt(car.position);
 		this.cameras.push(camera);
-
-		// Switching to our initial camera
-		this.changeToOrthographic();
 	}
 
 	getCurrentCamera() {
