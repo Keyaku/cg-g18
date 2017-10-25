@@ -54,6 +54,9 @@ function onKeyDown(e) {
 
 	// Setting global input (if any)
 	switch(e.keyCode) {
+		case 48: //0
+			cameraManager.changeTo(0);
+			break;
 		case 49: //1
 			cameraManager.changeToOrthographic();
 			break;

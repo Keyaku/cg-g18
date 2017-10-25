@@ -1,6 +1,5 @@
 class CameraManager {
 	constructor() {
-		this.cameraNumber = 1
 		this.windowWidth = window.innerWidth;
 		this.windowHeight = window.innerHeight;
 		this.aspectRatio = this.windowWidth / this.windowHeight;
@@ -8,14 +7,44 @@ class CameraManager {
 		this.far = 2000;
 		this.frustumSize = 1000;
 
-		this.camera = new THREE.OrthographicCamera(0, 0, 0, 0, this.near, this.far);
-		this.camera.position.set(0, 1000, 0);
-		this.camera.lookAt(scene.position);
+		// Creating ALL cameras now
+		this.cameraNumber = 0;
+		this.cameras = [];
+		var camera;
 
-		controls = new THREE.OrbitControls(this.camera);
-		controls.enableKeys = false
+		// Creating debug camera: Orthographic + OrbitControls
+		camera = new THREE.OrthographicCamera(0, 0, 0, 0, this.near, this.far);
+		camera.position.set(0, 1000, 0);
+		camera.lookAt(scene.position);
+		controls = new THREE.OrbitControls(camera);
+		controls.enableKeys = false;
+		this.cameras.push(camera);
 
-		this.updateCamera();
+		// Creating 1st camera: Orthographic Top
+		camera = new THREE.OrthographicCamera(0, 0, 0, 0, this.near, this.far);
+		camera.position.set(0, 1000, 0);
+		camera.lookAt(scene.position);
+		this.cameras.push(camera);
+
+		// Creating 2nd camera: Perspective World
+		camera = new THREE.PerspectiveCamera(75, this.aspectRatio, this.near, this.far);
+		camera.position.set(0, 600, 550);
+		camera.lookAt(scene.position);
+		this.cameras.push(camera);
+
+		// Creating 3rd camera: Perspective Chase
+		camera = new THREE.PerspectiveCamera(75, this.aspectRatio, this.near, this.far);
+		camera.position.set(-20, 50, -25);
+		camera.rotation.set(0, 0, 0);
+		camera.lookAt(car.position);
+		this.cameras.push(camera);
+
+		// Switching to our initial camera
+		this.changeToOrthographic();
+	}
+
+	getCurrentCamera() {
+		return this.cameras[this.cameraNumber];
 	}
 
 	updateValues(w, h, aspect) {
@@ -25,26 +54,27 @@ class CameraManager {
 	}
 
 	updateCamera() {
-		if (this.cameraNumber == 1) {
+		var camera = this.getCurrentCamera();
+		if (camera instanceof THREE.OrthographicCamera) {
 			if (this.windowHeight > this.windowWidth) {
-				this.camera.left   = - this.frustumSize / 2;
-				this.camera.right  =   this.frustumSize / 2;
-				this.camera.top    =   this.frustumSize / this.aspectRatio / 2;
-				this.camera.bottom = - this.frustumSize / this.aspectRatio / 2;
+				camera.left   = - this.frustumSize / 2;
+				camera.right  =   this.frustumSize / 2;
+				camera.top    =   this.frustumSize / this.aspectRatio / 2;
+				camera.bottom = - this.frustumSize / this.aspectRatio / 2;
 			}
 			else {
-				this.camera.left   = - this.frustumSize * this.aspectRatio / 2;
-				this.camera.right  =   this.frustumSize * this.aspectRatio / 2;
-				this.camera.top    =   this.frustumSize / 2;
-				this.camera.bottom = - this.frustumSize / 2;
+				camera.left   = - this.frustumSize * this.aspectRatio / 2;
+				camera.right  =   this.frustumSize * this.aspectRatio / 2;
+				camera.top    =   this.frustumSize / 2;
+				camera.bottom = - this.frustumSize / 2;
 			}
 		}
 
 		/*
 		else if (this.cameraNumber == 2) {
-			this.camera.aspect = renderer.getSize().width / renderer.getSize().height;
-			var dir = this.camera.getWorldDirection();
-			var pos = this.camera.position;
+			camera.aspect = renderer.getSize().width / renderer.getSize().height;
+			var dir = camera.getWorldDirection();
+			var pos = camera.position;
 			var halfBoardWidth = BOARD_WIDTH;
 			var halfCameraFOV = 45;
 			var D = halfBoardWidth / Math.tan(halfCameraFOV);
@@ -52,77 +82,61 @@ class CameraManager {
 			D = D*0.5
 			var displ = {x:dir.x*-D, y:dir.y*-D, z:dir.z*-D};
 			var newPos = {x:0, y:pos.y, z:displ.z+halfBoardWidth};
-			this.camera.position.set(newPos.x, newPos.y, newPos.z)
+			camera.position.set(newPos.x, newPos.y, newPos.z)
 		}
 		*/
 		/*
 		else if (this.cameraNumber == 2) {
-			this.camera.aspect = renderer.getSize().width / renderer.getSize().height;
+			camera.aspect = renderer.getSize().width / renderer.getSize().height;
 			var halfBoardWidth = HALF_BOARD_WIDTH;
-			var dCameraBoard = 1000//this.camera.position.z - halfBoardWidth;
+			var dCameraBoard = 1000//camera.position.z - halfBoardWidth;
 			var halfHorizontalFOV = Math.atan(halfBoardWidth / dCameraBoard);
 			var verticalFOV = halfHorizontalFOV * 100 * this.aspectRatio;
 			console.log(halfHorizontalFOV, this.aspectRatio)
-			this.camera.fov = verticalFOV;
+			camera.fov = verticalFOV;
 		}
 		*/
 
 		else {
-			this.camera.aspect = renderer.getSize().width / renderer.getSize().height;
+			camera.aspect = renderer.getSize().width / renderer.getSize().height;
 		}
-		this.camera.updateProjectionMatrix();
+
+		// Updating projection matrix (absolutely required)
+		camera.updateProjectionMatrix();
 	}
 
-	changeGlobal() {
-		this.updateCamera();
-		//controls = new THREE.OrbitControls(this.camera);
-		//controls.enableKeys = false
+	changeTo(index) {
+		if (0 <= index && index < this.cameras.length) {
+			controls.enabled = index == 0;
+			this.cameraNumber = index;
+			this.updateCamera();
+		}
 	}
 
 	changeToOrthographic() {
-		if (this.cameraNumber == 1) {
-			return;
-		}
-		this.camera = new THREE.OrthographicCamera(0, 0, 0, 0, this.near, this.far);
-		this.camera.position.set(0, 1000, 0);
-		this.cameraNumber = 1;
-		this.camera.lookAt(scene.position);
-		this.changeGlobal();
+		this.changeTo(1);
 	}
 
 	changeToPerspectiveWorld() {
-		if (this.cameraNumber == 2) {
-			return;
-		}
-		this.camera = new THREE.PerspectiveCamera(75, this.aspectRatio, this.near, this.far);
-		this.camera.position.set(0, 600, 550);
-		this.cameraNumber = 2;
-		this.camera.lookAt(scene.position);
-		this.changeGlobal();
+		this.changeTo(2);
 	}
 
 	changeToPerspectiveFollow() {
-		if (this.cameraNumber == 3) {
-			return;
-		}
-		this.camera = new THREE.PerspectiveCamera(75, this.aspectRatio, this.near, this.far);
-		this.camera.position.set(-20, 50, -25);
-		this.camera.rotation.set(0, 0, 0);
-		this.cameraNumber = 3;
-		this.changeGlobal();
+		this.changeTo(3);
 	}
 
-	updateFollowCamera(carPosition, carDirection) {
+	updateFollowCamera(position, direction) {
 		if (this.cameraNumber != 3) {
 			return;
 		}
-		var offsetX = Math.cos(NINETY_DEGREES) * carDirection.x - Math.sin(NINETY_DEGREES) * carDirection.z;
-		var offsetZ = Math.sin(NINETY_DEGREES) * carDirection.x + Math.cos(NINETY_DEGREES) * carDirection.z;
-		var x = carPosition.x + offsetX * -40;
-		var y = carPosition.y + 30;
-		var z = carPosition.z + offsetZ * -40;
-		this.camera.position.set(x, y, z);
-		this.camera.lookAt(carPosition);
-		this.changeGlobal();
+		var camera = this.getCurrentCamera();
+		var offsetX = Math.cos(NINETY_DEGREES) * direction.x - Math.sin(NINETY_DEGREES) * direction.z;
+		var offsetZ = Math.sin(NINETY_DEGREES) * direction.x + Math.cos(NINETY_DEGREES) * direction.z;
+		var x = position.x + offsetX * -40;
+		var y = position.y + 30;
+		var z = position.z + offsetZ * -40;
+		camera.position.set(x, y, z);
+		camera.lookAt(position);
+		this.updateCamera();
 	}
 }

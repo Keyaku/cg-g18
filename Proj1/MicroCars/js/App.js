@@ -46,7 +46,7 @@ function render() {
 	cameraManager.updateFollowCamera(car.position, car.getWorldDirection());
 	// ThreeJS updates (OrbitControls, renderer)
 	controls.update();
-	renderer.render(scene, cameraManager.camera);
+	renderer.render(scene, cameraManager.getCurrentCamera());
 	requestAnimationFrame(render);
 }
 
