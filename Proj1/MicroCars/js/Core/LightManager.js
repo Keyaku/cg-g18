@@ -72,9 +72,8 @@ class LightManager {
   }
 
   switchMaterials() {
-    scene.traverse(function(node) {
-      if (node instanceof THREE.Mesh) {
-        node.switchMaterials();
-      }
+    scene.traverse(function (node) {
+      if (node instanceof THREE.Mesh) { node.switchMaterials(); }
+    });
   }
 }
