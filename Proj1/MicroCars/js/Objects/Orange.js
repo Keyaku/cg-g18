@@ -7,7 +7,7 @@
 * @attribute position: position of this wrapper in world coordinates.
 */
 class OrangeWrapper extends MotionBody {
-	constructor(orangeName, x, y, z, radius = 5) {
+	constructor(orangeName, x, y, z, radius = 15) {
 		super(0.140);
 
 		// Adding mesh
@@ -19,7 +19,7 @@ class OrangeWrapper extends MotionBody {
 		this.position.set(x, y, z);
 
 		// Adding BoundingSphere
-		this.bounds = new BoundingSphere(this.concreteOrange, 5);
+		this.bounds = new BoundingSphere(this.concreteOrange, 15);
 		this.add(this.bounds);
 
 		// Setting up scene graph
@@ -64,7 +64,7 @@ class OrangeWrapper extends MotionBody {
 *******************************************************************************/
 
 class Orange extends THREE.Object3D {
-	constructor(orangeName, x, y, z, radius = 5) {
+	constructor(orangeName, x, y, z, radius = 15) {
 		super();
 		var orangeFruit = new OrangeFruit(this, x, y, z, radius);
 		var orangeBranch = new OrangeBranch(this, x, y, z);
@@ -80,7 +80,7 @@ class Orange extends THREE.Object3D {
 *******************************************************************************/
 
 class OrangeFruit extends THREE.Mesh {
-	constructor(obj, x, y, z, radius = 5) {
+	constructor(obj, x, y, z, radius = 15) {
 		var material = new THREE.MeshLambertMaterial({color:0xFF9900});
 		var geometry = new THREE.SphereGeometry(radius, 15, 15);
 		super(geometry, material);
@@ -99,33 +99,10 @@ class OrangeFruit extends THREE.Mesh {
 class OrangeBranch extends THREE.Mesh {
 	constructor(obj, x, y, z) {
 		var material = new THREE.MeshLambertMaterial({color:0x666633});
-		var geometry = new THREE.CylinderGeometry(0.66, 0.33, 4);
+		var geometry = new THREE.CylinderGeometry(2, 1, 8);
 		super(geometry, material);
 		this.type = 'OrangeBranch';
-		this.position.set(x, y + 5, z);
-
-		obj.add(this);
-		return this;
-	}
-}
-
-/*******************************************************************************
-* OrangeLeaf class
-*******************************************************************************/
-
-class OrangeLeaf extends THREE.Mesh {
-	constructor(obj, x, y, z) {
-		var leafShape = new THREE.Shape();
-		leafShape.moveTo( 0, 0 );
-		leafShape.bezierCurveTo( x + 6, y - 6, x + 12, y + 4, x, y );
-
-		var extrudeSettings = { amount: 0.5, bevelEnabled: false };
-		var geometry = new THREE.ExtrudeGeometry( leafShape, extrudeSettings );
-		var material = new THREE.MeshLambertMaterial({color: 0x009900});
-
-		super(geometry, material);
-		this.type = 'OrangeLeaf';
-		this.position.set(x, y+6.5, z);
+		this.position.set(x, y + 15, z);
 
 		obj.add(this);
 		return this;

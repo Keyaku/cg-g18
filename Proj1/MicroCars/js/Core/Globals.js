@@ -16,7 +16,7 @@ const BOARD_LENGHT = 1000;
 const HALF_BOARD_WIDTH  = BOARD_WIDTH  >> 1;
 const HALF_BOARD_LENGHT = BOARD_LENGHT >> 1;
 const FRICTION = 0.02;
-const EDIBLES_Y = 5;
+const EDIBLES_Y = 15;
 
 /*******************************************************************************
 * Directional variables
