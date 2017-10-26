@@ -54,19 +54,6 @@ function onKeyDown(e) {
 
 	// Setting global input (if any)
 	switch(e.keyCode) {
-		case 48: //0
-			cameraManager.changeTo(0);
-			break;
-		case 49: //1
-			cameraManager.changeToOrthographic();
-			break;
-		case 50: //2
-			cameraManager.changeToPerspectiveWorld();
-			break;
-		case 51: //3
-			cameraManager.changeToPerspectiveFollow();
-			break;
-
 		case 65: // A
 		case 97: // a
 			scene.traverse(function (node) {

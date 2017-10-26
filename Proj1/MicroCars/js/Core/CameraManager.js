@@ -66,6 +66,7 @@ class CameraManager {
 		this.aspectRatio = aspect;
 	}
 
+	// Updates
 	updateCamera() {
 		var camera = this.getCurrentCamera();
 		if (camera instanceof THREE.OrthographicCamera) {
@@ -118,12 +119,33 @@ class CameraManager {
 		camera.updateProjectionMatrix();
 	}
 
+	update() {
+		var toggled = {
+			changeToOrthographic      : Input.is_pressed("1"),
+			changeToPerspectiveWorld  : Input.is_pressed("2"),
+			changeToPerspectiveFollow : Input.is_pressed("3"),
+			changeToOrbit             : Input.is_pressed("0"),
+		};
+
+		// Iterate our toggled keypresses
+		for (var key in toggled) {
+			if (toggled[key]) {
+				// if the given key was pressed, call the function with key's name
+				this[key]();
+			}
+		}
+	}
+
 	changeTo(index) {
 		if (0 <= index && index < this.cameras.length) {
 			controls.enabled = index == 0;
 			this.cameraNumber = index;
 			this.updateCamera();
 		}
+	}
+
+	changeToOrbit() {
+		this.changeTo(0);
 	}
 
 	changeToOrthographic() {
