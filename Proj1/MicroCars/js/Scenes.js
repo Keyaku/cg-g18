@@ -27,9 +27,9 @@ function createScene() {
 	createEdible(OrangeWrapper, "Orange2", -200, EDIBLES_Y, -100);
 	createEdible(OrangeWrapper, "Orange3", 0, EDIBLES_Y, 50);
 	// Adding apples. I mean, butters.
-	createEdible(Butter, "Butter1", 100, EDIBLES_Y, -100);
-	createEdible(Butter, "Butter2", -100, EDIBLES_Y, -100);
-	createEdible(Butter, "Butter3", 50, EDIBLES_Y, 70);
-	createEdible(Butter, "Butter4", 150, EDIBLES_Y, 90);
-	createEdible(Butter, "Butter5", -50, EDIBLES_Y, 70);
+	createEdible(Butter, "Butter1", 100, 0, -100);
+	createEdible(Butter, "Butter2", -100, 0, -100);
+	createEdible(Butter, "Butter3", 50, 0, 70);
+	createEdible(Butter, "Butter4", 150, 0, 90);
+	createEdible(Butter, "Butter5", -50, 0, 70);
 }

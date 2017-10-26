@@ -14,6 +14,7 @@ class Butter extends StaticBody {
 
 		var size = new THREE.Vector3(7, 10, 20);
 		this.mesh = new ButterBox(this, material, size);
+		this.mesh.position.setY(10/2);
 
 		// Places it in a given position
 		this.position.set(x, y, z);
@@ -21,6 +22,7 @@ class Butter extends StaticBody {
 			angle = Math.random() + 360 * TO_RADIANS;
 		}
 		this.rotateY(angle);
+		this.scale.set(2,2,2);
 
 		// Adding our Bounds
 		this.bounds = new BoundingSphere(this.mesh);

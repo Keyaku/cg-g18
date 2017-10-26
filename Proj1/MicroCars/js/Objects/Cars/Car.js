@@ -82,7 +82,6 @@ class Car extends MotionBody {
 				// Stop the car if it's a StaticBody
 				if (node instanceof StaticBody) {
 					var n = car.getHeading(car, node);
-					//var tangent = new THREE.Vector3(-n.z, 0, n.x);
 					var angle = car.heading.angleTo(n);
 
 					if (angle < 90 && car.acceleration < 0) {
