@@ -74,9 +74,12 @@ function onKeyDown(e) {
 					node.material.wireframe = !node.material.wireframe;
 			});
 			break;
-
+		case 78:
+		case 110:
+			lightManager.switchDirectionalLight();
+			break;
 		case 81:  // Q
-		case 103: // q
+		case 113: // q
 		scene.traverse(function (node) {
 			if (node instanceof PhysicsBody && node.bounds != undefined)
 				node.bounds.toggleVisibility();

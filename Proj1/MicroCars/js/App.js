@@ -47,7 +47,7 @@ function init() {
 	createScene();
 	cameraManager = new CameraManager();
 	cameraManager.changeToOrthographic();
-	lightManager = new lightManager();
+	lightManager = new LightManager();
 	render();
 
 	window.addEventListener('resize', onWindowResize, false);
