@@ -65,8 +65,8 @@ function onKeyDown(e) {
 		case 81:  // Q
 		case 113: // q
 			scene.traverse(function (node) {
-				if (node instanceof PhysicsBody && node.bounds != undefined) {
-					node.bounds.toggleVisibility();
+				if (node instanceof BoundingSphere) {
+					node.toggleVisibility();
 				}
 			});
 			break;
