@@ -65,16 +65,18 @@ class Track extends THREE.Object3D {
 		return mesh
 	}
 	trackAddTorus(obj, vertices) {
+		//Creates the torus material.
+		var material = new THREE.MeshPhongMaterial({color:0xAA1111})
 		//Step of the for loop
 		var step = 2
 		//Adds the tires to the track's sides.
 		for (var i = 0; i < vertices.length; i += step)
-			new Tire(obj, vertices[i])
+			new Tire(obj, vertices[i], material)
 	}
 }
 
 class Tire extends RigidBody {
-	constructor(obj, p) {
+	constructor(obj, p, material) {
 		super(7)
 		this.type = 'Tire'
 
@@ -82,8 +84,7 @@ class Tire extends RigidBody {
 		var radius = 2.5
 		var tube = 0.8
 		var geometry = new THREE.TorusBufferGeometry(radius, tube, 5, 16)
-		//Creates the torus material.
-		var material = new THREE.MeshPhongMaterial({color:0xAA1111})
+		//Creates the mesh
 		var mesh = new THREE.Mesh(geometry, material)
 		//Positions the torus to be on the track point.
 		this.position.copy(p)
