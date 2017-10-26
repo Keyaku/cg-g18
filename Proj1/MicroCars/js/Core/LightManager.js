@@ -1,5 +1,6 @@
 class LightManager {
   constructor() {
+    this.lightsNeedUpdate = true;
     this.directionalLight = this.newDirectionalLight();
     this.ambientLight = this.newAmbientLight();
     this.horizon = this.newHorizonLight();
@@ -64,5 +65,14 @@ class LightManager {
   	} else {
   		this.directionalLight.visible = true;
   	}
+  }
+
+  disableLightUpdates() {
+    // TODO
+    if (this.lightsNeedUpdate) {
+      this.lightsNeedUpdate = false;
+    } else {
+      this.lightsNeedUpdate = true;
+    }
   }
 }

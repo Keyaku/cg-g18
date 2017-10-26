@@ -74,8 +74,16 @@ function onKeyDown(e) {
 					node.material.wireframe = !node.material.wireframe;
 			});
 			break;
-		case 78:
-		case 110:
+		case 71: // g
+		case 103: // G
+			lightManager.switchShadowMode();
+			break;
+		case 76: // l
+		case 108: // L
+			lightManager.disableLightUpdates();
+			break;
+		case 78: // n
+		case 110: // N
 			lightManager.switchDirectionalLight();
 			break;
 		case 81:  // Q
