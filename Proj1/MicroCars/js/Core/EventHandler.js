@@ -75,29 +75,14 @@ function onKeyDown(e) {
 			});
 			break;
 
-		case 67: //C
-		case 99: //c
-			lightManager.switchPointLights();
-			break;
-		case 71: // g
-		case 103: // G
-			lightManager.switchMaterials();
-			break;
-		case 76: // l
-		case 108: // L
-			lightManager.disableLightUpdates();
-			break;
-		case 78: // n
-		case 110: // N
-			lightManager.switchDirectionalLight();
-			break;
 		case 81:  // Q
 		case 113: // q
-		scene.traverse(function (node) {
-			if (node instanceof PhysicsBody && node.bounds != undefined)
-				node.bounds.toggleVisibility();
-		});
-		break;
+			scene.traverse(function (node) {
+				if (node instanceof PhysicsBody && node.bounds != undefined) {
+					node.bounds.toggleVisibility();
+				}
+			});
+			break;
 	}
 }
 

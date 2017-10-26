@@ -59,12 +59,25 @@ class LightManager {
     return ambientLight;
   }
 
+	update() {
+		var toggled = {
+			switchPointLights      : Input.is_pressed("c"),
+			switchMaterials        : Input.is_pressed("g"),
+			disableLightUpdates    : Input.is_pressed("l"),
+			switchDirectionalLight : Input.is_pressed("n"),
+		};
+
+		// Iterate our toggled keypresses
+		for (var key in toggled) {
+			if (toggled[key]) {
+				// if the given key was pressed, call the function with key's name
+				lightManager[key]();
+			}
+		}
+	}
+
   switchDirectionalLight() {
-  	if (this.directionalLight.visible) {
-  		this.directionalLight.visible = false;
-  	} else {
-  		this.directionalLight.visible = true;
-  	}
+  	this.directionalLight.visible = !this.directionalLight.visible;
   }
 
   disableLightUpdates() {
@@ -87,10 +100,10 @@ class LightManager {
     scene.traverse(function (node) {
       if (node instanceof THREE.Mesh && node.type == "Board") {
         if (node.material instanceof THREE.MeshPhongMaterial) {
-    			node.material = node.lambertMaterial;
-    		} else {
-    			node.material = node.phongMaterial;
-    		}
+    		node.material = node.lambertMaterial;
+		} else {
+			node.material = node.phongMaterial;
+		}
       }
     });
   }

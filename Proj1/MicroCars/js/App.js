@@ -22,6 +22,8 @@ function render() {
 		}
 	});
 
+	lightManager.update();
+
 	// ThreeJS updates (OrbitControls, renderer)
 	controls.update();
 	renderer.render(scene, cameraManager.getCurrentCamera());
