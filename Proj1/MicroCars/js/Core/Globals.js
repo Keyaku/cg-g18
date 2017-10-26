@@ -7,7 +7,6 @@ const ORANGE_VELOCITY = 20;
 const ORANGE_ACCELERATION = 2;
 const TURN_ASSIST = CAR_ACCELERATION / 32;
 const WHEEL_ROTATION = Math.PI / 8;
-
 /*******************************************************************************
 * Board variables
 *******************************************************************************/
@@ -17,7 +16,6 @@ const HALF_BOARD_WIDTH  = BOARD_WIDTH  >> 1;
 const HALF_BOARD_LENGHT = BOARD_LENGHT >> 1;
 const FRICTION = 0.02;
 const EDIBLES_Y = 15;
-
 /*******************************************************************************
 * Directional variables
 *******************************************************************************/
@@ -41,6 +39,10 @@ const TO_DEGREES = 180 / Math.PI;
 const TO_RADIANS = Math.PI / 180;
 const NINETY_DEGREES = Math.PI / 2;
 const THREE_HUNDRED_SIXTY_DEGREES = 2 * Math.PI;
+/*******************************************************************************
+* Lighting variables
+*******************************************************************************/
+const POINT_LIGHT_INTENSITY = 10;
 
 /*******************************************************************************
 * Helper methods
