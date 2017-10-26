@@ -74,6 +74,11 @@ function onKeyDown(e) {
 					node.material.wireframe = !node.material.wireframe;
 			});
 			break;
+		
+		case 67: //C
+		case 99: //c
+			raceTrack.switchPointLights();
+			break;
 		case 71: // g
 		case 103: // G
 			lightManager.switchMaterials();

@@ -25,8 +25,12 @@ class Track extends THREE.Object3D {
 		var track = this.trackCreate(this, points, trackWidth, 0x13294B)
 		//Adds the tori on the track.
 		this.trackAddTorus(this, track.geometry.vertices)
+
+
+		this.lights = new Candles(this);
+
 		//Adds all to the scene.
-		scene.add(this)
+		scene.add(this)		
 		return this
 	}
 
@@ -70,6 +74,20 @@ class Track extends THREE.Object3D {
 		for (var i = 0; i < vertices.length; i += step)
 			new Tire(obj, vertices[i])
 	}
+
+	switchPointLights() {
+		var lights = this.lights;
+		for (var i = 0; i < lights.length; i++) {
+			var light = lights[i];
+			if (light.intensity != 0) {
+				light.intensity = 0;	
+			}
+			else {
+				light.intensity = POINT_LIGHT_INTENSITY;
+			}
+			
+		}
+	}
 }
 
 class Tire extends RigidBody {
@@ -97,5 +115,27 @@ class Tire extends RigidBody {
 		this.add(mesh)
 		obj.add(this)
 		return this
+	}
+}
+
+class Candles {
+	constructor(obj) {
+		var lights = []
+		var horizontalSpacing = BOARD_WIDTH / 3;
+		var verticalSpacing = BOARD_LENGHT / 4;
+		for (var lines = 1; lines <= 2; lines++) {
+			for (var columns = 1; columns <= 3; columns++) {
+				var coords = new THREE.Vector3(
+						horizontalSpacing * lines - HALF_BOARD_WIDTH,
+						50,
+						verticalSpacing * columns - HALF_BOARD_LENGHT
+				);
+				var light = new THREE.PointLight(0x0000ff, POINT_LIGHT_INTENSITY, 100);
+				light.position.set(coords.x, coords.y, coords.z);
+				obj.add(light);
+				lights.push(light);
+			}
+		}
+		return lights;
 	}
 }
