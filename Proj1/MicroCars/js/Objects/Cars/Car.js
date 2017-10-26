@@ -7,6 +7,10 @@ class Car extends MotionBody {
 		this.mesh = new CarMesh();
 		this.add(this.mesh);
 
+		this.canMoveForward = true;
+		this.canMoveBack = true;
+		this.colliding = false;
+
 		// Creating Bounds
 		/* FIXME: hacked our way through a BoundingSphere for our car */
 		var vertices = this.mesh.children[0].geometry.vertices
@@ -40,6 +44,53 @@ class Car extends MotionBody {
 	}
 
 	update(delta) {
+		var carCollided = false;
+		// Handling collisions
+		scene.traverseVisible(function(node) {
+			if (node == car) { return; }
+
+			if (car.intersects(node)) {
+				// Calculate new position
+
+				// Fire the main event
+				car.dispatchEvent({type: 'collided', body: node});
+
+				// Stop the car if it's a StaticBody
+				if (node instanceof StaticBody) {
+					carCollided = true;
+					car.velocity = 0;
+					var xx = node.position.x - car.position.x;
+					var zz = node.position.z - car.position.z;
+					var vectorCarToButter = new THREE.Vector3(xx, 0, zz);
+					vectorCarToButter.normalize();
+					
+					//The world direction vector is rotated 90º because it point right.
+					var heading = car.getWorldDirection();
+					var rotatedX = Math.cos(NINETY_DEGREES) * heading.x - Math.sin(NINETY_DEGREES) * heading.z;
+					var rotatedZ = Math.sin(NINETY_DEGREES) * heading.x + Math.cos(NINETY_DEGREES) * heading.z;
+					var carHeading = new THREE.Vector3(rotatedX, 0, rotatedZ);
+					var angleCarButter = carHeading.angleTo(vectorCarToButter) * TO_DEGREES;
+					
+					if (angleCarButter < 90) {
+						car.canMoveForward = false;
+					}
+					else {
+						car.canMoveBack = false;
+					}
+				}
+				// Respawn the car if it's an Orange
+				else if (node instanceof OrangeWrapper) {
+					respawnObject(car);
+				}
+			}
+		});
+
+		if (!carCollided) {
+			car.colliding = false;
+			car.canMoveForward = true;
+			car.canMoveBack = true;
+		}
+
 		// Handling input
 		var left  = Input.is_pressed("ArrowLeft");
 		var right = Input.is_pressed("ArrowRight");
@@ -47,9 +98,11 @@ class Car extends MotionBody {
 		var down  = Input.is_pressed("ArrowDown");
 
 		this.acceleration = 0;
-		if (up && !down) {
+		//console.log(car.canMoveForward)
+		if (up && !down && car.canMoveForward) {
 			this.acceleration = -CAR_ACCELERATION;
-		} else if (down && !up) {
+		} 
+		else if (down && !up && car.canMoveBack) {
 			this.acceleration = CAR_ACCELERATION;
 		}
 
@@ -67,34 +120,7 @@ class Car extends MotionBody {
 		if (angle != 0) {
 			angle *= Math.abs(this.velocity) * TURN_ASSIST;
 			this.rotateY(angle);
-		}
-
-		// Handling collisions
-		scene.traverseVisible(function(node) {
-			if (node == car) { return; }
-
-			if (car.intersects(node)) {
-				// Calculate new position
-
-				// Fire the main event
-				car.dispatchEvent({type: 'collided', body: node});
-
-				// Stop the car if it's a StaticBody
-				if (node instanceof StaticBody) {
-					var n = car.getHeading(car, node);
-					var angle = car.heading.angleTo(n);
-
-					if (angle < 90 && car.acceleration < 0) {
-						car.velocity = 0;
-					}
-				}
-
-				// Respawn the car if it's an Orange
-				if (node instanceof OrangeWrapper) {
-					respawnObject(car);
-				}
-			}
-		});
+		}		
 
 		// Moving our car
 		this.move(this.heading, this.velocity);
