@@ -20,7 +20,7 @@ class PhysicsBody extends THREE.Object3D {
 	// Gets the
 	getHeading(a, b, n=undefined) {
 		if (n == undefined || !n.isVector3) {
-			b.getWorldPosition().clone();
+			n = b.getWorldPosition().clone();
 		} else {
 			n.copy(b.getWorldPosition());
 		}
@@ -90,7 +90,7 @@ class MotionBody extends PhysicsBody {
 	}
 
 	/**
-	* @method move: Trnaslate object according to previously calculated or collision values.
+	* @method move: Translate object according to previously calculated or collision values.
 	* @param axis: representing the direction of movement_direction
 	* @param distance: how far should the body travel
 	*/
