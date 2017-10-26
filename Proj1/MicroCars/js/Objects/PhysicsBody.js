@@ -17,7 +17,7 @@ class PhysicsBody extends THREE.Object3D {
 	// Callback for every frame
 	update(delta) { /* do nothing */ }
 
-	// Gets the
+	// Gets the vector direction where a points to b
 	getHeading(a, b, n=undefined) {
 		if (n == undefined || !n.isVector3) {
 			n = b.getWorldPosition().clone();

@@ -32,6 +32,8 @@ class Car extends MotionBody {
 		this.add(this.bounds);
 
 		// Positioning the car
+		this.heading = X_AXIS_HEADING.clone();
+		this.acceleration = 0;
 		this.position.set(x, y, z);
 		this.userData.initialPosition = this.position.clone();
 
@@ -46,15 +48,15 @@ class Car extends MotionBody {
 		var up    = Input.is_pressed("ArrowUp");
 		var down  = Input.is_pressed("ArrowDown");
 
-		var acceleration = 0;
+		this.acceleration = 0;
 		if (up && !down) {
-			acceleration = -CAR_ACCELERATION;
+			this.acceleration = -CAR_ACCELERATION;
 		} else if (down && !up) {
-			acceleration = CAR_ACCELERATION;
+			this.acceleration = CAR_ACCELERATION;
 		}
 
 		// Updating car motion
-		this.velocity += acceleration * delta - FRICTION * this.velocity;
+		this.velocity += this.acceleration * delta - FRICTION * this.mass * this.velocity;
 
 		// Rotates the mesh
 		var angle = 0;
@@ -74,12 +76,20 @@ class Car extends MotionBody {
 			if (node == car) { return; }
 
 			if (car.intersects(node)) {
+				// Calculate new position
+
 				// Fire the main event
 				car.dispatchEvent({type: 'collided', body: node});
 
 				// Stop the car if it's a StaticBody
 				if (node instanceof StaticBody) {
-					car.velocity = 0;
+					var n = car.getHeading(car, node);
+					//var tangent = new THREE.Vector3(-n.z, 0, n.x);
+					var angle = car.heading.angleTo(n);
+
+					if (angle < 90 && car.acceleration < 0) {
+						car.velocity = 0;
+					}
 				}
 
 				// Respawn the car if it's an Orange
@@ -90,7 +100,7 @@ class Car extends MotionBody {
 		});
 
 		// Moving our car
-		this.move(X_AXIS_HEADING, this.velocity);
+		this.move(this.heading, this.velocity);
 		if (objectNeedsRespawn(this.getWorldPosition())) {
 			respawnObject(this);
 		}
