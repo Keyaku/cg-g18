@@ -2,6 +2,7 @@
 * This is the 'main' JS file. Everything down to globals and runtime happens here.
 */
 var renderer, cameraManager, controls;
+var lightManager;
 var gameBoard, raceTrack, car;
 var clock = new THREE.Clock(false);
 
@@ -46,7 +47,7 @@ function init() {
 	createScene();
 	cameraManager = new CameraManager();
 	cameraManager.changeToOrthographic();
-	createLights();
+	lightManager = new lightManager();
 	render();
 
 	window.addEventListener('resize', onWindowResize, false);
