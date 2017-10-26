@@ -74,7 +74,7 @@ class Track extends THREE.Object3D {
 
 class Tire extends RigidBody {
 	constructor(obj, p) {
-		super()
+		super(7)
 		this.type = 'Tire'
 
 		//Creates the torus geometry.
@@ -97,10 +97,5 @@ class Tire extends RigidBody {
 		this.add(mesh)
 		obj.add(this)
 		return this
-	}
-
-	update(delta) {
-		this.velocity -= FRICTION * this.velocity;
-		this.translateX(this.velocity);
 	}
 }

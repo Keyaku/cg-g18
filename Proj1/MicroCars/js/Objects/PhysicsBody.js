@@ -11,11 +11,26 @@ class PhysicsBody extends THREE.Object3D {
 
 		this.collisionData = undefined;
 		this.bounds = undefined;
+		this.heading = new THREE.Vector3();
 	}
 
 	// Callback for every frame
 	update(delta) { /* do nothing */ }
 
+	// Gets the
+	getHeading(a, b, n=undefined) {
+		if (n == undefined || !n.isVector3) {
+			b.getWorldPosition().clone();
+		} else {
+			n.copy(b.getWorldPosition());
+		}
+		n.sub(a.getWorldPosition());
+		n.setZ(0);
+		n.normalize();
+		return n;
+	}
+
+	// Checks for intersection via a formula
 	intersects(body) {
 		if (!(body instanceof PhysicsBody)) { return false; }
 		if (this.bounds == undefined || body.bounds == undefined) {
@@ -47,7 +62,8 @@ class RigidBody extends PhysicsBody {
 	}
 
 	update(delta) {
-		// TODO for next assignment: fill with gravitational force
+		this.velocity -= FRICTION * this.mass * this.velocity;
+		this.translateOnAxis(this.heading, this.velocity);
 	}
 }
 
@@ -63,8 +79,8 @@ class MotionBody extends PhysicsBody {
 		// Creating event for collision
 		this.addEventListener('collided', function(event) {
 			if (event.body instanceof RigidBody) {
-				// FIXME: apply proper physics to both bodies (when applied)
-				event.body.velocity = this.velocity;
+				this.getHeading(this, event.body, event.body.heading);
+				event.body.velocity = Math.abs(this.velocity);
 			}
 		});
 	}
@@ -78,7 +94,7 @@ class MotionBody extends PhysicsBody {
 	* @param axis: representing the direction of movement_direction
 	* @param distance: how far should the body travel
 	*/
-	move(distance) {
-		this.translateX(distance);
+	move(axis, distance) {
+		this.translateOnAxis(axis, distance);
 	}
 }

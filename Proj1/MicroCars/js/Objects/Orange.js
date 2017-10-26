@@ -39,7 +39,7 @@ class OrangeWrapper extends MotionBody {
 			this.velocity += ORANGE_ACCELERATION * delta;
 		};
 		var distance = this.velocity * delta;
-		this.translateOnAxis(this.heading, distance);
+		this.move(this.heading, distance);
 		if (objectNeedsRespawn(this.getWorldPosition())) {
 			respawnObject(this);
 		}
