@@ -73,7 +73,13 @@ class LightManager {
 
   switchMaterials() {
     scene.traverse(function (node) {
-      if (node instanceof THREE.Mesh) { node.switchMaterials(); }
+      if (node instanceof THREE.Mesh && node.parent.type == "Board") {
+        if (node.material instanceof THREE.MeshPhongMaterial) {
+    			node.material = node.parent.lambertMaterial;
+    		} else {
+    			node.material = node.parent.phongMaterial;
+    		}
+      }
     });
   }
 }

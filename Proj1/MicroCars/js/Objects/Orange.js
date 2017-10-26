@@ -81,9 +81,13 @@ class Orange extends THREE.Object3D {
 
 class OrangeFruit extends THREE.Mesh {
 	constructor(obj, x, y, z, radius = 15) {
-		var material = new THREE.MeshLambertMaterial({color:0xFF9900});
 		var geometry = new THREE.SphereGeometry(radius, 15, 15);
-		super(geometry, material);
+		super(geometry);
+
+		this.lambertMaterial = new THREE.MeshLambertMaterial({color:0xFF9900});
+		this.phongMaterial = new THREE.MeshPhongMaterial({color:0xFF9900});
+		this.material = this.lambertMaterial;
+
 		this.type = 'OrangeFruit';
 		this.position.set(x, y, z);
 
