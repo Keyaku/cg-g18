@@ -8,8 +8,6 @@ class Car extends MotionBody {
 		this.add(this.mesh);
 
 		// Creating Bounds
-		this.bounds = new BoundingSphere(this.mesh);
-
 		/* FIXME: hacked our way through a BoundingSphere for our car */
 		var vertices = this.mesh.children[0].geometry.vertices
 		var min = new THREE.Vector3(0, 0, 0);
@@ -26,7 +24,7 @@ class Car extends MotionBody {
 		center.divideScalar(2);
 		center.multiplyScalar(0.5);
 
-		this.bounds.updateBounds(radius, center);
+		this.bounds = new BoundingSphere(this.mesh, radius, center);
 		/* FIXME: attempt to remove the code above later */
 
 		this.add(this.bounds);

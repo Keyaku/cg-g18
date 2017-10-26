@@ -14,6 +14,7 @@ class BoundingSphere extends THREE.Mesh {
 		} else { // This goes straight to the point and creates the sphere according to our radius
 			this.updateBounds(radius, center)
 		}
+
 		this.material = new THREE.MeshBasicMaterial({wireframe:true});
 		this.scale.copy(mesh.scale);
 		return this;
@@ -75,6 +76,7 @@ class BoundingSphere extends THREE.Mesh {
 		var sum = this.radius + bounds.radius;
 		var d = this.getWorldPosition().clone();
 		d.sub(bounds.getWorldPosition());
+		d.setY(0);
 
 		return sum >= d.length();
 	}
