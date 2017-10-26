@@ -21,4 +21,5 @@ class Board extends THREE.Object3D {
 		scene.add(this);
 		return this;
 	}
+	
 }

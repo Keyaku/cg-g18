@@ -94,6 +94,7 @@ class OrangeFruit extends THREE.Mesh {
 		obj.add(this);
 		return this;
 	}
+	
 }
 
 /*******************************************************************************
