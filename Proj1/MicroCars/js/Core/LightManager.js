@@ -60,6 +60,17 @@ class LightManager {
   }
 
 	update() {
+		// While lightsNeedUpdate == false, we shall ignore any of our relevant input
+		if (!this.lightsNeedUpdate) {
+			if (!(
+				Input.is_pressed("c") || Input.is_pressed("g") ||
+				Input.is_pressed("l") || Input.is_pressed("n")
+			)) {
+				this.lightsNeedUpdate = true;
+			}
+			return;
+		}
+
 		var toggled = {
 			switchPointLights      : Input.is_pressed("c"),
 			switchMaterials        : Input.is_pressed("g"),
@@ -70,8 +81,9 @@ class LightManager {
 		// Iterate our toggled keypresses
 		for (var key in toggled) {
 			if (toggled[key]) {
+				this.lightsNeedUpdate = false;
 				// if the given key was pressed, call the function with key's name
-				lightManager[key]();
+				this[key]();
 			}
 		}
 	}
