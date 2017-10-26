@@ -71,6 +71,18 @@ class LightManager {
     // TODO
   }
 
+  switchPointLights() {
+    var lights = raceTrack.lights.getLightsArray();
+    for (var i = 0; i < lights.length; i++) {
+      var light = lights[i];
+      if (light.intensity != 0) {
+        light.intensity = 0;
+      } else {
+        light.intensity = POINT_LIGHT_INTENSITY;
+      }
+    }
+  }
+
   switchMaterials() {
     scene.traverse(function (node) {
       if (node instanceof THREE.Mesh && node.type == "Board") {
