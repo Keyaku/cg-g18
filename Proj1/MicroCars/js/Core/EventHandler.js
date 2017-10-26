@@ -76,7 +76,7 @@ function onKeyDown(e) {
 			break;
 		case 71: // g
 		case 103: // G
-			lightManager.switchShadowMode();
+			lightManager.switchMaterials();
 			break;
 		case 76: // l
 		case 108: // L

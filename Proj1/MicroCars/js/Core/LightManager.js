@@ -69,10 +69,12 @@ class LightManager {
 
   disableLightUpdates() {
     // TODO
-    if (this.lightsNeedUpdate) {
-      this.lightsNeedUpdate = false;
-    } else {
-      this.lightsNeedUpdate = true;
-    }
+  }
+
+  switchMaterials() {
+    scene.traverse(function(node) {
+      if (node instanceof THREE.Mesh) {
+        node.switchMaterials();
+      }
   }
 }
