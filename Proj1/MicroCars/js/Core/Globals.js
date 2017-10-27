@@ -82,8 +82,8 @@ function addMaterials(mesh, lambertMaterial, phongMaterial) {
 function objectNeedsRespawn(vector) {
 	var x = vector.x;
 	var z = vector.z;
-	return x <= ((-1) * HALF_BOARD_WIDTH)  || x >= (HALF_BOARD_WIDTH) ||
-			z <= ((-1) * HALF_BOARD_LENGHT) || z >= (HALF_BOARD_LENGHT);
+	return x <= -HALF_BOARD_WIDTH  || x >= HALF_BOARD_WIDTH ||
+		z <= -HALF_BOARD_LENGHT || z >= HALF_BOARD_LENGHT;
 }
 
 /** generateSpawnLocation(min, max)
