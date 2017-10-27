@@ -65,7 +65,7 @@ function createMaterials(mesh, parameters={}) {
 * @method addMaterials Adds the given materials to a given mesh
 * @param mesh: The mesh to associate the materials with
 * @param lambertMaterial:
-* @param phongMaterial: 
+* @param phongMaterial:
 */
 function addMaterials(mesh, lambertMaterial, phongMaterial) {
 	mesh.material        = lambertMaterial;
@@ -82,13 +82,8 @@ function addMaterials(mesh, lambertMaterial, phongMaterial) {
 function objectNeedsRespawn(vector) {
 	var x = vector.x;
 	var z = vector.z;
-	if (x <= ((-1) * HALF_BOARD_WIDTH) || x >= (HALF_BOARD_WIDTH) ||
-		z <= ((-1) * HALF_BOARD_LENGHT) || z >= (HALF_BOARD_LENGHT)
-	) {
-		return true;
-	} else {
-		return false;
-	}
+	return x <= ((-1) * HALF_BOARD_WIDTH)  || x >= (HALF_BOARD_WIDTH) ||
+			z <= ((-1) * HALF_BOARD_LENGHT) || z >= (HALF_BOARD_LENGHT);
 }
 
 /** generateSpawnLocation(min, max)
