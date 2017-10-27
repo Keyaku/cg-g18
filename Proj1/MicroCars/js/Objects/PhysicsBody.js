@@ -59,6 +59,7 @@ class StaticBody extends PhysicsBody {
 
 
 // Weighted, non-deformable bodies. Use for props
+var rigidbodyIteration;
 class RigidBody extends PhysicsBody {
 	constructor(mass = 1) {
 		super();
@@ -69,15 +70,15 @@ class RigidBody extends PhysicsBody {
 
 		// Creating event for collision
 		this.addEventListener('collided', function (event) {
-			this.getHeading(event.body, event.body.heading);
-			// if the colliding body is a RigidBody, share velocity with this one
-			if (event.body.isRigidBody) {
-				event.body.velocity = Math.abs(this.velocity);
-			}
 			// if the colliding body is a StaticBody, bounce against it
-			else if (event.body.isStaticBody) {
-				// FIXME: this will never run while RigidBody.update() doesn't iterate through all PhysicsBodies
+			if (event.body.isStaticBody) {
+				this.getHeading(event.body, event.body.heading);
 				this.velocity = -this.velocity;
+			}
+			// if the colliding body is a RigidBody, share velocity with this one
+			else if (event.body.isRigidBody) {
+				this.getHeading(event.body, event.body.heading);
+				event.body.velocity = Math.abs(this.velocity);
 			}
 		});
 	}
@@ -85,6 +86,21 @@ class RigidBody extends PhysicsBody {
 	update(delta) {
 		this.velocity -= FRICTION * this.mass * this.velocity;
 		this.translateOnAxis(this.heading, this.velocity);
+
+		if (this.velocity > 0.01) {
+			/* FIXME: Since we can't use `this` in traverseVisible() iteration,
+				we have to use this kind of practice */
+			rigidbodyIteration = this;
+			scene.traverseVisible(function (node) {
+				if (!node.isPhysicsBody) { return; }
+				if (rigidbodyIteration.id == node.id) { return; }
+				if (node.isMotionBody) { return; }
+
+				if (rigidbodyIteration.intersects(node)) {
+					rigidbodyIteration.dispatchEvent({type: 'collided', body: node});
+				}
+			});
+		}
 	}
 }
 
@@ -106,10 +122,6 @@ class MotionBody extends PhysicsBody {
 				event.body.velocity = Math.abs(this.velocity);
 			}
 		});
-	}
-
-	update(delta) {
-		// TODO for next assignment: fill with gravitational force
 	}
 
 	/**
