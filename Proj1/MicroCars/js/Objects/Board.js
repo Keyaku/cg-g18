@@ -8,10 +8,8 @@ class Board extends THREE.Mesh {
 
 		super(geometry);
 		this.type = 'Board';
-		this.lambertMaterial = new THREE.MeshLambertMaterial({map:grassTexture, side: THREE.DoubleSide});
-		this.phongMaterial = new THREE.MeshPhongMaterial({map:grassTexture, side: THREE.DoubleSide});
+		createMaterials(this, {map:grassTexture, side: THREE.DoubleSide});
 
-		this.material = this.lambertMaterial;
 		this.position.set(x, y, z);
 		this.rotateX(90 * TO_RADIANS);
 

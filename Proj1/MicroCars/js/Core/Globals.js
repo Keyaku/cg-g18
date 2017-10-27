@@ -49,6 +49,31 @@ const POINT_LIGHT_INTENSITY = 10;
 *******************************************************************************/
 
 /**
+* @method createMaterials Creates the appropriate materials for a given mesh
+* @param mesh: The mesh to associate the materials with
+* @param parameters: THREE.Material parameters
+*/
+function createMaterials(mesh, parameters={}) {
+	addMaterials(
+		mesh,
+		new THREE.MeshLambertMaterial(parameters),
+		new THREE.MeshPhongMaterial(parameters)
+	)
+}
+
+/**
+* @method addMaterials Adds the given materials to a given mesh
+* @param mesh: The mesh to associate the materials with
+* @param lambertMaterial:
+* @param phongMaterial: 
+*/
+function addMaterials(mesh, lambertMaterial, phongMaterial) {
+	mesh.material        = lambertMaterial;
+	mesh.lambertMaterial = lambertMaterial;
+	mesh.phongMaterial   = phongMaterial;
+}
+
+/**
 * objectNeedsRespawn verifies if an object is within the boundaries of the board
 * @param x: x position of the object subject to verification.
 * @param z: z position of the object subject to verification.

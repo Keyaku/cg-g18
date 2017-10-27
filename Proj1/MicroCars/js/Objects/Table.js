@@ -25,10 +25,9 @@ class TableTop extends THREE.Mesh {
 	constructor(obj, x, y, z, size, thickness) {
 		var geometry = new THREE.CubeGeometry(size, thickness, size);
 		super(geometry);
-		this.lambertMaterial = new THREE.MeshLambertMaterial({color:0xDEB887});
-		this.phongMaterial = new THREE.MeshPhongMaterial({color:0xDEB887});
-		this.material = this.lambertMaterial;
 		this.type = 'TableTop';
+		createMaterials(this, {color:0xDEB887});
+
 		this.position.set(x, y, z);
 		obj.add(this);
 		return this;
@@ -39,9 +38,8 @@ class TableLeg extends THREE.Mesh  {
 	constructor(obj, x, y, z, size) {
 		var geometry = new THREE.CubeGeometry(size/10, size, size/10);
 		super(geometry);
-		this.lambertMaterial = new THREE.MeshLambertMaterial({color:0xDEB887});
-		this.phongMaterial = new THREE.MeshPhongMaterial({color:0xDEB887});
-		this.material = this.lambertMaterial;
+		createMaterials(this, {color:0xDEB887});
+
 		this.position.set(x, y - (size >> 1), z);
 		obj.add(this);
 		return this;

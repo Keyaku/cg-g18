@@ -3,15 +3,14 @@ class CarMesh extends THREE.Group {
 		super();
 
 		/* Creates the body panels */
-		//Creates the material for the car body.
-		var matBody = new THREE.MeshPhongMaterial({
-			color:0x2194ce, /*Blue*/ specular: 0x111111, shininess: 10,
-		});
 		//Extrude setting that define the car width.
 		var extrSettings = {amount:8, bevelEnabled:false};
 
 		// Main mesh to merge all CarSquare and CarTriangle meshes
-		var square = new THREE.Mesh(new THREE.Geometry(), matBody);
+		var square = new THREE.Mesh(new THREE.Geometry());
+		createMaterials(square, {
+			color:0x2194ce, /*Blue*/ specular: 0x111111, shininess: 10,
+		});
 		this.add(square);
 
 		var c1 = new CarSquare(square, extrSettings,  3, 5,  0, 0);
@@ -40,7 +39,8 @@ class CarMesh extends THREE.Group {
 		//Creates the material for the axles.
 		var materialAxle = new THREE.MeshBasicMaterial({color:0x960101});
 
-		var cylinders = new THREE.Mesh(new THREE.Geometry(), materialAxle);
+		var cylinders = new THREE.Mesh(new THREE.Geometry());
+		createMaterials(cylinders, {color:0x960101});
 		this.add(cylinders);
 
 		var cy1 = new CarCylinder(cylinders, 0.5, 12, 8, 1,  5.5,  -1, 4, 90, 0,  0);
@@ -93,9 +93,9 @@ class CarTorus {
 	constructor(obj, radius, tube, rSeg, tSeg, x, y, z) {
 		//Creates the wheel's geometry - torus.
 		var geometry = new THREE.TorusGeometry(radius, tube, rSeg, tSeg)
-		var materialTorus = new THREE.MeshLambertMaterial({color:0x222222})
 		//Creates the wheel's mesh.
-		var mesh = new THREE.Mesh(geometry, materialTorus);
+		var mesh = new THREE.Mesh(geometry);
+		createMaterials(mesh, {color:0x222222});
 		//Positions the wheel.
 		mesh.position.set(x, y, z)
 		obj.add(mesh)

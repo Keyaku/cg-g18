@@ -37,10 +37,7 @@ class ButterBox extends THREE.Mesh {
 		var geometry = new THREE.BoxGeometry(size.x, size.y, size.z);
 
 		super(geometry);
-
-		this.lambertMaterial = new THREE.MeshLambertMaterial({ map: tex });
-		this.phongMaterial = new THREE.MeshPhongMaterial({ map: tex });
-		this.material = this.lambertMaterial;
+		createMaterials(this, { map: tex });
 
 		this.position.setY(10/2);
 

@@ -66,10 +66,11 @@ class OrangeWrapper extends MotionBody {
 class Orange extends THREE.Object3D {
 	constructor(orangeName, x, y, z, radius = 15) {
 		super();
-		this.orangeFruit = new OrangeFruit(this, x, y, z, radius);
-		this.orangeBranch = new OrangeBranch(this, x, y, z);
 		this.type = 'Orange';
 		this.name = orangeName;
+
+		this.orangeFruit = new OrangeFruit(this, x, y, z, radius);
+		this.orangeBranch = new OrangeBranch(this, x, y, z);
 		this.position.set(x, y, z);
 		return this;
 	}
@@ -84,11 +85,9 @@ class OrangeFruit extends THREE.Mesh {
 		var geometry = new THREE.SphereGeometry(radius, 15, 15);
 
 		super(geometry);
-
-		this.lambertMaterial = new THREE.MeshLambertMaterial({color:0xFF9900});
-		this.phongMaterial = new THREE.MeshPhongMaterial({color:0xFF9900});
-		this.material = this.lambertMaterial;
 		this.type = 'OrangeFruit';
+		createMaterials(this, {color:0xFF9900});
+
 		this.position.set(x, y, z);
 
 		obj.add(this);
@@ -106,11 +105,9 @@ class OrangeBranch extends THREE.Mesh {
 		var geometry = new THREE.CylinderGeometry(2, 1, 8);
 
 		super(geometry);
-
-		this.lambertMaterial = new THREE.MeshLambertMaterial({color:0x666633});
-		this.phongMaterial = new THREE.MeshPhongMaterial({color:0x666633});
-		this.material = this.lambertMaterial;
 		this.type = 'OrangeBranch';
+		createMaterials(this, {color:0x666633});
+
 		this.position.set(x, y + 15, z);
 
 		obj.add(this);
