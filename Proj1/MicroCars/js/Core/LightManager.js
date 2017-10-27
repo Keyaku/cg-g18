@@ -61,13 +61,12 @@ class LightManager {
 
 	update() {
 		// While lightsNeedUpdate == false, we shall ignore any of our relevant input
+		// until one of them has been released
 		if (!this.lightsNeedUpdate) {
-			if (!(
+			this.lightsNeedUpdate = !(
 				Input.is_pressed("c") || Input.is_pressed("g") ||
 				Input.is_pressed("l") || Input.is_pressed("n")
-			)) {
-				this.lightsNeedUpdate = true;
-			}
+			);
 			return;
 		}
 
