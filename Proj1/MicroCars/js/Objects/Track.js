@@ -100,4 +100,21 @@ class Tire extends RigidBody {
 		obj.add(this)
 		return this
 	}
+
+	update(delta) {
+		super.update(delta);
+
+		if (this.velocity > 0.01) {
+			// FIXME: Try to iterate through all the PhysicsBody objects
+			for (var i in raceTrack.children) {
+				if (!(raceTrack.children[i] instanceof PhysicsBody)) { continue; }
+				if (raceTrack.children[i].id == this.id) { continue; }
+				var node = raceTrack.children[i];
+
+				if (this.intersects(node)) {
+					this.dispatchEvent({type: 'collided', body: node});
+				}
+			}
+		}
+	}
 }
