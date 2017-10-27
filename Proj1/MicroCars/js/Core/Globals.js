@@ -127,9 +127,9 @@ function respawnObject(obj) {
 	var maskDirection = Math.random();
 	var vector = generateSpawnLocation();
 
-	if (maskDirection >= 0 && maskDirection < 0.33) {
+	if (0 <= maskDirection && maskDirection < 0.33) {
 		heading = new THREE.Vector3(x, 0, z);
-	} else if (maskDirection >= 0.33 && maskDirection < 0.66){
+	} else if (0.33 <= maskDirection && maskDirection < 0.66){
 		heading = new THREE.Vector3(x, 0, 0);
 	} else {
 		heading = new THREE.Vector3(0, 0, z);
