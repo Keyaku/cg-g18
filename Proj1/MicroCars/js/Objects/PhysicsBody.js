@@ -18,15 +18,19 @@ class PhysicsBody extends THREE.Object3D {
 	// Callback for every frame
 	update(delta) { /* do nothing */ }
 
-	// Gets the vector direction where a points to b
-	getHeading(a, b, n=undefined) {
+	/**
+	* @method getHeading: Gets the Vector direction where Point a points to Point b.
+	* @param b: Object3D of point B
+	* @param n: given Vector3 to fill data in. If undefined, function will return a new one
+	*/
+	getHeading(b, n=undefined) {
 		if (n == undefined || !n.isVector3) {
 			n = b.getWorldPosition().clone();
 		} else {
 			n.copy(b.getWorldPosition());
 		}
-		n.sub(a.getWorldPosition());
-		n.setZ(0);
+		n.sub(this.getWorldPosition());
+		n.set(n.x, 0, 0);
 		n.normalize();
 		return n;
 	}
@@ -83,7 +87,7 @@ class MotionBody extends PhysicsBody {
 		// Creating event for collision
 		this.addEventListener('collided', function(event) {
 			if (event.body instanceof RigidBody) {
-				this.getHeading(this, event.body, event.body.heading);
+				this.getHeading(event.body, event.body.heading);
 				event.body.velocity = Math.abs(this.velocity);
 			}
 		});
