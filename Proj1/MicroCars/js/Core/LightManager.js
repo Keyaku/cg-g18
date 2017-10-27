@@ -112,7 +112,7 @@ class LightManager {
       if (node instanceof THREE.Mesh) {
         if (node.material instanceof THREE.MeshPhongMaterial) {
     		node.material = node.lambertMaterial;
-		} else {
+		} else if (node.material instanceof THREE.MeshLambertMaterial) {
 			node.material = node.phongMaterial;
 		}
       }
