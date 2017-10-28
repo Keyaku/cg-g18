@@ -43,6 +43,13 @@ class Car extends MotionBody {
 		scene.add(this);
 	}
 
+	respawn(position=this.userData.initialPosition) {
+		this.position.copy(position);
+		this.rotation.set(0, 0, 0);
+		this.velocity = 0;
+	}
+
+	// Our mandatory update() function
 	update(delta) {
 		var carCollided = false;
 		// Handling collisions
@@ -63,14 +70,14 @@ class Car extends MotionBody {
 					var zz = node.position.z - car.position.z;
 					var vectorCarToButter = new THREE.Vector3(xx, 0, zz);
 					vectorCarToButter.normalize();
-					
+
 					//The world direction vector is rotated 90º because it point right.
 					var heading = car.getWorldDirection();
 					var rotatedX = Math.cos(NINETY_DEGREES) * heading.x - Math.sin(NINETY_DEGREES) * heading.z;
 					var rotatedZ = Math.sin(NINETY_DEGREES) * heading.x + Math.cos(NINETY_DEGREES) * heading.z;
 					var carHeading = new THREE.Vector3(rotatedX, 0, rotatedZ);
 					var angleCarButter = carHeading.angleTo(vectorCarToButter) * TO_DEGREES;
-					
+
 					if (angleCarButter < 90) {
 						car.canMoveForward = false;
 					}
@@ -80,7 +87,7 @@ class Car extends MotionBody {
 				}
 				// Respawn the car if it's an Orange
 				else if (node instanceof OrangeWrapper) {
-					respawnObject(car);
+					car.respawn();
 				}
 			}
 		});
@@ -101,7 +108,7 @@ class Car extends MotionBody {
 		//console.log(car.canMoveForward)
 		if (up && !down && car.canMoveForward) {
 			this.acceleration = -CAR_ACCELERATION;
-		} 
+		}
 		else if (down && !up && car.canMoveBack) {
 			this.acceleration = CAR_ACCELERATION;
 		}
@@ -120,12 +127,12 @@ class Car extends MotionBody {
 		if (angle != 0) {
 			angle *= Math.abs(this.velocity) * TURN_ASSIST;
 			this.rotateY(angle);
-		}		
+		}
 
 		// Moving our car
 		this.move(this.heading, this.velocity);
-		if (objectNeedsRespawn(this.getWorldPosition())) {
-			respawnObject(this);
+		if (objectNeedsRespawn(this)) {
+			car.respawn();
 		}
 	}
 }

@@ -11,7 +11,7 @@ class OrangeWrapper extends MotionBody {
 		super(0.140);
 
 		// Adding mesh
-		this.concreteOrange = new Orange(orangeName, 0, 0, 0);
+		this.mesh = new Orange(orangeName, 0, 0, 0);
 		this.velocity = ORANGE_VELOCITY;
 		this.acceleration = ORANGE_ACCELERATION;
 		this.heading = HEADING_ARRAY[Math.floor((Math.random() * HEADING_ARRAY.length))];
@@ -19,11 +19,11 @@ class OrangeWrapper extends MotionBody {
 		this.position.set(x, y, z);
 
 		// Adding BoundingSphere
-		this.bounds = new BoundingSphere(this.concreteOrange, radius);
+		this.bounds = new BoundingSphere(this.mesh, radius);
 		this.add(this.bounds);
 
 		// Setting up scene graph
-		this.add(this.concreteOrange);
+		this.add(this.mesh);
 		scene.add(this);
 
 		return this;
@@ -40,7 +40,7 @@ class OrangeWrapper extends MotionBody {
 		};
 		var distance = this.velocity * delta;
 		this.move(this.heading, distance);
-		if (objectNeedsRespawn(this.getWorldPosition())) {
+		if (objectNeedsRespawn(this)) {
 			respawnObject(this);
 		}
 		this.rotate(this.heading);
@@ -56,7 +56,7 @@ class OrangeWrapper extends MotionBody {
 		var angularVelocity = (this.velocity / this.radius) * TO_RADIANS;
 		var rotationAxis = axis.clone();
 		rotationAxis.applyAxisAngle(Y_AXIS_HEADING, NINETY_DEGREES);
-		this.concreteOrange.rotateOnAxis(rotationAxis, angularVelocity);
+		this.mesh.rotateOnAxis(rotationAxis, angularVelocity);
 	}
 }
 /*******************************************************************************

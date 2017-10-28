@@ -14,13 +14,13 @@ class Butter extends StaticBody {
 
 		this.type = "Butter";
 		this.name = name;
-		this.concreteButter = new ButterBox(this, size);
+		this.mesh = new ButterBox(this, size);
 		// Places it in a given position
 		this.position.set(x, y, z);
 		this.rotateY(angle);
 		this.scale.set(2,2,2);
 		// Adding our Bounds
-		this.bounds = new BoundingSphere(this.concreteButter);
+		this.bounds = new BoundingSphere(this.mesh);
 		this.add(this.bounds);
 
 		scene.add(this);

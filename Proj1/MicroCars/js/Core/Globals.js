@@ -79,45 +79,31 @@ function addMaterials(mesh, lambertMaterial, phongMaterial) {
 * @param z: z position of the object subject to verification.
 * @return: Boolean value True if orange is outside of the board. False otherwise
 */
-function objectNeedsRespawn(vector) {
-	var x = vector.x;
-	var z = vector.z;
-	return x <= -HALF_BOARD_WIDTH  || x >= HALF_BOARD_WIDTH ||
-		z <= -HALF_BOARD_LENGHT || z >= HALF_BOARD_LENGHT;
+function objectNeedsRespawn(obj) {
+	var x = obj.getWorldPosition().x;
+	var z = obj.getWorldPosition().z;
+	return x <= -HALF_BOARD_WIDTH  || x >= HALF_BOARD_WIDTH
+		|| z <= -HALF_BOARD_LENGHT || z >= HALF_BOARD_LENGHT;
 }
 
 /** generateSpawnLocation(min, max)
 @param min: used to calculate a random coordinate in inverval [min, max]
 @param max: used to calculate a random coordinate in inverval [min, max]
-@var signX: defines if x coordinate is positive or negative
-@var signZ: defines if z coordinate is positive or negative
 @var x: X coordinate (value calculated randomly based on min-max values)
 @var y: Y coordiante (default is 0 - orange stay on top of the board at all times)
 @var z: Z coordinate (value calculated randomly based on min-max values)
 @return: Vector3D that defines a new spawn location after orange falls from the table.
 */
-function generateSpawnLocation(min = 0, max = HALF_BOARD_WIDTH) {
-	var signX = Math.random() < 0.5 ? -1 : 1;
-	var signZ = Math.random() < 0.5 ? -1 : 1;
+function generateSpawnLocation(min = -HALF_BOARD_WIDTH, max = HALF_BOARD_WIDTH) {
 	var x = Math.floor(Math.random() * (max - min + 1)) + min;
 	var z = Math.floor(Math.random() * (max - min + 1)) + min;
-	var spawnLocation = new THREE.Vector3(x, EDIBLES_Y, z);
-	return spawnLocation;
+	return new THREE.Vector3(x, EDIBLES_Y, z);
 }
 
 /** respawnObject(spawnLocation, axis, distance)
 * @param obj: object that is being respawned
-* @param distance: How far should the orange travel after respawning
 */
 function respawnObject(obj) {
-	if (obj.type == 'Car') {
-		obj.position.copy(obj.userData.initialPosition);
-		obj.rotation.set(0, 0, 0);
-		obj.velocity = 0;
-		return;
-	}
-
-
 	var heading;
 
 	obj.visible = false;
@@ -136,9 +122,8 @@ function respawnObject(obj) {
 	}
 
 	setTimeout(function() {
-		obj.position.set(vector.x, vector.y, vector.z);
-		obj.concreteOrange.rotation.set(0, 0, 0);
-		obj.concreteOrange.position.set(0,0,0);
+		obj.position.copy(vector);
+		obj.mesh.rotation.set(0, 0, 0);
 		obj.heading = heading.normalize();
 		obj.visible = true;
 	}, 1000);
