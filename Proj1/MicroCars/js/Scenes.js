@@ -9,6 +9,13 @@ var scene;
 *	Instanciates and adds edibles to the track which debuff the player when touched
 * Object3D of subtype Car to a dictionary
 */
+function wheelTest() {
+	var geometry = new Wheel(100, 20);
+	var material = new THREE.MeshLambertMaterial( {color: 0xFFFF000});
+	var wheel = new THREE.Mesh(geometry, material);
+	wheel.position.set(0, 30, 0);
+	scene.add(wheel);
+}
 function createScene() {
 	var size = BOARD_WIDTH;
 	var divisions = BOARD_WIDTH / 10;
@@ -21,7 +28,7 @@ function createScene() {
 	gameBoard = new Board(0, -1, 0, size);
 	raceTrack = new Track();
 	car = new Car(20, 2.66, -5);
-
+	wheelTest();
 	// Adding oranges
 	createEdible(OrangeWrapper, "Orange1", 150, EDIBLES_Y, 80);
 	createEdible(OrangeWrapper, "Orange2", -200, EDIBLES_Y, -100);
