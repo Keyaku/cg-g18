@@ -68,7 +68,6 @@ class Track extends THREE.Object3D {
 		//Creates the torus material.
 		var lambertMaterial = new THREE.MeshLambertMaterial({color:0xAA1111});
 		var phongMaterial   = new THREE.MeshPhongMaterial({color:0xAA1111});
-
 		//Step of the for loop
 		var step = 2
 		//Adds the tires to the track's sides.

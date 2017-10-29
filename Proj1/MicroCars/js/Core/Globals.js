@@ -54,11 +54,9 @@ const POINT_LIGHT_INTENSITY = 10;
 * @param parameters: THREE.Material parameters
 */
 function createMaterials(mesh, parameters={}) {
-	addMaterials(
-		mesh,
-		new THREE.MeshLambertMaterial(parameters),
-		new THREE.MeshPhongMaterial(parameters)
-	)
+  var lambertMaterial = new THREE.MeshLambertMaterial(parameters);
+  var phongMaterial   = new THREE.MeshPhongMaterial(parameters);
+	addMaterials(mesh, lambertMaterial, phongMaterial);
 }
 
 /**
@@ -126,6 +124,6 @@ function respawnObject(obj) {
 		obj.mesh.rotation.set(0, 0, 0);
 		obj.heading = heading.normalize();
 		obj.visible = true;
-	}, 1000);
+	}, 2000);
 
 }
