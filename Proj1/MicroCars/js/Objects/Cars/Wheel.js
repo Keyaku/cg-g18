@@ -10,15 +10,15 @@ class Wheel extends THREE.Geometry {
     // Defining the geometry's vertices
 	var vertices = [
 		// Define wheel's centercap points and spike point
-		[-this.capInnerLenght, 0, 0],
-		[this.capInnerLenght, 0, 0],
-		[0, this.capInnerLenght, 0],
-		[0, -this.capInnerLenght, 0],
-		[-this.capInnerLenght, 0, -depth],
-		[this.capInnerLenght, 0, -depth],
-		[0, this.capInnerLenght, -depth],
-		[0, -this.capInnerLenght, -depth],
-		[0, 0, this.capInnerLenght],
+		[-this.capInnerLenght, 0, 0],       // 0
+		[this.capInnerLenght, 0, 0],        // 1
+		[0, this.capInnerLenght, 0],        // 2
+		[0, -this.capInnerLenght, 0],       // 3
+		[-this.capInnerLenght, 0, -depth],  // 4
+		[this.capInnerLenght, 0, -depth],   // 5
+		[0, this.capInnerLenght, -depth],   // 6
+		[0, -this.capInnerLenght, -depth],  // 7
+		[0, 0, this.capInnerLenght],        // 8
 	];
 
 	// Pushing the vertices in

@@ -1,23 +1,29 @@
 class Candle {
 	constructor(obj) {
 		this.lightsArray = []
-		var horizontalSpacing = BOARD_WIDTH / 3;
-		var verticalSpacing = BOARD_LENGHT / 4;
-		for (var lines = 1; lines <= 2; lines++) {
-			for (var columns = 1; columns <= 3; columns++) {
-        var light = new THREE.PointLight(0x0000ff, POINT_LIGHT_INTENSITY, 100);
-        var x = horizontalSpacing * lines - HALF_BOARD_WIDTH;
-        var y = 20;
-        var z = verticalSpacing * columns - HALF_BOARD_LENGHT;
-				light.position.set(x, y, z);
-        obj.add(light);
-				this.lightsArray.push(light);
-			}
-		}
-		return this;
-	}
+		var i, x, y, z;
+		var lightsPositions = [
+			[-QUARTER_BOARD_WIDTH, 50, -QUARTER_BOARD_LENGHT],
+			[ QUARTER_BOARD_WIDTH, 50,  QUARTER_BOARD_LENGHT],
+			[-QUARTER_BOARD_WIDTH, 50,  QUARTER_BOARD_LENGHT],
+			[ QUARTER_BOARD_WIDTH, 50, -QUARTER_BOARD_LENGHT],
+			[-QUARTER_BOARD_WIDTH, 50, 0],
+			[ QUARTER_BOARD_WIDTH, 50, 0]
+		];
 
-  getLightsArray() {
-    return this.lightsArray;
-  }
-}
+		for (i = 0; i < NUMBER_OF_POINT_LIGHTS; i++) {
+        var light = new THREE.PointLight(0xCCFFFF, POINT_LIGHT_INTENSITY, POINT_LIGHT_DISTANCE, POINT_LIGHT_REAL);
+				x = lightsPositions[i][0];
+				y = lightsPositions[i][1];
+				z = lightsPositions[i][2];
+				light.position.set(x, y, z);
+				this.lightsArray.push(light);
+        obj.add(light);
+			}
+			return this;
+		}
+
+		getLightsArray() {
+			return this.lightsArray;
+		}
+	}

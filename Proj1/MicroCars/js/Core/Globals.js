@@ -14,6 +14,8 @@ const BOARD_WIDTH = 1000;
 const BOARD_LENGHT = 1000;
 const HALF_BOARD_WIDTH  = BOARD_WIDTH  >> 1;
 const HALF_BOARD_LENGHT = BOARD_LENGHT >> 1;
+const QUARTER_BOARD_WIDTH  = BOARD_WIDTH  >> 2;
+const QUARTER_BOARD_LENGHT = BOARD_LENGHT >> 2;
 const FRICTION = 0.02;
 const EDIBLES_Y = 15;
 /*******************************************************************************
@@ -42,7 +44,10 @@ const THREE_HUNDRED_SIXTY_DEGREES = 2 * Math.PI;
 /*******************************************************************************
 * Lighting variables
 *******************************************************************************/
-const POINT_LIGHT_INTENSITY = 10;
+const NUMBER_OF_POINT_LIGHTS = 6;
+const POINT_LIGHT_INTENSITY = 2;
+const POINT_LIGHT_DISTANCE = 1000;
+const POINT_LIGHT_REAL = 2;
 
 /*******************************************************************************
 * Helper methods

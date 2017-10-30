@@ -3,7 +3,7 @@ class LightManager {
     this.lightsNeedUpdate = true;
     this.directionalLight = this.newDirectionalLight();
     this.ambientLight = this.newAmbientLight();
-    this.horizon = this.newHorizonLight();
+    this.horizonLight = this.newHorizonLight();
   }
 
   /**
@@ -89,6 +89,8 @@ class LightManager {
 
 	switchDirectionalLight() {
 		this.directionalLight.visible = !this.directionalLight.visible;
+    this.ambientLight.visible = !this.ambientLight.visible;
+    this.horizonLight.visible = !this.horizonLight.visible;
 	}
 
 	disableLightUpdates() {
