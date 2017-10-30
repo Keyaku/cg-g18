@@ -87,13 +87,21 @@ class LightManager {
 		}
 	}
 
-  switchDirectionalLight() {
-  	this.directionalLight.visible = !this.directionalLight.visible;
-  }
+	switchDirectionalLight() {
+		this.directionalLight.visible = !this.directionalLight.visible;
+	}
 
-  disableLightUpdates() {
-    // TODO
-  }
+	disableLightUpdates() {
+		scene.traverse(function (node) {
+			if (node instanceof THREE.Mesh && !(node instanceof BoundingGeometry)) {
+				if (!(node.material instanceof THREE.MeshBasicMaterial)) {
+					node.material = node.basicMaterial;
+				} else {
+					node.material = node.lambertMaterial;
+				}
+			}
+		});
+	}
 
   switchPointLights() {
     var lights = raceTrack.lights.getLightsArray();
@@ -107,16 +115,16 @@ class LightManager {
     }
   }
 
-  switchMaterials() {
-    scene.traverse(function (node) {
-      if (node instanceof THREE.Mesh) {
-        if (node.material instanceof THREE.MeshPhongMaterial) {
-    		node.material = node.lambertMaterial;
-		} else if (node.material instanceof THREE.MeshLambertMaterial) {
-			node.material = node.phongMaterial;
-		}
-      }
-    });
-  }
+	switchMaterials() {
+		scene.traverse(function (node) {
+			if (node instanceof THREE.Mesh && !(node instanceof BoundingGeometry)) {
+				if (node.material instanceof THREE.MeshLambertMaterial) {
+					node.material = node.phongMaterial;
+				} else {
+					node.material = node.lambertMaterial;
+				}
+			}
+		});
+	}
 
 }

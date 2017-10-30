@@ -54,19 +54,23 @@ const POINT_LIGHT_INTENSITY = 10;
 * @param parameters: THREE.Material parameters
 */
 function createMaterials(mesh, parameters={}) {
-  var lambertMaterial = new THREE.MeshLambertMaterial(parameters);
-  var phongMaterial   = new THREE.MeshPhongMaterial(parameters);
-	addMaterials(mesh, lambertMaterial, phongMaterial);
+	addMaterials(mesh,
+		new THREE.MeshBasicMaterial(parameters),
+		new THREE.MeshLambertMaterial(parameters),
+		new THREE.MeshPhongMaterial(parameters),
+	);
 }
 
 /**
 * @method addMaterials Adds the given materials to a given mesh
 * @param mesh: The mesh to associate the materials with
+* @param basicMaterial:
 * @param lambertMaterial:
 * @param phongMaterial:
 */
-function addMaterials(mesh, lambertMaterial, phongMaterial) {
+function addMaterials(mesh, basicMaterial, lambertMaterial, phongMaterial) {
 	mesh.material        = lambertMaterial;
+	mesh.basicMaterial   = basicMaterial;
 	mesh.lambertMaterial = lambertMaterial;
 	mesh.phongMaterial   = phongMaterial;
 }
