@@ -91,6 +91,7 @@ class Tire extends RigidBody {
 
 		//Creates the mesh
 		this.mesh = new THREE.Mesh(geometry);
+		this.add(this.mesh)
 
 		//Positions the torus to be on the track point.
 		this.position.copy(p)
@@ -102,7 +103,6 @@ class Tire extends RigidBody {
 		this.add(this.bounds)
 
 		//Adds the mesh to the track class object.
-		this.add(this.mesh)
 		obj.add(this)
 		return this
 	}
