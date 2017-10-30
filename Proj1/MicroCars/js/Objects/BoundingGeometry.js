@@ -60,8 +60,11 @@ class BoundingGeometry extends THREE.Mesh {
 class BoundingBox extends BoundingGeometry {
 	constructor(mesh, min=undefined, max=undefined) {
 		super(mesh);
+		this.type = "BoundingBox";
 
 		if (min == undefined || max == undefined) {
+			min = new THREE.Vector3();
+			max = new THREE.Vector3(1, 1, 1);
 			this.setFromMesh(mesh, min, max);
 		} else {
 			this.updateBounds(min, max);
@@ -71,7 +74,7 @@ class BoundingBox extends BoundingGeometry {
 	}
 
 	setFromMesh(obj, min, max) {
-		super.setFromMesh(obj);
+		super.setFromMesh(obj, min, max);
 		this.updateBounds(min, max);
 	}
 
@@ -80,6 +83,19 @@ class BoundingBox extends BoundingGeometry {
 		var diagonal = max.clone().sub(min);
 		this.geometry = new THREE.BoxBufferGeometry(diagonal.x, diagonal.y, diagonal.z);
 		this.geometry.boundingBox = new THREE.Box3(min, max);
+
+		this.min = min;
+		this.max = max;
+	}
+
+	intersects(bounds) {
+		if (!(bounds instanceof BoundingBox)) {
+			return false;
+		}
+
+		return this.min.x <= bounds.min.x && bounds.max.x <= this.max.x
+			&& this.min.y <= bounds.min.y && bounds.max.y <= this.max.y
+			&& this.min.z <= bounds.min.z && bounds.max.z <= this.max.z;
 	}
 }
 
