@@ -66,18 +66,21 @@ class Track extends THREE.Object3D {
 	}
 	trackAddTorus(obj, vertices) {
 		//Creates the torus material.
+		var basicMaterial   = new THREE.MeshBasicMaterial({color:0xAA1111});
 		var lambertMaterial = new THREE.MeshLambertMaterial({color:0xAA1111});
 		var phongMaterial   = new THREE.MeshPhongMaterial({color:0xAA1111});
 		//Step of the for loop
 		var step = 2
 		//Adds the tires to the track's sides.
-		for (var i = 0; i < vertices.length; i += step)
-			new Tire(obj, vertices[i], lambertMaterial, phongMaterial)
+		for (var i = 0; i < vertices.length; i += step) {
+			var tire = new Tire(obj, vertices[i]);
+			addMaterials(tire.mesh, basicMaterial, lambertMaterial, phongMaterial);
+		}
 	}
 }
 
 class Tire extends RigidBody {
-	constructor(obj, p, lambertMaterial, phongMaterial) {
+	constructor(obj, p) {
 		super(7)
 		this.type = 'Tire'
 
@@ -87,8 +90,7 @@ class Tire extends RigidBody {
 		var geometry = new THREE.TorusBufferGeometry(radius, tube, 5, 16)
 
 		//Creates the mesh
-		var mesh = new THREE.Mesh(geometry);
-		addMaterials(mesh, lambertMaterial, phongMaterial);
+		this.mesh = new THREE.Mesh(geometry);
 
 		//Positions the torus to be on the track point.
 		this.position.copy(p)
@@ -96,11 +98,11 @@ class Tire extends RigidBody {
 		this.rotation.set(NINETY_DEGREES, 0, 0)
 
 		// Adding BoundingSphere
-		this.bounds = new BoundingSphere(mesh, radius+tube)
+		this.bounds = new BoundingSphere(this.mesh, radius+tube)
 		this.add(this.bounds)
 
 		//Adds the mesh to the track class object.
-		this.add(mesh)
+		this.add(this.mesh)
 		obj.add(this)
 		return this
 	}
