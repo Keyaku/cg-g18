@@ -86,9 +86,9 @@ class OrangeFruit extends THREE.Mesh {
 
 		super(geometry);
 		this.type = 'OrangeFruit';
-		createMaterials(this, {color:0xFF9900});
-
 		this.position.set(x, y, z);
+
+		createMaterials(this, {color:0xFF9900});
 
 		obj.add(this);
 		return this;
@@ -106,9 +106,9 @@ class OrangeBranch extends THREE.Mesh {
 
 		super(geometry);
 		this.type = 'OrangeBranch';
-		createMaterials(this, {color:0x666633});
-
 		this.position.set(x, y + 15, z);
+
+		createMaterials(this, {color:0x666633});
 
 		obj.add(this);
 		return this;

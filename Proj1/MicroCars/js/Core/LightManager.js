@@ -115,6 +115,7 @@ class LightManager {
         light.intensity = POINT_LIGHT_INTENSITY;
       }
     }
+    raceTrack.lights.burnCandles();
   }
 
 	switchMaterials() {
