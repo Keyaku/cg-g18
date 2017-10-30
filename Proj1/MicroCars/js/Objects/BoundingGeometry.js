@@ -50,6 +50,16 @@ class BoundingGeometry extends THREE.Mesh {
 			}
 		}
 	}
+
+	// Checks for potential intersections and calculates accordingly
+	intersects(bounds) {
+		for (var type in bounds_type) {
+			if (bounds instanceof bounds_type[type] && this[type] != undefined) {
+				return this[type](bounds);
+			}
+		}
+		return false;
+	}
 }
 
 /*
@@ -88,14 +98,10 @@ class BoundingBox extends BoundingGeometry {
 		this.max = max;
 	}
 
-	intersects(bounds) {
-		if (!(bounds instanceof BoundingBox)) {
-			return false;
-		}
-
-		return this.min.x <= bounds.min.x && bounds.max.x <= this.max.x
-			&& this.min.y <= bounds.min.y && bounds.max.y <= this.max.y
-			&& this.min.z <= bounds.min.z && bounds.max.z <= this.max.z;
+	intersectsBox(box) {
+		return this.min.x <= box.min.x && box.max.x <= this.max.x
+			&& this.min.y <= box.min.y && box.max.y <= this.max.y
+			&& this.min.z <= box.min.z && box.max.z <= this.max.z;
 	}
 }
 
@@ -141,16 +147,21 @@ class BoundingSphere extends BoundingGeometry {
 	}
 
 	// Collision methods
-	intersects(bounds) {
-		if (!(bounds instanceof BoundingSphere)) {
-			return false;
-		} // FIXME: do this for BoundingBox whenever possible
-
-		var sum = this.radius + bounds.radius;
+	intersectsSphere(sphere) {
+		var sum = this.radius + sphere.radius;
 		var d = this.getWorldPosition().clone();
-		d.sub(bounds.getWorldPosition());
+		d.sub(sphere.getWorldPosition());
 		d.setY(0);
 
 		return sum >= d.length();
 	}
 }
+
+/*
+**	Bounds types aggregated in one dictionary
+** Useful for intersection triage.
+*/
+const bounds_type = {
+	intersectsBox    : BoundingBox,
+	intersectsSphere : BoundingSphere,
+};
