@@ -91,6 +91,8 @@ class LightManager {
 		this.directionalLight.visible = !this.directionalLight.visible;
     this.ambientLight.visible = !this.ambientLight.visible;
     this.horizonLight.visible = !this.horizonLight.visible;
+    // NOTE: DELETE LINE BELLOW ON EVALUATION DAY.
+    this.switchPointLights();
 	}
 
 	disableLightUpdates() {
