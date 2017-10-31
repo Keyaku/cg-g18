@@ -11,11 +11,11 @@ const WHEEL_ROTATION = Math.PI / 8;
 * Board variables
 *******************************************************************************/
 const BOARD_WIDTH = 1000;
-const BOARD_LENGHT = 1000;
+const BOARD_LENGTH = 1000;
 const HALF_BOARD_WIDTH  = BOARD_WIDTH  >> 1;
-const HALF_BOARD_LENGTH = BOARD_LENGHT >> 1;
+const HALF_BOARD_LENGTH = BOARD_LENGTH >> 1;
 const QUARTER_BOARD_WIDTH  = BOARD_WIDTH  >> 2;
-const QUARTER_BOARD_LENGHT = BOARD_LENGHT >> 2;
+const QUARTER_BOARD_LENGTH = BOARD_LENGTH >> 2;
 const FRICTION = 0.02;
 const EDIBLES_Y = 15;
 /*******************************************************************************
