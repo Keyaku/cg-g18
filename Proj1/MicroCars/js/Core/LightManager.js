@@ -20,7 +20,7 @@ class LightManager {
   	directionalLight.castShadow = true;
 
     directionalLight.shadow.mapSize.width = HALF_BOARD_WIDTH;
-    directionalLight.shadow.mapSize.height = HALF_BOARD_LENGHT;
+    directionalLight.shadow.mapSize.height = HALF_BOARD_LENGTH;
   	directionalLight.shadow.camera.near = 1;
   	directionalLight.shadow.camera.far = frustumSize;
   	directionalLight.shadow.camera.left = - halfFrustum;

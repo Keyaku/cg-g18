@@ -13,7 +13,7 @@ const WHEEL_ROTATION = Math.PI / 8;
 const BOARD_WIDTH = 1000;
 const BOARD_LENGHT = 1000;
 const HALF_BOARD_WIDTH  = BOARD_WIDTH  >> 1;
-const HALF_BOARD_LENGHT = BOARD_LENGHT >> 1;
+const HALF_BOARD_LENGTH = BOARD_LENGHT >> 1;
 const QUARTER_BOARD_WIDTH  = BOARD_WIDTH  >> 2;
 const QUARTER_BOARD_LENGHT = BOARD_LENGHT >> 2;
 const FRICTION = 0.02;
@@ -90,7 +90,7 @@ function objectNeedsRespawn(obj) {
 	var x = obj.getWorldPosition().x;
 	var z = obj.getWorldPosition().z;
 	return x <= -HALF_BOARD_WIDTH  || x >= HALF_BOARD_WIDTH
-		|| z <= -HALF_BOARD_LENGHT || z >= HALF_BOARD_LENGHT;
+		|| z <= -HALF_BOARD_LENGTH || z >= HALF_BOARD_LENGTH;
 }
 
 /** generateSpawnLocation(min, max)

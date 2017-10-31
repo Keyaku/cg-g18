@@ -84,33 +84,6 @@ class CameraManager {
 			}
 		}
 
-		/*
-		else if (this.cameraNumber == 2) {
-			camera.aspect = renderer.getSize().width / renderer.getSize().height;
-			var dir = camera.getWorldDirection();
-			var pos = camera.position;
-			var halfBoardWidth = BOARD_WIDTH;
-			var halfCameraFOV = 45;
-			var D = halfBoardWidth / Math.tan(halfCameraFOV);
-			D = D / this.aspectRatio
-			D = D*0.5
-			var displ = {x:dir.x*-D, y:dir.y*-D, z:dir.z*-D};
-			var newPos = {x:0, y:pos.y, z:displ.z+halfBoardWidth};
-			camera.position.set(newPos.x, newPos.y, newPos.z)
-		}
-		*/
-		/*
-		else if (this.cameraNumber == 2) {
-			camera.aspect = renderer.getSize().width / renderer.getSize().height;
-			var halfBoardWidth = HALF_BOARD_WIDTH;
-			var dCameraBoard = 1000//camera.position.z - halfBoardWidth;
-			var halfHorizontalFOV = Math.atan(halfBoardWidth / dCameraBoard);
-			var verticalFOV = halfHorizontalFOV * 100 * this.aspectRatio;
-			console.log(halfHorizontalFOV, this.aspectRatio)
-			camera.fov = verticalFOV;
-		}
-		*/
-
 		else {
 			camera.aspect = renderer.getSize().width / renderer.getSize().height;
 		}
