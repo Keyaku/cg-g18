@@ -89,19 +89,18 @@ class LightManager {
 
 	switchDirectionalLight() {
 		this.directionalLight.visible = !this.directionalLight.visible;
-    this.ambientLight.visible = !this.ambientLight.visible;
-    this.horizonLight.visible = !this.horizonLight.visible;
-    // NOTE: DELETE LINE BELLOW ON EVALUATION DAY.
-    this.switchPointLights();
+	    this.ambientLight.visible = !this.ambientLight.visible;
+	    this.horizonLight.visible = !this.horizonLight.visible;
 	}
 
 	disableLightUpdates() {
 		scene.traverse(function (node) {
 			if (node instanceof THREE.Mesh && !(node instanceof BoundingGeometry)) {
 				if (!(node.material instanceof THREE.MeshBasicMaterial)) {
+					node.previousMaterial = node.material;
 					node.material = node.basicMaterial;
 				} else {
-					node.material = node.lambertMaterial;
+					node.material = node.previousMaterial;
 				}
 			}
 		});
@@ -124,9 +123,13 @@ class LightManager {
 		scene.traverse(function (node) {
 			if (node instanceof THREE.Mesh && !(node instanceof BoundingGeometry)) {
 				if (node.material instanceof THREE.MeshLambertMaterial) {
+					node.previousMaterial = node.material;
 					node.material = node.phongMaterial;
-				} else {
+				} else if (node.material instanceof THREE.MeshPhongMaterial) {
+					node.previousMaterial = node.material;
 					node.material = node.lambertMaterial;
+				} else {
+					node.material = node.previousMaterial;
 				}
 			}
 		});
