@@ -45,11 +45,11 @@ class Candle {
 	}
 
 class ConcreteCandle extends THREE.Object3D {
-	constructor(obj, x, y, z, radius = 10) {
+	constructor(obj, x, y, z, radius = 4) {
 		super();
 		this.type = 'Candle';
 		this.candleBottom = new CandleBottom(this, radius);
-		this.candleTop    = new CandleTop(this, radius / 8);
+		this.candleTop    = new CandleTop(this, radius * 5);
 		obj.add(this);
 		return this;
 	}
@@ -61,12 +61,12 @@ class ConcreteCandle extends THREE.Object3D {
 
 class CandleBottom extends THREE.Mesh {
 	constructor(obj, radius) {
-		var geometry = new THREE.CylinderGeometry(radius, radius, 20);
+		var geometry = new THREE.CylinderGeometry(radius, radius, 100);
 		super(geometry);
 		this.type = 'CandleBottom';
 
-		createMaterials(this, {color:0xF9D3A5});
-		this.position.y = 9;
+		createMaterials(this, {color:0xD3D3D3});
+		this.position.y = 50;
 		obj.add(this);
 		return this;
 	}
@@ -74,19 +74,19 @@ class CandleBottom extends THREE.Mesh {
 
 class CandleTop extends THREE.Mesh {
 	constructor(obj, radius){
-		var geometry = new THREE.CylinderGeometry(1, radius * 2.5, 7.5);
+		var geometry = new THREE.CylinderGeometry(radius, radius, 2);
 
 		super(geometry);
 		this.type = 'CandleTop';
-		this.position.y = 25;
-		this.visible = false;
-		createMaterials(this, {color:0xFF2B00});
+		this.position.y = 100;
+		this.visible = true;
+		createMaterials(this, {color:0xD3D3D3});
 
 		obj.add(this);
 		return this;
 	}
 
 	meshVisible() {
-		this.visible = !this.visible;
+		// this.visible = !this.visible;
 	}
 }
