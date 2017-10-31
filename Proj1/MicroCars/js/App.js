@@ -49,13 +49,19 @@ function init() {
 
 	createScene();
 	cameraManager = new CameraManager();
-	cameraManager.changeToOrthographic();
 	lightManager = new LightManager();
 	render();
 
 	window.addEventListener('resize', onWindowResize, false);
 	window.addEventListener('keydown', onKeyDown);
 	window.addEventListener('keyup', onKeyUp);
+
+	// Starting at the appropriate camera angle depending on the device
+	if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
+		cameraManager.changeToPerspectiveFollow();
+	} else {
+		cameraManager.changeToOrthographic();
+	}
 
 	clock.start();
 }
