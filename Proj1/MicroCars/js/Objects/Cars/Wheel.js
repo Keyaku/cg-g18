@@ -1,13 +1,14 @@
 class WheelGeometry extends THREE.Geometry {
   constructor(wheelradius, depth) {
+    super();
     var wcc = new THREE.Mesh(new CenterCapGeometry(wheelradius, depth));
-    var wt = new THREE.Mesh(new TireGeometry(wheelradius, depth * 6));
+    //var wt = new THREE.Mesh(new TireGeometry(wheelradius, depth * 6));
 
     wcc.updateMatrix();
-    wt.updateMatrix();
+    //wt.updateMatrix();
 
     this.merge(wcc.geometry, wcc.matrix);
-    this.merge(wt.geometry, wt.matrix);
+    //this.merge(wt.geometry, wt.matrix);
 
     return this;
   }
