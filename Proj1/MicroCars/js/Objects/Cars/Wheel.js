@@ -2,15 +2,16 @@ class WheelCenterCap extends THREE.Geometry {
   constructor(wheelradius, depth) {
     super();
     this.wheelRadius      = wheelradius;
-    this.pcr              = wheelradius / 3;
-    this.bladeLenght      = this.pcr * 2;
-    this.bladeWidth       = wheelradius / 6;
-    this.capInnerLenght   = Math.sqrt(2*(this.bladeWidth*this.bladeWidth))
+    this.pcr              = wheelradius * 0.25;
+    this.bladeLenght      = this.pcr * 0.75;
+    this.bladeWidth       = wheelradius * 0.166;
+    this.capInnerLenght   = Math.sqrt(this.bladeWidth*this.bladeWidth);
 
   var hBW = this.bladeWidth / 2;
   var cil = this.capInnerLenght;
   var pcr = this.pcr;
-
+  var hD  = depth / 2;
+  var wr  = wheelradius;
     // Defining the geometry's vertices
 	var vertices = [
 		// Define wheel's centercap points and spike point
@@ -42,7 +43,12 @@ class WheelCenterCap extends THREE.Geometry {
     [-pcr,-hBW, 0],       // 21  (I)
     [-pcr,-hBW, -depth],  // 22  (I')
     [-pcr, hBW, 0],       // 23  (J)
-    [-pcr, hBW, -depth]   // 24  (J')
+    [-pcr, hBW, -depth],   // 24  (J')
+
+    [ 0  , wr ,-hD],       // 25  (K)
+    [ wr , 0  ,-hD],       // 26  (L)
+    [ 0  ,-wr ,-hD],       // 27  (M)
+    [-wr , 0  ,-hD]        // 28  (N)
 	];
 
 	// Pushing the vertices in
@@ -103,6 +109,27 @@ class WheelCenterCap extends THREE.Geometry {
     [0, 24, 23],
     [0, 22, 4],
     [0, 21, 22],
+    // Define wheel Blades
+    // Top Blade (K 25, C 9, C' 10, D 11, D' 12)
+    [9, 11, 25],
+    [11, 12, 25],
+    [12, 10, 25],
+    [10, 9, 25],
+    // Right Blade (L 26, E 13, E' 14, F 15, F' 16)
+    [13, 15, 26],
+    [15, 16, 26],
+    [16, 14, 26],
+    [14, 13, 26],
+    // Bottom Blade (M 27, G 17, G' 18, H 19, H' 20)
+    [17, 19, 27],
+    [19, 20, 27],
+    [20, 18, 27],
+    [18, 17, 27],
+    // Left Blade (N 28, I 21, I' 22, J 23, J' 24)
+    [21, 23, 28],
+    [23, 24, 28],
+    [24, 22, 28],
+    [22, 21, 28]
 	];
 
 	// Pushing the faces in
