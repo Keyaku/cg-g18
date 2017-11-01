@@ -10,7 +10,7 @@ var scene;
 * Object3D of subtype Car to a dictionary
 */
 function wheelTest() {
-	var geometry = new WheelCenterCap(100, 20);
+	var geometry = new CenterCapGeometry(100, 20);
 	var material = new THREE.MeshLambertMaterial( {color: 0xFFFF000});
 	var wheel = new THREE.Mesh(geometry, material);
 	wheel.position.set(0, 30, 0);
