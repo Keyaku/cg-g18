@@ -97,10 +97,10 @@ class LightManager {
 		scene.traverse(function (node) {
 			if (node instanceof THREE.Mesh && !(node instanceof BoundingGeometry)) {
 				if (!(node.material instanceof THREE.MeshBasicMaterial)) {
-					node.previousMaterial = node.material;
-					node.material = node.basicMaterial;
+					node.userData.previousMaterial = node.material;
+					node.material = node.userData.basicMaterial;
 				} else {
-					node.material = node.previousMaterial;
+					node.material = node.userData.previousMaterial;
 				}
 			}
 		});
@@ -123,13 +123,13 @@ class LightManager {
 		scene.traverse(function (node) {
 			if (node instanceof THREE.Mesh && !(node instanceof BoundingGeometry)) {
 				if (node.material instanceof THREE.MeshLambertMaterial) {
-					node.previousMaterial = node.material;
-					node.material = node.phongMaterial;
+					node.userData.previousMaterial = node.material;
+					node.material = node.userData.phongMaterial;
 				} else if (node.material instanceof THREE.MeshPhongMaterial) {
-					node.previousMaterial = node.material;
-					node.material = node.lambertMaterial;
+					node.userData.previousMaterial = node.material;
+					node.material = node.userData.lambertMaterial;
 				} else {
-					node.material = node.previousMaterial;
+					node.material = node.userData.previousMaterial;
 				}
 			}
 		});

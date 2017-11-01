@@ -74,11 +74,11 @@ function createMaterials(mesh, parameters={}) {
 * @param phongMaterial:
 */
 function addMaterials(mesh, basicMaterial, lambertMaterial, phongMaterial) {
-	mesh.material         = phongMaterial;
-	mesh.previousMaterial = phongMaterial;
-	mesh.basicMaterial    = basicMaterial;
-	mesh.lambertMaterial  = lambertMaterial;
-	mesh.phongMaterial    = phongMaterial;
+	mesh.material                  = phongMaterial;
+	mesh.userData.previousMaterial = phongMaterial;
+	mesh.userData.basicMaterial    = basicMaterial;
+	mesh.userData.lambertMaterial  = lambertMaterial;
+	mesh.userData.phongMaterial    = phongMaterial;
 }
 
 /**
