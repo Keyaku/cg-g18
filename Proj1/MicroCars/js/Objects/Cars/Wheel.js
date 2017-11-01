@@ -18,7 +18,7 @@ class Wheel extends THREE.Geometry {
 		[this.capInnerLenght, 0, -depth],   // 5
 		[0, this.capInnerLenght, -depth],   // 6
 		[0, -this.capInnerLenght, -depth],  // 7
-		[0, 0, this.capInnerLenght],        // 8
+		[0, 0, this.capInnerLenght / 2],        // 8
 	];
 
 	// Pushing the vertices in
@@ -29,25 +29,27 @@ class Wheel extends THREE.Geometry {
 
 	// Defining faces
 	var faces = [
-		// Define wheel's centercap front and back faces
-		[0, 2, 3],        // 0
-		[1, 2, 3],        // 1
-		[4, 6, 7],        // 2
-		[5, 6, 7],        // 3
-		// Define wheel's centercap lateral faces left to right, top to bottom
-		[2, 4, 6],        // 4
-		[0, 2, 4],        // 5
-		[4, 0, 7],        // 6
-		[0, 3, 7],        // 7
-		[3, 5, 7],        // 8
-		[3, 4, 5],        // 9
-		[2, 5, 6],        // 10
-		[2, 4, 5],        // 11
-		// Define spike faces
-		[0, 2, 8],        // 12
-		[0, 3, 8],        // 13
-		[2, 4, 8],        // 14
-		[3, 4, 8],        // 15
+		// Define wheel's centercap front faces, which stand behind the spikes (+z) => (counter-clock wise)
+		[0, 1, 2],        // A
+		[0, 3, 1],        // B
+    // Define wheel's centercap back faces, which have no spikes (-z) => (clock wise)
+    [4, 6, 5],        // C
+		[4, 5, 7],        // D
+    // Define wheel's center cap left side faces (-x) => (ccw)
+    [4, 0, 2],        // E
+    [4, 2, 6],        // F
+    [4, 7, 3],        // G
+    [4, 3, 0],        // H
+    // Define wheel's center cap right side faces (+x) => (ccw)
+    [6, 2, 1],        // I
+    [6, 1, 5],        // J
+    [1, 3, 5],        // K
+    [3, 7, 5],         // L
+    // Define spike faces, faces are in -x and +x => (ccw)
+    [8, 1, 2],        // M
+    [8, 3, 1],        // N
+    [8, 0, 3],        // O
+    [8, 2, 0]         // P
 	];
 
 	// Pushing the faces in

@@ -28,7 +28,7 @@ function createScene() {
 	gameBoard = new Board(0, -1, 0, size);
 	raceTrack = new Track();
 	car = new Car(20, 2.66, -5);
-	//wheelTest();
+	wheelTest();
 	// Adding oranges
 	createEdible(OrangeWrapper, "Orange1", 150, EDIBLES_Y, 80);
 	createEdible(OrangeWrapper, "Orange2", -200, EDIBLES_Y, -100);
