@@ -1,5 +1,6 @@
 class CameraManager {
 	constructor() {
+		// Main CameraManager data
 		this.windowWidth = window.innerWidth;
 		this.windowHeight = window.innerHeight;
 		this.aspectRatio = this.windowWidth / this.windowHeight;
@@ -13,30 +14,42 @@ class CameraManager {
 		var camera;
 
 		// Creating debug camera: Orthographic + OrbitControls
-		camera = new THREE.OrthographicCamera(0, 0, 0, 0, this.near, this.far);
-		camera.position.set(0, 1000, 0);
+		camera = this.createOrthographicCamera("Orbit Camera");
+		camera.position.set(0, BOARD_WIDTH, 0);
 		camera.lookAt(scene.position);
 		controls = new THREE.OrbitControls(camera);
 		controls.enableKeys = false;
 		this.cameras.push(camera);
 
 		// Creating 1st camera: Orthographic Top
-		camera = new THREE.OrthographicCamera(0, 0, 0, 0, this.near, this.far);
-		camera.position.set(0, 1000, 0);
+		camera = this.createOrthographicCamera("Top Camera");
+		camera.position.set(0, BOARD_WIDTH, 0);
 		camera.lookAt(scene.position);
 		this.cameras.push(camera);
 
 		// Creating 2nd camera: Perspective World
-		camera = new THREE.PerspectiveCamera(75, this.aspectRatio, this.near, this.far);
+		camera = this.createPerspectiveCamera("Table Camera");
 		camera.position.set(0, 600, 550);
 		camera.lookAt(scene.position);
 		this.cameras.push(camera);
 
 		// Creating 3rd camera: Perspective Chase
-		camera = new THREE.PerspectiveCamera(75, this.aspectRatio, this.near, this.far);
+		camera = this.createPerspectiveCamera("Chase Camera");
 		this.attachCameraTo(camera, car);
 		camera.position.set(40, 30, 1); // FIXME: remove these values whenever possible
 		this.cameras.push(camera);
+	}
+
+	createPerspectiveCamera(name="", fov=75) {
+		var cam = new THREE.PerspectiveCamera(fov, this.aspectRatio, this.near, this.far);
+		cam.name = name;
+		return cam;
+	}
+
+	createOrthographicCamera(name="") {
+		var cam = new THREE.OrthographicCamera(0, 0, 0, 0, this.near, this.far);
+		cam.name = name;
+		return cam;
 	}
 
 	attachCameraTo(camera, obj) {
