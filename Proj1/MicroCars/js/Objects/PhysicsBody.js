@@ -10,7 +10,6 @@ class PhysicsBody extends THREE.Object3D {
 		this.type = "PhysicsBody";
 		this.isPhysicsBody = true;
 
-		this.collisionData = undefined;
 		this.bounds = undefined;
 		this.heading = new THREE.Vector3();
 	}
@@ -23,12 +22,9 @@ class PhysicsBody extends THREE.Object3D {
 	* @param b: Object3D of point B
 	* @param n: given Vector3 to fill data in. If undefined, function will return a new one
 	*/
-	getHeading(b, n=undefined) {
-		if (n == undefined || !n.isVector3) {
-			n = b.getWorldPosition().clone();
-		} else {
-			n.copy(b.getWorldPosition());
-		}
+	getHeading(b, vec=undefined) {
+		var n = vec || new THREE.Vector3();
+		n.copy(b.getWorldPosition());
 		n.sub(this.getWorldPosition());
 		n.set(n.x, 0, 0);
 		n.normalize();

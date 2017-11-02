@@ -8,7 +8,7 @@ class CarMesh extends THREE.Group {
 
 		// Main mesh to merge all CarSquare and CarTriangle meshes
 		var square = new THREE.Mesh(new THREE.Geometry());
-		createMaterials(square, { color:0x2194ce, /*Blue*/ specular: 0x111111, shininess: 10,});
+		createMaterials(square, { color:0x2194ce, /*Blue*/ specular: 0x111111, shininess: 10 });
 		this.add(square);
 
 		var c1 = new CarSquare(square, extrSettings,  3, 5,  0, 0);
@@ -35,8 +35,6 @@ class CarMesh extends THREE.Group {
 
 		/* Creates the axles */
 		//Creates the material for the axles.
-		var materialAxle = new THREE.MeshBasicMaterial({color:0x960101});
-
 		var cylinders = new THREE.Mesh(new THREE.Geometry());
 		createMaterials(cylinders, {color:0x960101});
 		this.add(cylinders);
