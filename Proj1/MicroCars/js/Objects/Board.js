@@ -9,7 +9,8 @@ class Board extends THREE.Mesh {
 		super(geometry);
 		this.type = 'Board';
 		createMaterials(this, {map:grassTexture, side: THREE.DoubleSide});
-
+		this.material.shininess = 5;
+		this.material.specular = new THREE.Color("rgb(5%, 5%, 5%)");
 		this.position.set(x, y, z);
 		this.rotateX(90 * TO_RADIANS);
 
