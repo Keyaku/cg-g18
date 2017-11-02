@@ -6,7 +6,7 @@ class CameraManager {
 		this.aspectRatio = this.windowWidth / this.windowHeight;
 		this.near = 0.1;
 		this.far = 2000;
-		this.frustumSize = 1000;
+		this.frustumSize = BOARD_WIDTH;
 
 		// Creating ALL cameras now
 		this.cameraNumber = 0;
@@ -36,7 +36,8 @@ class CameraManager {
 		// Creating 3rd camera: Perspective Chase
 		camera = this.createPerspectiveCamera("Chase Camera");
 		this.attachCameraTo(camera, car);
-		camera.position.set(40, 30, 1); // FIXME: remove these values whenever possible
+		camera.position.set(40, 30, 2); // FIXME: fix Car's position, THEN come back here and remove this line
+		camera.lookAt(car.bounds.position); // FIXME
 		this.cameras.push(camera);
 	}
 
@@ -54,19 +55,9 @@ class CameraManager {
 
 	attachCameraTo(camera, obj) {
 		obj.add(camera);
-
-		var direction = obj.getWorldDirection();
-		var position  = obj.getWorldPosition();
-		var offsetX = Math.cos(NINETY_DEGREES) * direction.x - Math.sin(NINETY_DEGREES) * direction.z;
-		var offsetZ = Math.sin(NINETY_DEGREES) * direction.x + Math.cos(NINETY_DEGREES) * direction.z;
-
-		var x = position.x + offsetX * -40;
-		var y = position.y + 30;
-		var z = position.z + offsetZ * -40;
-
-		camera.position.set(x, y, z);
+		camera.position.set(0, 30, 40);
 		camera.rotation.set(0, 0, 0);
-		camera.lookAt(obj.position);
+		camera.lookAt(obj.getWorldPosition());
 	}
 
 	getCurrentCamera() {
