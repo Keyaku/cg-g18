@@ -8,9 +8,13 @@ class Board extends THREE.Mesh {
 
 		super(geometry);
 		this.type = 'Board';
-		createMaterials(this, {map:grassTexture, side: THREE.DoubleSide});
-		this.material.shininess = 5;
-		this.material.specular = new THREE.Color("rgb(5%, 5%, 5%)");
+
+		var basicMat = {map:grassTexture, side: THREE.DoubleSide};
+		var phongMat = {map:grassTexture, side: THREE.DoubleSide, shininess: 5, specular: new THREE.Color("rgb(5%, 5%, 5%)")};
+		var lambertMat = {map:grassTexture, side: THREE.DoubleSide};
+
+		createMaterialsTwo(this, basicMat, phongMat, lambertMat);
+
 		this.position.set(x, y, z);
 		this.rotateX(90 * TO_RADIANS);
 

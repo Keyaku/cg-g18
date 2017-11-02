@@ -66,6 +66,19 @@ function createMaterials(mesh, parameters={}) {
 }
 
 /**
+* @method createMaterials Creates the appropriate materials for a given mesh
+* @param mesh: The mesh to associate the materials with
+* @param parameters: THREE.Material parameters distinguished by inheritance
+*/
+function createMaterialsTwo(mesh, basicParam={}, phongParam={}, lambertParam={}) {
+	addMaterials(mesh,
+		new THREE.MeshBasicMaterial(basicParam),
+		new THREE.MeshLambertMaterial(lambertParam),
+		new THREE.MeshPhongMaterial(phongParam),
+	);
+}
+
+/**
 * @method addMaterials Adds the given materials to a given mesh
 * @param mesh: The mesh to associate the materials with
 * @param basicMaterial:

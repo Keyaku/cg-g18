@@ -65,9 +65,11 @@ class LampBottom extends THREE.Mesh {
 		super(geometry);
 		this.type = 'LampBottom';
 
-		createMaterials(this, {color:0xDCDCDC});
-		this.material.shininess = 10;
-		this.material.specular = new THREE.Color("rgb(40%, 30%, 30%)");
+		var basicMat = {color:0xDCDCDC};
+		var phongMat = {color:0xDCDCDC, shininess: 10, specular: new THREE.Color("rgb(40%, 30%, 30%)")};
+		var lambertMat = {color:0xDCDCDC};
+
+		createMaterialsTwo(this, basicMat, phongMat, lambertMat);
 
 		this.position.y = 50;
 		obj.add(this);
@@ -83,9 +85,12 @@ class LampTop extends THREE.Mesh {
 		this.type = 'LampTop';
 		this.position.y = 100;
 		this.visible = true;
-		createMaterials(this, {color:0xDCDCDC});
-		this.material.shininess = 10;
-		this.material.specular = new THREE.Color("rgb(40%, 30%, 30%)");
+
+		var basicMat = {color:0xDCDCDC};
+		var phongMat = {color:0xDCDCDC, shininess: 10, specular: new THREE.Color("rgb(40%, 30%, 30%)")};
+		var lambertMat = {color:0xDCDCDC};
+
+		createMaterialsTwo(this, basicMat, phongMat, lambertMat);
 
 
 		obj.add(this);

@@ -88,9 +88,11 @@ class OrangeFruit extends THREE.Mesh {
 		this.type = 'OrangeFruit';
 		this.position.set(x, y, z);
 
-		createMaterials(this, {color:0xFF9900});
-		this.material.shininess = 50;
-		this.material.specular = new THREE.Color("rgb(40%, 15%, 15%)");
+		var basicMat = {color:0xFF9900};
+		var phongMat = {color:0xFF9900, shininess: 50, specular: new THREE.Color("rgb(5%, 5%, 5%)")};
+		var lambertMat = {color:0xFF9900};
+
+		createMaterials(this, basicMat, phongMat, lambertMat);
 
 		obj.add(this);
 		return this;
