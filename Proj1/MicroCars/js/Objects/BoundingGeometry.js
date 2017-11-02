@@ -54,6 +54,7 @@ class BoundingGeometry extends THREE.Mesh {
 	// Checks for potential intersections and calculates accordingly
 	intersects(bounds) {
 		for (var type in bounds_type) {
+			// If `bounds` type is of `type` AND the method is available, call it.
 			if (bounds instanceof bounds_type[type] && this[type] != undefined) {
 				return this[type](bounds);
 			}
