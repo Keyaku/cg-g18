@@ -11,7 +11,7 @@ class Board extends THREE.Mesh {
 
 		var basicMat = {map:grassTexture, side: THREE.DoubleSide};
 		var phongMat = {map:grassTexture, side: THREE.DoubleSide, shininess: 5, specular: new THREE.Color("rgb(5%, 5%, 5%)")};
-		var lambertMat = {map:grassTexture, side: THREE.DoubleSide};
+		var lambertMat = {map:grassTexture, side: THREE.DoubleSide, emissive: 0x002200, emissiveIntensity: 0.5};
 
 		createMaterialsTwo(this, basicMat, phongMat, lambertMat);
 
