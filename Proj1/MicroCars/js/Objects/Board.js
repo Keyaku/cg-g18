@@ -21,5 +21,4 @@ class Board extends THREE.Mesh {
 		scene.add(this);
 		return this;
 	}
-
 }
