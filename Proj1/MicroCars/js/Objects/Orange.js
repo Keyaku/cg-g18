@@ -89,6 +89,8 @@ class OrangeFruit extends THREE.Mesh {
 		this.position.set(x, y, z);
 
 		createMaterials(this, {color:0xFF9900});
+		this.material.shininess = 50;
+		this.material.specular = new THREE.Color("rgb(40%, 15%, 15%)");
 
 		obj.add(this);
 		return this;

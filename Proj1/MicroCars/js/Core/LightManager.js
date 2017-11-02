@@ -39,7 +39,7 @@ class LightManager {
   * towards the ground. Simulates horizon.
   */
   newHorizonLight() {
-  	var horizonLight = new THREE.HemisphereLight(0xFF4444, 0x44FF44, 0.6);
+  	var horizonLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.35);
 
   	horizonLight.name = 'horizonLight';
   	horizonLight.position.set( 0, cameraManager.frustumSize, 0 );
@@ -89,8 +89,8 @@ class LightManager {
 
 	switchDirectionalLight() {
 		this.directionalLight.visible = !this.directionalLight.visible;
-	    this.ambientLight.visible = !this.ambientLight.visible;
-	    this.horizonLight.visible = !this.horizonLight.visible;
+	  this.ambientLight.visible = !this.ambientLight.visible;
+	  this.horizonLight.visible = !this.horizonLight.visible;
 	}
 
 	disableLightUpdates() {
