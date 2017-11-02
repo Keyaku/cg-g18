@@ -1,4 +1,4 @@
-class Candle {
+class Lamp {
 	constructor(obj) {
 		this.lightsArray = [];
 		this.candleArray = [];
@@ -17,7 +17,7 @@ class Candle {
 				y = lightsPositions[i][1];
 				z = lightsPositions[i][2];
 
-				var candle = new ConcreteCandle(obj, x, 0, z);
+				var candle = new ConcreteLamp(obj, x, 0, z);
         var light = new THREE.PointLight(0xCCFFFF, 0, POINT_LIGHT_DISTANCE, POINT_LIGHT_REAL);
 
 				candle.position.set(x, 0, z);
@@ -36,34 +36,34 @@ class Candle {
 			return this.lightsArray;
 		}
 
-		burnCandles() {
+		lampsOn() {
 			var candle;
 			for (candle = 0; candle < NUMBER_OF_POINT_LIGHTS; candle++) {
-				this.candleArray[candle].burnCandle();
+				this.candleArray[candle].lampOn();
 			}
 		}
 	}
 
-class ConcreteCandle extends THREE.Object3D {
+class ConcreteLamp extends THREE.Object3D {
 	constructor(obj, x, y, z, radius = 4) {
 		super();
-		this.type = 'Candle';
-		this.candleBottom = new CandleBottom(this, radius);
-		this.candleTop    = new CandleTop(this, radius * 5);
+		this.type = 'Lamp';
+		this.candleBottom = new LampBottom(this, radius);
+		this.candleTop    = new LampTop(this, radius * 5);
 		obj.add(this);
 		return this;
 	}
 
-	burnCandle() {
+	lampOn() {
 		this.candleTop.meshVisible();
 	}
 };
 
-class CandleBottom extends THREE.Mesh {
+class LampBottom extends THREE.Mesh {
 	constructor(obj, radius) {
 		var geometry = new THREE.CylinderGeometry(radius, radius, 100);
 		super(geometry);
-		this.type = 'CandleBottom';
+		this.type = 'LampBottom';
 
 		createMaterials(this, {color:0xDCDCDC});
 		this.material.shininess = 10;
@@ -75,12 +75,12 @@ class CandleBottom extends THREE.Mesh {
 	}
 }
 
-class CandleTop extends THREE.Mesh {
+class LampTop extends THREE.Mesh {
 	constructor(obj, radius){
 		var geometry = new THREE.CylinderGeometry(radius, radius, 2);
 
 		super(geometry);
-		this.type = 'CandleTop';
+		this.type = 'LampTop';
 		this.position.y = 100;
 		this.visible = true;
 		createMaterials(this, {color:0xDCDCDC});

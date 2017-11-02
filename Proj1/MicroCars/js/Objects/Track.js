@@ -2,7 +2,7 @@ class Track extends THREE.Object3D {
 	constructor() {
 		super()
 		this.type = 'Track'
-		this.lights = new Candle(this);
+		this.lights = new Lamp(this);
 
 		//Sets how wide the track is.
 		var trackWidth = 45
