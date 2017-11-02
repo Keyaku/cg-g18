@@ -54,7 +54,7 @@ class StaticBody extends PhysicsBody {
 }
 
 
-// Weighted, non-deformable bodies. Use for props
+// Weighted, non-deformable bodies. Useful for Oranges
 var rigidbodyIteration;
 class RigidBody extends PhysicsBody {
 	constructor(mass = 1) {
@@ -101,7 +101,7 @@ class RigidBody extends PhysicsBody {
 }
 
 
-// Bodies that move and can be animated. Useful for cars.
+// Bodies that move and can be animated. Useful for Cars.
 class MotionBody extends PhysicsBody {
 	constructor(mass = 1) {
 		super();
