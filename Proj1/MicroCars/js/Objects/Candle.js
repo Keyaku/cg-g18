@@ -65,7 +65,10 @@ class CandleBottom extends THREE.Mesh {
 		super(geometry);
 		this.type = 'CandleBottom';
 
-		createMaterials(this, {color:0xD3D3D3});
+		createMaterials(this, {color:0xDCDCDC});
+		this.material.shininess = 10;
+		this.material.specular = new THREE.Color("rgb(40%, 30%, 30%)");
+
 		this.position.y = 50;
 		obj.add(this);
 		return this;
@@ -80,7 +83,10 @@ class CandleTop extends THREE.Mesh {
 		this.type = 'CandleTop';
 		this.position.y = 100;
 		this.visible = true;
-		createMaterials(this, {color:0xD3D3D3});
+		createMaterials(this, {color:0xDCDCDC});
+		this.material.shininess = 10;
+		this.material.specular = new THREE.Color("rgb(40%, 30%, 30%)");
+
 
 		obj.add(this);
 		return this;
