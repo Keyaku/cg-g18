@@ -17,7 +17,6 @@ const HALF_BOARD_LENGTH = BOARD_LENGTH >> 1;
 const QUARTER_BOARD_WIDTH  = BOARD_WIDTH  >> 2;
 const QUARTER_BOARD_LENGTH = BOARD_LENGTH >> 2;
 const FRICTION = 0.02;
-const EDIBLES_Y = 15;
 /*******************************************************************************
 * Directional variables
 *******************************************************************************/
@@ -105,7 +104,7 @@ function objectNeedsRespawn(obj) {
 function generateSpawnLocation(min = -HALF_BOARD_WIDTH, max = HALF_BOARD_WIDTH) {
 	var x = Math.floor(Math.random() * (max - min + 1)) + min;
 	var z = Math.floor(Math.random() * (max - min + 1)) + min;
-	return new THREE.Vector3(x, EDIBLES_Y, z);
+	return new THREE.Vector3(x, 0, z);
 }
 
 /** respawnObject(spawnLocation, axis, distance)
@@ -120,6 +119,7 @@ function respawnObject(obj) {
 	var z = Math.random() < 0.5 ? -1 : 1;
 	var maskDirection = Math.random();
 	var vector = generateSpawnLocation();
+	vector.setY(obj.bounds.radius);
 
 	if (0 <= maskDirection && maskDirection < 0.33) {
 		heading = new THREE.Vector3(x, 0, z);

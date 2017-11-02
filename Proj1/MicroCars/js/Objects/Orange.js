@@ -7,7 +7,7 @@
 * @attribute position: position of this wrapper in world coordinates.
 */
 class OrangeWrapper extends MotionBody {
-	constructor(orangeName, x, y, z, radius = 15) {
+	constructor(orangeName, x=0, y=0, z=0, radius=15) {
 		super(0.140);
 
 		// Adding mesh
@@ -16,7 +16,7 @@ class OrangeWrapper extends MotionBody {
 		this.acceleration = ORANGE_ACCELERATION;
 		this.heading = HEADING_ARRAY[Math.floor((Math.random() * HEADING_ARRAY.length))];
 		this.radius = radius;
-		this.position.set(x, y, z);
+		this.position.set(x, y+radius, z);
 
 		// Adding BoundingSphere
 		this.bounds = new BoundingSphere(this.mesh, radius);

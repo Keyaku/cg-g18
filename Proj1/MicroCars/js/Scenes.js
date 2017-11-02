@@ -30,9 +30,9 @@ function createScene() {
 	car = new Car(20, 2.66, -5);
 	//wheelTest();
 	// Adding oranges
-	createEdible(OrangeWrapper, "Orange1", 150, EDIBLES_Y, 80);
-	createEdible(OrangeWrapper, "Orange2", -200, EDIBLES_Y, -100);
-	createEdible(OrangeWrapper, "Orange3", 0, EDIBLES_Y, 50);
+	createEdible(OrangeWrapper, "Orange1", 150, 0, 80);
+	createEdible(OrangeWrapper, "Orange2", -200, 0, -100);
+	createEdible(OrangeWrapper, "Orange3", 0, 0, 50);
 	// Adding apples. I mean, butters.
 	createEdible(Butter, "Butter1", 100, 0, -100);
 	createEdible(Butter, "Butter2", -100, 0, -100);
