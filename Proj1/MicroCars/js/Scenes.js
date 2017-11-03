@@ -10,10 +10,10 @@ var scene;
 * Object3D of subtype Car to a dictionary
 */
 function wheelTest() {
-	var geometry = new WheelGeometry(50, 10);
+	var geometry = new WheelGeometry(50, 30);
 	var material = new THREE.MeshLambertMaterial( {color: 0xFFFF000});
 	var wheel = new THREE.Mesh(geometry, material);
-	wheel.position.set(0, 60, 0);
+	wheel.position.set(0, 100, 0);
 	scene.add(wheel);
 }
 function createScene() {
@@ -28,7 +28,7 @@ function createScene() {
 	gameBoard = new Board(0, -1, 0, size);
 	raceTrack = new Track();
 	car = new Car(20, 2.66, -5);
-	// wheelTest();
+	wheelTest();
 	// Adding oranges
 	createEdible(OrangeWrapper, "Orange1", 150, 0, 80);
 	createEdible(OrangeWrapper, "Orange2", -200, 0, -100);
