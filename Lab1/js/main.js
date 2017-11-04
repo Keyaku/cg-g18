@@ -1,14 +1,6 @@
 var camera, controls, scene, renderer;
 var table, ball;
 
-function addBumper() {
-	var geometry = new BumperGeometry(50, 10, 10);
-	var material = new THREE.MeshLambertMaterial( {color: 0xFFFF000});
-	var bumper = new THREE.Mesh(geometry, material);
-	bumper.position.set(0, 60, 0);
-	scene.add(bumper);
-}
-
 function createCamera() {
 	'use strict';
 
@@ -36,8 +28,6 @@ function createScene() {
 	var ambientLight = new THREE.AmbientLight(0x404040);
 	ambientLight.name = 'ambientLight';
 	scene.add(ambientLight);
-
-	addBumper();
 }
 
 function init() {
