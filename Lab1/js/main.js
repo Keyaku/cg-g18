@@ -1,5 +1,13 @@
-var camera, scene, renderer;
-var table, ball
+var camera, controls, scene, renderer;
+var table, ball;
+
+function addBumper() {
+	var geometry = new BumperGeometry(50, 10, 10);
+	var material = new THREE.MeshLambertMaterial( {color: 0xFFFF000});
+	var bumper = new THREE.Mesh(geometry, material);
+	bumper.position.set(0, 60, 0);
+	scene.add(bumper);
+}
 
 function createCamera() {
 	'use strict';
@@ -8,26 +16,28 @@ function createCamera() {
 	camera = new THREE.PerspectiveCamera(70, screenRatio, 1, 1000);
 	camera.position.set(50, 50, 50);
 	camera.lookAt(scene.position);
+	controls = new THREE.OrbitControls(camera);
+	controls.enableKeys = false;
 }
 
 function render() {
 	'use strict';
 
-	if (ball.userData.jumping) {
-		ball.userData.step += 0.04;
-		ball.position.y = Math.abs(30 * (Math.sin(ball.userData.step)));
-		ball.position.z = 15 * (Math.cos(ball.userData.step));
-	}
 	renderer.render(scene, camera);
 	requestAnimationFrame(render);
 }
 
 function createScene() {
 	'use strict';
+
 	scene = new THREE.Scene();
 	scene.add(new THREE.AxisHelper(10));
-	table = new Table(0, 0, 0); //Adds a Table (custom object).
-	ball = new Ball(0, 0, 15); //Adds a Ball (custom object).
+
+	var ambientLight = new THREE.AmbientLight(0x404040);
+	ambientLight.name = 'ambientLight';
+	scene.add(ambientLight);
+
+	addBumper();
 }
 
 function init() {
