@@ -4,9 +4,14 @@ class BumperGeometry extends THREE.Geometry {
 		this.type = 'BumperGeometry';
 
 		/* The objective of these custom faces is to interpolate between vertices. */
+		var halfWidth = width / 2;
+		var halfDepth = depth / 2;
+		var quarterDepth = depth / 4;
+
 		// Creating boxes
-		this.createBox(width, height, depth/4); // main body
-		// TODO: left and right wings
+		this.createBox(width, height, quarterDepth); // main body
+		this.createBox(width*0.05, height, depth, -halfWidth, 0, -quarterDepth); // left wing
+		this.createBox(width*0.05, height, depth,  halfWidth, 0, -quarterDepth); // right wing
 		// TODO: triangles
 
 		// Update our Geometry
@@ -23,7 +28,7 @@ class BumperGeometry extends THREE.Geometry {
 	* @argument udir:
 	* @argument vdir:
 	*/
-	createPlane(u, v, w, udir, vdir, width, height, depth) {
+	createPlane(u, v, w, udir, vdir, width, height, depth, xOrig=0, yOrig=0, zOrig=0) {
 		var halfWidth  = width / 2;
 		var halfHeight = height / 2;
 		var halfDepth  = depth / 2;
@@ -36,9 +41,15 @@ class BumperGeometry extends THREE.Geometry {
 				var x = ix * width - halfWidth;
 
 				var vertex = new THREE.Vector3();
+				/* Defining box's dimensions */
 				vertex[u] = x * udir;
 				vertex[v] = y * vdir;
 				vertex[w] = halfDepth;
+
+				/* Defining box's position */
+				vertex.x += xOrig;
+				vertex.y += yOrig;
+				vertex.z += zOrig;
 				this.vertices.push(vertex);
 			}
 		}
@@ -57,7 +68,7 @@ class BumperGeometry extends THREE.Geometry {
 	/**
 	* @method createBox: Creates a box of a given width, height and depth
 	*/
-	createBox(width, height, depth) {
+	createBox(width, height, depth, x=0, y=0, z=0) {
 		// Arguments to send to createPlane()
 		var attributes = [
 			[ 'x', 'y', 'z', -1, -1, width, height, -depth  ], // ABCD - front
@@ -69,7 +80,8 @@ class BumperGeometry extends THREE.Geometry {
 		];
 
 		for (var i in attributes) {
-			this.createPlane.apply(this, attributes[i]);
+			/* Creating planes with the arguments defined above + (x, y, z) */
+			this.createPlane.apply(this, attributes[i].concat([x, y, z]));
 		}
 	}
 }
