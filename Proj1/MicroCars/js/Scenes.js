@@ -29,6 +29,9 @@ function createScene() {
 	raceTrack = new Track();
 	car = new Car(20, 2.66, -5);
 	wheelTest();
+
+	var body = new CarBody(21, 8)
+
 	// Adding oranges
 	createEdible(OrangeWrapper, "Orange1", 150, 0, 80);
 	createEdible(OrangeWrapper, "Orange2", -200, 0, -100);
