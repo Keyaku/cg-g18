@@ -13,6 +13,7 @@ class BumperGeometry extends THREE.Geometry {
 		this.createBox(width*0.05, height, depth, -halfWidth, 0, -quarterDepth); // left wing
 		this.createBox(width*0.05, height, depth,  halfWidth, 0, -quarterDepth); // right wing
 		// TODO: triangles
+		//this.createTriPrism(depth, height, 2, 1);
 
 		// Update our Geometry
 		this.mergeVertices();
@@ -21,7 +22,7 @@ class BumperGeometry extends THREE.Geometry {
 	}
 
 	/**
-	* @method createBox: Creates a plane of a given width, height and depth
+	* @method createPlane: Creates a plane of a given width, height and depth
 	* @argument u:
 	* @argument v:
 	* @argument w:
@@ -34,10 +35,10 @@ class BumperGeometry extends THREE.Geometry {
 		var halfDepth  = depth / 2;
 
 		// Creating vertices
-		for (var iy = 0; iy < 2; iy++) { // 2 = number of segments
+		for (var iy = 0; iy < 2; iy++) { // 2 = number of height segments
 			var y = iy * height - halfHeight;
 
-			for (var ix = 0; ix < 2; ix++) { // 2 = number of segments
+			for (var ix = 0; ix < 2; ix++) { // 2 = number of width segments
 				var x = ix * width - halfWidth;
 
 				var vertex = new THREE.Vector3();
@@ -83,5 +84,74 @@ class BumperGeometry extends THREE.Geometry {
 			/* Creating planes with the arguments defined above + (x, y, z) */
 			this.createPlane.apply(this, attributes[i].concat([x, y, z]));
 		}
+	}
+
+	/**
+	* @method createTriPrism: Creates an Extruded Triangle (Prism is more accurate)
+	* of a given width, height and depth
+	* This borrows logic from Cylinder construction, only modified to build a Prism.
+	*/
+	createTriPrism(width, height, thetaStart=0, alpha=0, x=0, y=0, z=0) {
+		var halfHeight = height / 2;
+
+		var radialSegments = 3; // it's a triangle, after all
+		var heightSegments = 1; // we don't need more segments to extrude our triangle
+		var thetaLength = 6.3;  // necessary for accurate triangulation
+		thetaStart = thetaStart > thetaLength ? thetaLength : thetaStart;
+
+		var radius = Math.sqrt(width*width + height*height);
+
+		var x, y;
+
+		// Creating vertices
+		var indexes = [];
+		for (y = 0; y <= heightSegments; y++) {
+			var indexRow = [];
+			var v = y / heightSegments;
+
+			for (x = 0; x <= radialSegments; x++) {
+				var u = x / radialSegments;
+				var theta = u * thetaLength + thetaStart;
+				var sinTheta = Math.sin(theta);
+				var cosTheta = Math.cos(theta);
+
+				var vertex = new THREE.Vector3();
+				vertex.x = radius * sinTheta;
+				vertex.y = - v * height + halfHeight;
+				vertex.z = radius * cosTheta;
+				this.vertices.push(vertex);
+
+				indexRow.push(this.vertices.length-1);
+			}
+
+			indexes.push(indexRow);
+		}
+
+		// Creating side faces
+		for (y = 0; y < heightSegments; y++) {
+			for (x = 0; x < radialSegments; x++) {
+				var a = indexes[y][x];
+				var b = indexes[y + 1][x];
+				var c = indexes[y + 1][x + 1];
+				var d = indexes[y][x + 1];
+
+				this.faces.push(new THREE.Face3(a, b, d));
+				this.faces.push(new THREE.Face3(b, c, d));
+			}
+		}
+
+		// XXX: Get ready for some old-fashioned hard-code
+		var a, b, c;
+		// top face
+		a = indexes[0][0];
+		b = indexes[0][1];
+		c = indexes[0][2];
+		this.faces.push(new THREE.Face3(a, b, c));
+
+		// bottom face
+		a = indexes[1][0];
+		b = indexes[1][1];
+		c = indexes[1][2];
+		this.faces.push(new THREE.Face3(c, b, a));
 	}
 }
