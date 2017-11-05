@@ -4,9 +4,9 @@ class TriangularPrismGeometry extends THREE.Geometry {
 	* of a given width, height and depth
 	* This borrows logic from Cylinder construction, only modified to build a Prism.
 	*/
-	constructor(width=1, height=1, thetaStart=0, xOrig=0, yOrig=0, zOrig=0) {
+	constructor(width=1, height=1, depth=1, thetaStart=0, xOrig=0, yOrig=0, zOrig=0) {
 		super();
-		var halfHeight = height / 2;
+		var halfDepth = depth / 2;
 
 		var radialSegments = 3; // it's a triangle, after all
 		var heightSegments = 1; // we don't need more segments to extrude our triangle
@@ -31,7 +31,7 @@ class TriangularPrismGeometry extends THREE.Geometry {
 
 				var vertex = new THREE.Vector3();
 				vertex.x = xOrig + this.radius * sinTheta;
-				vertex.y = yOrig - v * height + halfHeight;
+				vertex.y = yOrig - v * depth + halfDepth;
 				vertex.z = zOrig + this.radius * cosTheta;
 				this.vertices.push(vertex);
 
@@ -178,7 +178,7 @@ class BumperGeometry extends THREE.Geometry {
 		}
 
 		// Adding triangular prisms
-		var triprism = new TriangularPrismGeometry(quarterDepth, halfHeight);
+		var triprism = new TriangularPrismGeometry(quarterDepth, halfHeight, halfDepth);
 		triprism.rotateToVertical();
 		var prismPositions = [-(halfWidth - halfDepth), 0, halfWidth - halfDepth];
 		for (var i = 0; i < 3; i++) {
