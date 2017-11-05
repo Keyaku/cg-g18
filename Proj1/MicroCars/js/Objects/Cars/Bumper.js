@@ -79,36 +79,24 @@ class TriangularPrismGeometry extends THREE.Geometry {
 	}
 }
 
-class BumperGeometry extends THREE.Geometry {
-	constructor(width=1, height=1, depth=1) {
+class BoxGeometry extends THREE.Geometry {
+	constructor(width, height, depth, x=0, y=0, z=0) {
 		super();
-		this.type = 'BumperGeometry';
 
-		/* The objective of these custom faces is to interpolate between vertices. */
-		var halfWidth = width / 2;
-		var halfHeight = height / 2;
-		var halfDepth = depth / 2;
-		var quarterDepth = depth / 4;
+		// Arguments to send to createPlane()
+		var attributes = [
+			[ 'x', 'y', 'z', -1, -1, width, height, -depth  ], // ABCD - front
+			[ 'x', 'y', 'z',  1, -1, width, height,  depth  ], // BHGC - back
+			[ 'x', 'z', 'y',  1,  1, width,  depth,  height ], // AEHB - top
+			[ 'x', 'z', 'y',  1, -1, width,  depth, -height ], // DMGC - bottom
+			[ 'z', 'y', 'x',  1, -1, depth, height, -width  ], // AEFD - side left
+			[ 'z', 'y', 'x', -1, -1, depth, height,  width  ], // EGHM - side right
+		];
 
-		// Creating boxes
-		this.createBox(width, height, quarterDepth); // main body
-		this.createBox(width*0.05, height, depth, -halfWidth, 0, -quarterDepth); // left wing
-		this.createBox(width*0.05, height, depth,  halfWidth, 0, -quarterDepth); // right wing
-
-		// Adding triangular prisms
-		var triprism = new TriangularPrismGeometry(quarterDepth, halfHeight);
-		triprism.rotateToVertical();
-		var prismPositions = [-(halfWidth - halfDepth), 0, halfWidth - halfDepth];
-		for (var i = 0; i < 3; i++) {
-			var prism = triprism.clone();
-			prism.translate(prismPositions[i], 0, quarterDepth);
-			this.merge(prism);
+		for (var i in attributes) {
+			/* Creating planes with the arguments defined above + (x, y, z) */
+			this.createPlane.apply(this, attributes[i].concat([x, y, z]));
 		}
-
-		// Update our Geometry
-		this.mergeVertices();
-		this.computeFaceNormals();
-		this.computeVertexNormals();
 	}
 
 	/**
@@ -155,24 +143,41 @@ class BumperGeometry extends THREE.Geometry {
 		this.faces.push(new THREE.Face3(a, b, d));
 		this.faces.push(new THREE.Face3(b, c, d));
 	}
+}
 
-	/**
-	* @method createBox: Creates a box of a given width, height and depth
-	*/
-	createBox(width, height, depth, x=0, y=0, z=0) {
-		// Arguments to send to createPlane()
-		var attributes = [
-			[ 'x', 'y', 'z', -1, -1, width, height, -depth  ], // ABCD - front
-			[ 'x', 'y', 'z',  1, -1, width, height,  depth  ], // BHGC - back
-			[ 'x', 'z', 'y',  1,  1, width,  depth,  height ], // AEHB - top
-			[ 'x', 'z', 'y',  1, -1, width,  depth, -height ], // DMGC - bottom
-			[ 'z', 'y', 'x',  1, -1, depth, height, -width  ], // AEFD - side left
-			[ 'z', 'y', 'x', -1, -1, depth, height,  width  ], // EGHM - side right
-		];
+class BumperGeometry extends THREE.Geometry {
+	constructor(width=1, height=1, depth=1) {
+		super();
+		this.type = 'BumperGeometry';
 
-		for (var i in attributes) {
-			/* Creating planes with the arguments defined above + (x, y, z) */
-			this.createPlane.apply(this, attributes[i].concat([x, y, z]));
+		/* The objective of these custom faces is to interpolate between vertices. */
+		var halfWidth = width / 2;
+		var halfHeight = height / 2;
+		var halfDepth = depth / 2;
+		var quarterDepth = depth / 4;
+
+		// Creating boxes
+		var boxes = [];
+		boxes.push(new BoxGeometry(width, height, quarterDepth)); // main body
+		boxes.push(new BoxGeometry(width*0.05, height, depth, -halfWidth, 0, -quarterDepth)); // left wing
+		boxes.push(new BoxGeometry(width*0.05, height, depth,  halfWidth, 0, -quarterDepth)); // right wing
+		for (var i in boxes) {
+			this.merge(boxes[i]);
 		}
+
+		// Adding triangular prisms
+		var triprism = new TriangularPrismGeometry(quarterDepth, halfHeight);
+		triprism.rotateToVertical();
+		var prismPositions = [-(halfWidth - halfDepth), 0, halfWidth - halfDepth];
+		for (var i = 0; i < 3; i++) {
+			var prism = triprism.clone();
+			prism.translate(prismPositions[i], 0, quarterDepth);
+			this.merge(prism);
+		}
+
+		// Update our Geometry
+		this.mergeVertices();
+		this.computeFaceNormals();
+		this.computeVertexNormals();
 	}
 }
