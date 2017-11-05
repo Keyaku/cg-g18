@@ -4,7 +4,7 @@ class TriangularPrismGeometry extends THREE.Geometry {
 	* of a given width, height and depth
 	* This borrows logic from Cylinder construction, only modified to build a Prism.
 	*/
-	constructor(width=1, height=1, thetaStart=0, x=0, y=0, z=0) {
+	constructor(width=1, height=1, thetaStart=0, xOrig=0, yOrig=0, zOrig=0) {
 		super();
 		var halfHeight = height / 2;
 
@@ -30,9 +30,9 @@ class TriangularPrismGeometry extends THREE.Geometry {
 				var cosTheta = Math.cos(theta);
 
 				var vertex = new THREE.Vector3();
-				vertex.x = this.radius * sinTheta;
-				vertex.y = - v * height + halfHeight;
-				vertex.z = this.radius * cosTheta;
+				vertex.x = xOrig + this.radius * sinTheta;
+				vertex.y = yOrig - v * height + halfHeight;
+				vertex.z = zOrig + this.radius * cosTheta;
 				this.vertices.push(vertex);
 
 				indexRow.push(this.vertices.length-1);
@@ -85,7 +85,7 @@ class TriangularPrismGeometry extends THREE.Geometry {
 }
 
 class BoxGeometry extends THREE.Geometry {
-	constructor(width, height, depth, x=0, y=0, z=0) {
+	constructor(width, height, depth, xOrig=0, yOrig=0, zOrig=0) {
 		super();
 
 		// Arguments to send to createPlane()
@@ -100,7 +100,7 @@ class BoxGeometry extends THREE.Geometry {
 
 		for (var i in attributes) {
 			/* Creating planes with the arguments defined above + (x, y, z) */
-			this.createPlane.apply(this, attributes[i].concat([x, y, z]));
+			this.createPlane.apply(this, attributes[i].concat([xOrig, yOrig, zOrig]));
 		}
 
 		// Update our Geometry
