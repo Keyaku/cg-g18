@@ -68,6 +68,11 @@ class TriangularPrismGeometry extends THREE.Geometry {
 		c = indexes[1][2];
 		this.faces.push(new THREE.Face3(c, b, a));
 
+		// Update our Geometry
+		this.mergeVertices();
+		this.computeFaceNormals();
+		this.computeVertexNormals();
+
 		return this;
 	}
 
@@ -97,6 +102,13 @@ class BoxGeometry extends THREE.Geometry {
 			/* Creating planes with the arguments defined above + (x, y, z) */
 			this.createPlane.apply(this, attributes[i].concat([x, y, z]));
 		}
+
+		// Update our Geometry
+		this.mergeVertices();
+		this.computeFaceNormals();
+		this.computeVertexNormals();
+
+		return this;
 	}
 
 	/**
@@ -179,5 +191,7 @@ class BumperGeometry extends THREE.Geometry {
 		this.mergeVertices();
 		this.computeFaceNormals();
 		this.computeVertexNormals();
+
+		return this;
 	}
 }
