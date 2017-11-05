@@ -16,6 +16,14 @@ function wheelTest() {
 	wheel.position.set(0, 100, 0);
 	scene.add(wheel);
 }
+function bumperTest() {
+	var geometry = new BumperGeometry(50, 10, 10);
+	var material = new THREE.MeshPhongMaterial( {color: 0xFFFF000});
+	var bumper = new THREE.Mesh(geometry, material);
+	bumper.position.set(0, 40, 30);
+	scene.add(bumper);
+}
+
 function createScene() {
 	var size = BOARD_WIDTH;
 	var divisions = BOARD_WIDTH / 10;
@@ -29,8 +37,9 @@ function createScene() {
 	raceTrack = new Track();
 	car = new Car(20, 2.66, -5);
 	wheelTest();
+	bumperTest();
 
-	var body = new CarBody(21, 8)
+	var body = new CarBody(21, 8);
 
 	// Adding oranges
 	createEdible(OrangeWrapper, "Orange1", 150, 0, 80);
