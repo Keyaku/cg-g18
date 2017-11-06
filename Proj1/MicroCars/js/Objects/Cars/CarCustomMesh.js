@@ -39,7 +39,7 @@ function createCarMesh(carWidth, carLength) {
 		mesh.add(allMeshes[i]);
 	}
 
-	mesh.position.set(0, 0, 0)
+	mesh.position.set(0, 0, -2)
 	return mesh;
 
 }
