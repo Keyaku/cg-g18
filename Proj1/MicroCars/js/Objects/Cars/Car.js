@@ -28,12 +28,9 @@ class Car extends MotionBody {
 			min.min(v);
 			max.max(v);
 		}
-		var radius = 0.6 * Math.max((max.x-min.x), (max.y-min.y), (max.z-min.z))
 
 		var center = max.clone();
 		center.sub(min);
-		center.divideScalar(2);
-		center.multiplyScalar(0.5);
 
 		this.bounds = new BoundingSphere(this.mesh, carWidth, center);
 		/* FIXME: attempt to remove the code above later */
