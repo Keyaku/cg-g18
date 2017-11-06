@@ -1,5 +1,5 @@
 class Car extends MotionBody {
-	constructor(x=0, y=0, z=0, carMesh) {
+	constructor(x=0, y=0, z=0) {
 		super();
 		this.type = 'Car';
 
@@ -8,7 +8,9 @@ class Car extends MotionBody {
 		var lambertMaterial = new THREE.MeshLambertMaterial({color:0x222222});
 
 		// Creating mesh
-		this.mesh = carMesh;
+		var carWidth = 20;
+		var carLength = 10;
+		this.mesh = createCarMesh(carWidth, carLength);
 		createMaterialsTwo(this.mesh, basicMaterial, phongMaterial, lambertMaterial);
 		this.add(this.mesh);
 

@@ -20,11 +20,7 @@ function createScene() {
 	var table = new Table(0, -1.1, 0, size);
 	gameBoard = new Board(0, -1, 0, size);
 	raceTrack = new Track();
-
-	var carWidth = 20;
-	var carLength = 10;
-	var mesh = createCarMesh(carWidth, carLength);
-	car = new Car(20, 2.66, -5, mesh);
+	car = new Car(20, 0, -5);
 
 	// Adding oranges
 	createEdible(OrangeWrapper, "Orange1", 150, 0, 80);
