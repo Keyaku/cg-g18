@@ -20,8 +20,7 @@ class Car extends MotionBody {
 
 		// Creating Bounds
 		/* FIXME: hacked our way through a BoundingSphere for our car */
-		var bMesh = new CarMesh();
-		var vertices = bMesh.children[0].geometry.vertices
+		var vertices = this.mesh.children[0].geometry.vertices;
 		var min = new THREE.Vector3(0, 0, 0);
 		var max = new THREE.Vector3(0, 0, 0);
 		for (var i = 0; i < vertices.length; i++) {
@@ -36,7 +35,7 @@ class Car extends MotionBody {
 		center.divideScalar(2);
 		center.multiplyScalar(0.5);
 
-		this.bounds = new BoundingSphere(bMesh, radius, center);
+		this.bounds = new BoundingSphere(this.mesh, carWidth, center);
 		/* FIXME: attempt to remove the code above later */
 
 		this.add(this.bounds);

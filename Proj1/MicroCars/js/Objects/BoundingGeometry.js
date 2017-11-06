@@ -28,7 +28,7 @@ class BoundingGeometry extends THREE.Mesh {
 	setFromMesh(obj, min=new THREE.Vector3(), max=new THREE.Vector3(1)) {
 		var vertices;
 		// Checking mesh's own geometry (if available)
-		if (obj.geometry != undefined) {
+		if (obj.geometry != undefined && obj.geometry.vertices != undefined) {
 			vertices = obj.geometry.vertices;
 			for (var j = 0; j < vertices.length; j++) {
 				var v = vertices[j];
@@ -40,7 +40,7 @@ class BoundingGeometry extends THREE.Mesh {
 		var len = obj.children.length;
 		for (var i = 0; i < len; i++) {
 			var child = obj.children[i];
-			if (child.geometry != undefined) {
+			if (child.geometry != undefined && child.geometry.vertices != undefined) {
 				vertices = obj.children[i].geometry.vertices;
 				for (var j = 0; j < vertices.length; j++) {
 					var v = vertices[j];
