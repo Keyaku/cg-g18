@@ -6,7 +6,7 @@ class CarBody extends THREE.Geometry {
 		var geometry3 = new THREE.Geometry();
 		var material = new THREE.MeshBasicMaterial({color : 0xff0000});
 		var carDistanceFromGround = 5;
-		var carBodyHeight = 10;
+		var carBodyHeight = 5;
 		var lengthDiv = carLength / 3;
 		var vertices = [
 				{x: 0, y: carDistanceFromGround, z: 0}, //A - 0
@@ -64,9 +64,10 @@ class CarBody extends THREE.Geometry {
 		THREE.GeometryUtils.merge(geometry, geometry3);
 		geometry.computeFaceNormals();
 		geometry.computeVertexNormals();
-		var mesh = new THREE.Mesh(geometry, material);
-		//Adding to the scene to test.
-		scene.add(mesh);
-		return this;
+		
+		
+		//Creating and merging the wheels.
+		return geometry;
+
 	}
 }

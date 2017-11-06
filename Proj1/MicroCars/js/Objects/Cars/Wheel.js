@@ -5,11 +5,10 @@ class WheelGeometry extends THREE.Geometry {
 	var wt = new THREE.Mesh(new TireGeometry(wheelradius, depth));
 
 	wcc.updateMatrix();
-	//wt.updateMatrix();
+	wt.updateMatrix();
 
 	this.merge(wcc.geometry, wcc.matrix);
-	//this.merge(wt.geometry, wt.matrix);
-
+	this.merge(wt.geometry, wt.matrix);
 	return this;
   }
 }
@@ -89,10 +88,7 @@ class TireGeometry extends THREE.Geometry {
 		THREE.GeometryUtils.merge(geometry, geometry4);
 		geometry.computeFaceNormals();
 		geometry.computeVertexNormals();
-		var mesh = new THREE.Mesh(geometry, material);
-		mesh.position.set(0, 100, 0);
-		scene.add(mesh);
-		return this;
+		return geometry;
 	}
 }
 

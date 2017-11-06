@@ -1,10 +1,10 @@
 class Car extends MotionBody {
-	constructor(x=0, y=0, z=0) {
+	constructor(x=0, y=0, z=0, carMesh) {
 		super();
 		this.type = 'Car';
 
 		// Creating mesh
-		this.mesh = new CarMesh();
+		this.mesh = carMesh;
 		this.add(this.mesh);
 
 		this.canMoveForward = true;
@@ -13,7 +13,8 @@ class Car extends MotionBody {
 
 		// Creating Bounds
 		/* FIXME: hacked our way through a BoundingSphere for our car */
-		var vertices = this.mesh.children[0].geometry.vertices
+		var bMesh = new CarMesh();
+		var vertices = bMesh.children[0].geometry.vertices
 		var min = new THREE.Vector3(0, 0, 0);
 		var max = new THREE.Vector3(0, 0, 0);
 		for (var i = 0; i < vertices.length; i++) {
@@ -28,7 +29,7 @@ class Car extends MotionBody {
 		center.divideScalar(2);
 		center.multiplyScalar(0.5);
 
-		this.bounds = new BoundingSphere(this.mesh, radius, center);
+		this.bounds = new BoundingSphere(bMesh, radius, center);
 		/* FIXME: attempt to remove the code above later */
 
 		this.add(this.bounds);
