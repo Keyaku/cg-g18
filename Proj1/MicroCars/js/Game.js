@@ -1,6 +1,12 @@
 class Game {
 	constructor(numberOfLives=5, boardSize=BOARD_WIDTH) {
 		this.numberOfLives = numberOfLives;
+		// Defining immutable maximum values
+		Object.defineProperty(this, "maximumLives", {
+			value: numberOfLives,
+			enumerable: true,
+			configurable: false,
+		});
 
 		var carWidth = 20;
 		var carLength = 10;
@@ -16,7 +22,7 @@ class Game {
 	}
 
 	getCurrentLives() { return this.numberOfLives; }
-	getMaxLives() { return this.numberOfLives; }
+	getMaxLives() { return this.maximumLives; }
 	playerDied() {
 		this.numberOfLives -= 1;
 		(this.carLiveReps[this.numberOfLives]).visible = false;
