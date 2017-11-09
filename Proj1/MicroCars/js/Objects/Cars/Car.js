@@ -4,6 +4,7 @@ class Car extends MotionBody {
 		this.type = 'Car';
 
 		// Preparing abstract Car data
+		this.direction = 1;
 		this.userData.canMoveForward = true;
 		this.userData.canMoveBack = true;
 		this.userData.colliding = false;
@@ -143,10 +144,12 @@ class Car extends MotionBody {
 
 		this.acceleration = 0;
 		if (up && !down && this.userData.canMoveForward) {
-			this.acceleration = -CAR_ACCELERATION;
+			this.direction = -1;
+			this.acceleration = this.direction * CAR_ACCELERATION;
 		}
 		else if (down && !up && this.userData.canMoveBack) {
-			this.acceleration = CAR_ACCELERATION;
+			this.direction = 1;
+			this.acceleration = this.direction * CAR_ACCELERATION;
 		}
 
 		// Updating car motion
@@ -155,12 +158,13 @@ class Car extends MotionBody {
 		// Rotates the mesh
 		var angle = 0;
 		if (left && !right) {
-			angle = WHEEL_ROTATION;
-		}
-		if (right && !left) {
 			angle = -WHEEL_ROTATION;
 		}
+		if (right && !left) {
+			angle = WHEEL_ROTATION;
+		}
 		if (angle != 0) {
+			angle *= this.direction;
 			angle *= Math.abs(this.velocity) * TURN_ASSIST;
 			this.rotateY(angle);
 		}
