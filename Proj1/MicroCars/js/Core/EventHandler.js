@@ -14,7 +14,7 @@
 class InputServer {
 	constructor() {
 		this.pressed = [];
-		this.keys = [];
+		this.keys = {};
 		for (var i = 0; i < 256; i++) {
 			this.pressed[i] = false;
 		}
@@ -25,22 +25,21 @@ class InputServer {
 	}
 
 	is_pressed(keyName) {
-		return this.keys.indexOf(keyName) != -1;
+		return this.keys[keyName] != undefined;
+	}
+
+	is_echo(keyName) {
+		return this.keys[keyName].repeat;
 	}
 
 	press(e) {
 		this.pressed[e.keyCode] = true;
-		if (this.keys.indexOf(e.key) == -1) {
-			this.keys.push(e.key);
-		}
+		this.keys[e.key] = e;
 	}
 
 	release(e) {
 		this.pressed[e.keyCode] = false;
-		var idx = this.keys.indexOf(e.key);
-		if (idx > -1) {
-			this.keys.splice(idx, 1);
-		}
+		delete this.keys[e.key];
 	}
 }
 const Input = new InputServer();
