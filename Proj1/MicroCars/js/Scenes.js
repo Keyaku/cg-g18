@@ -20,7 +20,7 @@ function createScene() {
 	var table = new Table(0, -1.1, 0, size);
 	gameBoard = new Board(0, -1, 0, size);
 	raceTrack = new Track();
-	car = new Car(20, 0, -5);
+	car = new Car(100, 0, -325);
 
 	// Adding oranges
 	createEdible(OrangeWrapper, "Orange1", 150, 0, 80);

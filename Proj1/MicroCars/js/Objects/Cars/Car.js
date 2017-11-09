@@ -80,6 +80,8 @@ class Car extends MotionBody {
 	}
 
 	respawn(position=this.userData.initialPosition) {
+		game.playerDied();
+		console.log(game.getCurrentLives())
 		this.position.copy(position);
 		this.rotation.set(0, 0, 0);
 		this.velocity = 0;

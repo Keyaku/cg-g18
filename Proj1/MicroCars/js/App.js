@@ -3,8 +3,9 @@
 */
 var renderer, cameraManager, controls;
 var lightManager;
-var gameBoard, raceTrack, car;
+var game, gameBoard, raceTrack, car;
 var clock = new THREE.Clock(false);
+var isGamePaused = false;
 
 var LocalTextures = new THREE.TextureLoader();
 LocalTextures.setPath('textures/');
@@ -16,14 +17,16 @@ var RemoteTextures = new THREE.TextureLoader();
 function render() {
 	// Animation and physics updates to all visible PhysicsBody
 	var delta = clock.getDelta();
-	scene.traverseVisible(function(node) {
-		if (node instanceof PhysicsBody) {
-			node.update(delta);
-		}
-	});
-
-	cameraManager.update();
-	lightManager.update();
+	
+	if (!isGamePaused) {
+		scene.traverseVisible(function(node) {
+			if (node instanceof PhysicsBody) {
+				node.update(delta);
+			}
+		});
+		cameraManager.update();
+		lightManager.update();
+	}
 
 	// ThreeJS updates (OrbitControls, renderer)
 	controls.update();
@@ -48,6 +51,7 @@ function init() {
 	document.body.appendChild(renderer.domElement);
 
 	createScene();
+	game = new Game(5);
 	cameraManager = new CameraManager();
 	lightManager = new LightManager();
 	render();

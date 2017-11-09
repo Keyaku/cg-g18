@@ -76,6 +76,11 @@ function onKeyDown(e) {
 			car.switchHeadlights();
 			break;
 
+		case 83:
+		case 115:
+			game.togglePause();
+			break;
+
 	}
 }
 
