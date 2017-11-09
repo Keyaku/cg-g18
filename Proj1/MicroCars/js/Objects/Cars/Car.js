@@ -3,16 +3,18 @@ class Car extends MotionBody {
 		super();
 		this.type = 'Car';
 
+		// Preparing abstract Car data
+		this.userData.canMoveForward = true;
+		this.userData.canMoveBack = true;
+		this.userData.colliding = false;
+
+		this.addHeadLigths();
 
 		// Creating mesh
 		var carWidth = 20;
 		var carLength = 10;
 		this.mesh = createCarMesh(carWidth, carLength);
 		this.add(this.mesh);
-
-		this.canMoveForward = true;
-		this.canMoveBack = true;
-		this.colliding = false;
 
 		// Creating Bounds
 		/* FIXME: hacked our way through a BoundingSphere for our car */
@@ -39,8 +41,6 @@ class Car extends MotionBody {
 		this.position.set(x, y, z);
 		this.userData.initialPosition = this.position.clone();
 
-		this.addHeadLigths();
-
 		// Adding to scene graph
 		scene.add(this);
 	}
@@ -65,19 +65,18 @@ class Car extends MotionBody {
 	}
 
 	switchHeadlights() {
+		// FIXME: FIX THIS CODE
 		if (this.headlights1.power != 0) {
 			this.headlights1.power = 0;
 			this.headlights2.power = 0;
-		}
-		else {
-			this.headlights1.power = 5 * 3.14;
-			this.headlights2.power = 5 * 3.14;
+		} else {
+			this.headlights1.power = 5 * Math.PI;
+			this.headlights2.power = 5 * Math.PI;
 		}
 	}
 
 	respawn(position=this.userData.initialPosition) {
 		game.playerDied();
-		console.log(game.getCurrentLives())
 		this.position.copy(position);
 		this.rotation.set(0, 0, 0);
 		this.velocity = 0;
@@ -113,10 +112,10 @@ class Car extends MotionBody {
 					var angleCarButter = carHeading.angleTo(vectorCarToButter) * TO_DEGREES;
 
 					if (angleCarButter < 90) {
-						car.canMoveForward = false;
+						car.userData.canMoveForward = false;
 					}
 					else {
-						car.canMoveBack = false;
+						car.userData.canMoveBack = false;
 					}
 				}
 				// Respawn the car if it's an Orange
@@ -127,9 +126,9 @@ class Car extends MotionBody {
 		});
 
 		if (!carCollided) {
-			car.colliding = false;
-			car.canMoveForward = true;
-			car.canMoveBack = true;
+			this.userData.colliding = false;
+			this.userData.canMoveForward = true;
+			this.userData.canMoveBack = true;
 		}
 
 		// Handling input
@@ -138,12 +137,15 @@ class Car extends MotionBody {
 		var up    = Input.is_pressed("ArrowUp");
 		var down  = Input.is_pressed("ArrowDown");
 
+		if (Input.is_pressed("h")) {
+			this.switchHeadlights();
+		}
+
 		this.acceleration = 0;
-		//console.log(car.canMoveForward)
-		if (up && !down && car.canMoveForward) {
+		if (up && !down && this.userData.canMoveForward) {
 			this.acceleration = -CAR_ACCELERATION;
 		}
-		else if (down && !up && car.canMoveBack) {
+		else if (down && !up && this.userData.canMoveBack) {
 			this.acceleration = CAR_ACCELERATION;
 		}
 
@@ -166,7 +168,7 @@ class Car extends MotionBody {
 		// Moving our car
 		this.move(this.heading, this.velocity);
 		if (objectNeedsRespawn(this)) {
-			car.respawn();
+			this.respawn();
 		}
 	}
 }
