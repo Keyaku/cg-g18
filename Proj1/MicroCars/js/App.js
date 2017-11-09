@@ -17,7 +17,7 @@ var RemoteTextures = new THREE.TextureLoader();
 function render() {
 	// Animation and physics updates to all visible PhysicsBody
 	var delta = clock.getDelta();
-	
+
 	if (!isGamePaused) {
 		scene.traverseVisible(function(node) {
 			if (node instanceof PhysicsBody) {
@@ -58,7 +58,9 @@ function init() {
 
 	window.addEventListener('resize', onWindowResize, false);
 	window.addEventListener('keydown', onKeyDown);
+	window.addEventListener('keydown', Input.press.bind(Input));
 	window.addEventListener('keyup', onKeyUp);
+	window.addEventListener('keyup', Input.release.bind(Input));
 
 	// Starting at the appropriate camera angle depending on the device
 	if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {

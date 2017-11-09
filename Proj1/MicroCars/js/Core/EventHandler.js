@@ -50,9 +50,6 @@ const Input = new InputServer();
 *	Keypresses Events (keydown, keyup, keypress)
 */
 function onKeyDown(e) {
-	// Setting InputServer input for whoever wants to catch it
-	Input.press(e);
-
 	// Setting global input (if any)
 	switch(e.keyCode) {
 		case 65: // A
@@ -81,9 +78,6 @@ function onKeyDown(e) {
 }
 
 function onKeyUp(e) {
-	// Releasing input from InputServer
-	Input.release(e);
-
 	// Setting global input (if any)
 }
 
