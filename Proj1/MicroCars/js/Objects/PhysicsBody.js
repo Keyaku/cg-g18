@@ -55,7 +55,6 @@ class StaticBody extends PhysicsBody {
 
 
 // Weighted, non-deformable bodies. Useful for Oranges
-var rigidbodyIteration;
 class RigidBody extends PhysicsBody {
 	constructor(mass = 1) {
 		super();
@@ -77,6 +76,17 @@ class RigidBody extends PhysicsBody {
 				event.body.velocity = Math.abs(this.velocity);
 			}
 		});
+		this.collide = this.collide.bind(this);
+	}
+
+	collide(node) {
+		if (!node.isPhysicsBody) { return; }
+		if (this.id == node.id) { return; }
+		if (node.isMotionBody) { return; }
+
+		if (this.intersects(node)) {
+			this.dispatchEvent({type: 'collided', body: node});
+		}
 	}
 
 	update(delta) {
@@ -84,18 +94,7 @@ class RigidBody extends PhysicsBody {
 		this.translateOnAxis(this.heading, this.velocity);
 
 		if (this.velocity > 0.01) {
-			/* FIXME: Since we can't use `this` in traverseVisible() iteration,
-				we have to use this kind of practice */
-			rigidbodyIteration = this;
-			scene.traverseVisible(function (node) {
-				if (!node.isPhysicsBody) { return; }
-				if (rigidbodyIteration.id == node.id) { return; }
-				if (node.isMotionBody) { return; }
-
-				if (rigidbodyIteration.intersects(node)) {
-					rigidbodyIteration.dispatchEvent({type: 'collided', body: node});
-				}
-			});
+			scene.traverseVisible(this.collide);
 		}
 	}
 }

@@ -11,6 +11,9 @@ class Car extends MotionBody {
 
 		this.addHeadLigths();
 
+		// Collision function
+		this.collide = this.collide.bind(this);
+
 		// Creating mesh
 		var carWidth = 20;
 		var carLength = 10;
@@ -44,6 +47,45 @@ class Car extends MotionBody {
 
 		// Adding to scene graph
 		scene.add(this);
+	}
+
+	collide(node) {
+		if (node == this) { return; }
+
+		if (this.intersects(node)) {
+			// Calculate new position
+
+			// Fire the main event
+			this.dispatchEvent({type: 'collided', body: node});
+
+			// Stop the car if it's a StaticBody
+			if (node instanceof StaticBody) {
+				this.userData.colliding = true;
+				this.velocity = 0;
+				var xx = node.position.x - this.position.x;
+				var zz = node.position.z - this.position.z;
+				var vectorCarToButter = new THREE.Vector3(xx, 0, zz);
+				vectorCarToButter.normalize();
+
+				//The world direction vector is rotated 90º because it point right.
+				var heading = this.getWorldDirection();
+				var rotatedX = Math.cos(NINETY_DEGREES) * heading.x - Math.sin(NINETY_DEGREES) * heading.z;
+				var rotatedZ = Math.sin(NINETY_DEGREES) * heading.x + Math.cos(NINETY_DEGREES) * heading.z;
+				var carHeading = new THREE.Vector3(rotatedX, 0, rotatedZ);
+				var angleCarButter = carHeading.angleTo(vectorCarToButter) * TO_DEGREES;
+
+				if (angleCarButter < 90) {
+					this.userData.canMoveForward = false;
+				}
+				else {
+					this.userData.canMoveBack = false;
+				}
+			}
+			// Respawn the car if it's an Orange
+			else if (node instanceof OrangeWrapper) {
+				this.respawn();
+			}
+		}
 	}
 
 	addHeadLigths() {
@@ -85,49 +127,11 @@ class Car extends MotionBody {
 
 	// Our mandatory update() function
 	update(delta) {
-		var carCollided = false;
 		// Handling collisions
-		scene.traverseVisible(function(node) {
-			if (node == car) { return; }
+		this.userData.colliding = false;
+		scene.traverseVisible(this.collide);
 
-			if (car.intersects(node)) {
-				// Calculate new position
-
-				// Fire the main event
-				car.dispatchEvent({type: 'collided', body: node});
-
-				// Stop the car if it's a StaticBody
-				if (node instanceof StaticBody) {
-					carCollided = true;
-					car.velocity = 0;
-					var xx = node.position.x - car.position.x;
-					var zz = node.position.z - car.position.z;
-					var vectorCarToButter = new THREE.Vector3(xx, 0, zz);
-					vectorCarToButter.normalize();
-
-					//The world direction vector is rotated 90º because it point right.
-					var heading = car.getWorldDirection();
-					var rotatedX = Math.cos(NINETY_DEGREES) * heading.x - Math.sin(NINETY_DEGREES) * heading.z;
-					var rotatedZ = Math.sin(NINETY_DEGREES) * heading.x + Math.cos(NINETY_DEGREES) * heading.z;
-					var carHeading = new THREE.Vector3(rotatedX, 0, rotatedZ);
-					var angleCarButter = carHeading.angleTo(vectorCarToButter) * TO_DEGREES;
-
-					if (angleCarButter < 90) {
-						car.userData.canMoveForward = false;
-					}
-					else {
-						car.userData.canMoveBack = false;
-					}
-				}
-				// Respawn the car if it's an Orange
-				else if (node instanceof OrangeWrapper) {
-					car.respawn();
-				}
-			}
-		});
-
-		if (!carCollided) {
-			this.userData.colliding = false;
+		if (!this.userData.colliding) {
 			this.userData.canMoveForward = true;
 			this.userData.canMoveBack = true;
 		}
