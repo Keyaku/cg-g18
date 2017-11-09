@@ -13,11 +13,6 @@ class Game {
 			scene.add(mesh)
 			this.carLiveReps.push(mesh);
 		}
-
-
-
-		
-		
 	}
 
 	getCurrentLives() { return this.numberOfLives; }
@@ -33,6 +28,6 @@ class Game {
 	}
 
 	togglePause() {
-		isGamePaused = !isGamePaused;		
+		isGamePaused = !isGamePaused;
 	}
 }

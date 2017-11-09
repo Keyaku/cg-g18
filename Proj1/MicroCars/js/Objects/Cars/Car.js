@@ -3,15 +3,11 @@ class Car extends MotionBody {
 		super();
 		this.type = 'Car';
 
-		var basicMaterial = new THREE.MeshBasicMaterial({color:0x000000});
-		var phongMaterial = new THREE.MeshPhongMaterial({color:0x111111});
-		var lambertMaterial = new THREE.MeshLambertMaterial({color:0x222222});
 
 		// Creating mesh
 		var carWidth = 20;
 		var carLength = 10;
 		this.mesh = createCarMesh(carWidth, carLength);
-		createMaterialsTwo(this.mesh, basicMaterial, phongMaterial, lambertMaterial);
 		this.add(this.mesh);
 
 		this.canMoveForward = true;
