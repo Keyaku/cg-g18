@@ -83,6 +83,7 @@ class Car extends MotionBody {
 			}
 			// Respawn the car if it's an Orange
 			else if (node instanceof OrangeWrapper) {
+				game.playerDied();
 				this.respawn();
 			}
 		}
@@ -119,10 +120,14 @@ class Car extends MotionBody {
 	}
 
 	respawn(position=this.userData.initialPosition) {
-		game.playerDied();
-		this.position.copy(position);
-		this.rotation.set(0, 0, 0);
-		this.velocity = 0;
+		if (game.getCurrentLives() <= 0) {
+			this.visible = false;
+			//scene.remove(this); FIXME: crashes at render()
+		} else {
+			this.position.copy(position);
+			this.rotation.set(0, 0, 0);
+			this.velocity = 0;
+		}
 	}
 
 	// Our mandatory update() function
@@ -176,6 +181,7 @@ class Car extends MotionBody {
 		// Moving our car
 		this.move(this.heading, this.velocity);
 		if (objectNeedsRespawn(this)) {
+			game.playerDied();
 			this.respawn();
 		}
 	}
