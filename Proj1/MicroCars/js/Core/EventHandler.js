@@ -70,6 +70,12 @@ function onKeyDown(e) {
 				}
 			});
 			break;
+
+		case 72: //H
+		case 104: //h
+			car.switchHeadlights();
+			break;
+
 	}
 }
 

@@ -43,8 +43,40 @@ class Car extends MotionBody {
 		this.position.set(x, y, z);
 		this.userData.initialPosition = this.position.clone();
 
+		this.addHeadLigths();
+
 		// Adding to scene graph
 		scene.add(this);
+	}
+
+	addHeadLigths() {
+		var targetObject = new THREE.Object3D();
+		targetObject.position.set(-50, 10, 4);
+		this.add(targetObject);
+
+		var spotLight1 = new THREE.SpotLight( 0xffffff, 5, 200, 45 * TO_RADIANS);
+		spotLight1.position.set(0, 5, 0);
+		spotLight1.target = targetObject;
+		this.add(spotLight1);
+
+		var spotLight2 = new THREE.SpotLight( 0xffffff, 5, 200, 45 * TO_RADIANS);
+		spotLight2.position.set(0, 5, 8);
+		spotLight2.target = targetObject;
+		this.add(spotLight2);
+
+		this.headlights1 = spotLight1;
+		this.headlights2 = spotLight2;
+	}
+
+	switchHeadlights() {
+		if (this.headlights1.power != 0) {
+			this.headlights1.power = 0;
+			this.headlights2.power = 0;
+		}
+		else {
+			this.headlights1.power = 5 * 3.14;
+			this.headlights2.power = 5 * 3.14;
+		}
 	}
 
 	respawn(position=this.userData.initialPosition) {
