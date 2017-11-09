@@ -32,6 +32,9 @@ function render() {
 	controls.update();
 	renderer.render(scene, cameraManager.getCurrentCamera());
 	requestAnimationFrame(render);
+
+	// Freeing queued Object3D from scene
+	cleanQueue();
 }
 
 /**

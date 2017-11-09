@@ -150,3 +150,29 @@ function respawnObject(obj) {
 	}, 2000);
 
 }
+
+/*	Safe Freeing solution
+** scene.remove() usually goes wrong if it's called before a render() call if
+** the object that is being removed is too heavy.
+** Therefore, this queue of objects to be freed *after* a render() has taken place
+** is a solution to that problem.
+*/
+var to_delete = [];
+
+/** @function queueFree
+* @param obj: object to put to a queue
+*/
+function queueFree(obj) {
+	obj.visible = false; // Putting it invisible for it not to be drawn in the next frame
+	if (to_delete.indexOf(obj) == -1) {
+		to_delete.push(obj);
+	}
+}
+
+function cleanQueue() {
+	var length = to_delete.length;
+	for (var i = 0; i < length; i++) {
+		var obj = to_delete.pop();
+		scene.remove(obj);
+	}
+}
