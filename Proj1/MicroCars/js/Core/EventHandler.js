@@ -18,6 +18,8 @@ class InputServer {
 		for (var i = 0; i < 256; i++) {
 			this.pressed[i] = false;
 		}
+
+		Object.seal(this);
 	}
 
 	is_key_pressed(keyCode) {
