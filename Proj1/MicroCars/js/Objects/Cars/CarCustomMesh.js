@@ -40,6 +40,12 @@ function createCarMesh(carWidth, carLength) {
 	}
 
 	mesh.position.set(0, 0, -2)
+
+	// Associating car materials
+	var basicMaterial = new THREE.MeshBasicMaterial({color:0x000000});
+	var phongMaterial = new THREE.MeshPhongMaterial({color:0x111111});
+	var lambertMaterial = new THREE.MeshLambertMaterial({color:0x222222});
+	createMaterialsTwo(mesh, basicMaterial, phongMaterial, lambertMaterial);
 	return mesh;
 
 }
