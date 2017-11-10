@@ -96,8 +96,7 @@ class Car extends MotionBody {
 
 				if (angleCarButter < 90) {
 					this.userData.canMoveForward = false;
-				}
-				else {
+				} else {
 					this.userData.canMoveBack = false;
 				}
 			}
@@ -152,12 +151,10 @@ class Car extends MotionBody {
 
 		this.acceleration = 0;
 		if (up && !down && this.userData.canMoveForward) {
-			this.direction = -1;
-			this.acceleration = this.direction * CAR_ACCELERATION;
+			this.acceleration = -CAR_ACCELERATION;
 		}
 		else if (down && !up && this.userData.canMoveBack) {
-			this.direction = 1;
-			this.acceleration = this.direction * CAR_ACCELERATION;
+			this.acceleration = +CAR_ACCELERATION;
 		}
 
 		// Updating car motion
@@ -172,8 +169,8 @@ class Car extends MotionBody {
 			angle = WHEEL_ROTATION;
 		}
 		if (angle != 0) {
-			angle *= this.direction;
-			angle *= Math.abs(this.velocity) * TURN_ASSIST;
+			var sign = this.velocity > 0 ? 1 : -1
+			angle *= sign * Math.abs(this.velocity) * TURN_ASSIST;
 			this.rotateY(angle);
 		}
 

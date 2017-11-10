@@ -80,8 +80,8 @@ class RigidBody extends PhysicsBody {
 	}
 
 	collide(node) {
+		if (node == this) { return; }
 		if (!node.isPhysicsBody) { return; }
-		if (this.id == node.id) { return; }
 		if (node.isMotionBody) { return; }
 
 		if (this.intersects(node)) {
