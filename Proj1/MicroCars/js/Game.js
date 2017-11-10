@@ -67,6 +67,7 @@ class Game {
 		if (car == undefined) {
 			car = new Car(100, 0, -325);
 		}
+		// TODO: reset Orange speeds and whatnot
 	}
 
 	getCurrentLives() { return this.numberOfLives; }

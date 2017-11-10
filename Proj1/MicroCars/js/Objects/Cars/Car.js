@@ -9,7 +9,7 @@ class Car extends MotionBody {
 		this.userData.canMoveBack = true;
 		this.userData.colliding = false;
 
-		this.addHeadLigths();
+		addHeadLigths(this);
 
 		// Collision function
 		this.collide = this.collide.bind(this);
@@ -47,6 +47,26 @@ class Car extends MotionBody {
 
 		// Adding to scene graph
 		scene.add(this);
+
+		/* Miscellaneous one-time only used functions */
+		function addHeadLigths(thisArg) {
+			var targetObject = new THREE.Object3D();
+			targetObject.position.set(-50, 0, 0);
+
+			var spotLight = new THREE.SpotLight(0xffffff, 5, 200, 35 * TO_RADIANS);
+			spotLight.add(targetObject);
+
+			spotLight.position.set(0, 5, 0);
+			spotLight.target = spotLight.children[0];
+			thisArg.add(spotLight);
+			thisArg.headlights1 = spotLight;
+
+			spotLight = spotLight.clone();
+			spotLight.position.set(0, 5, 4);
+			spotLight.target = spotLight.children[0];
+			thisArg.add(spotLight);
+			thisArg.headlights2 = spotLight;
+		}
 	}
 
 	collide(node) {
@@ -87,25 +107,6 @@ class Car extends MotionBody {
 				this.respawn();
 			}
 		}
-	}
-
-	addHeadLigths() {
-		var targetObject = new THREE.Object3D();
-		targetObject.position.set(-50, 0, 0);
-
-		var spotLight = new THREE.SpotLight(0xffffff, 5, 200, 35 * TO_RADIANS);
-		spotLight.add(targetObject);
-
-		spotLight.position.set(0, 5, 0);
-		spotLight.target = spotLight.children[0];
-		this.add(spotLight);
-		this.headlights1 = spotLight;
-
-		spotLight = spotLight.clone();
-		spotLight.position.set(0, 5, 4);
-		spotLight.target = spotLight.children[0];
-		this.add(spotLight);
-		this.headlights2 = spotLight;
 	}
 
 	switchHeadlights() {

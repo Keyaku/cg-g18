@@ -8,7 +8,7 @@ class PhysicsBody extends THREE.Object3D {
 	constructor() {
 		super();
 		this.type = "PhysicsBody";
-		this.isPhysicsBody = true;
+		Object.defineProperty(this, "isPhysicsBody", { value: true });
 
 		this.bounds = undefined;
 		this.heading = new THREE.Vector3();
@@ -48,7 +48,7 @@ class StaticBody extends PhysicsBody {
 	constructor() {
 		super();
 		this.type = "StaticBody";
-		this.isStaticBody = true;
+		Object.defineProperty(this, "isStaticBody", { value: true });
 		this.matrixAutoUpdate = false; // Object is static, no update is necessary
 	}
 }
@@ -59,7 +59,7 @@ class RigidBody extends PhysicsBody {
 	constructor(mass = 1) {
 		super();
 		this.type = "RigidBody";
-		this.isRigidBody = true;
+		Object.defineProperty(this, "isRigidBody", { value: true });
 		this.mass = mass;
 		this.velocity = 0;
 
@@ -105,7 +105,7 @@ class MotionBody extends PhysicsBody {
 	constructor(mass = 1) {
 		super();
 		this.type = "MotionBody";
-		this.isMotionBody = true;
+		Object.defineProperty(this, "isMotionBody", { value: true });
 		this.mass = mass;
 		this.velocity = 0;
 
