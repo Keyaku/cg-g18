@@ -26,7 +26,7 @@ class PhysicsBody extends THREE.Object3D {
 		var n = vec || new THREE.Vector3();
 		n.copy(b.getWorldPosition());
 		n.sub(this.getWorldPosition());
-		n.set(n.x, 0, 0);
+		n.set(n.x, n.z, 0);
 		n.normalize();
 		return n;
 	}
