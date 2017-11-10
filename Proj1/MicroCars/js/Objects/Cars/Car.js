@@ -118,14 +118,14 @@ class Car extends MotionBody {
 	}
 
 	respawn(position=this.userData.initialPosition) {
-		if (game.getCurrentLives() <= 0) {
-			this.visible = false;
-			//scene.remove(this); FIXME: crashes at render()
-		} else {
-			this.position.copy(position);
-			this.rotation.set(0, 0, 0);
-			this.velocity = 0;
-		}
+		this.position.copy(position);
+		this.rotation.set(0, 0, 0);
+		this.velocity = 0;
+	}
+
+	free() {
+		queueFree(this);
+		car = undefined;
 	}
 
 	// Our mandatory update() function
