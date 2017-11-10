@@ -65,7 +65,8 @@ class LightManager {
 		if (!this.lightsNeedUpdate) {
 			this.lightsNeedUpdate = !(
 				Input.is_pressed("c") || Input.is_pressed("g") ||
-				Input.is_pressed("l") || Input.is_pressed("n")
+				Input.is_pressed("h") || Input.is_pressed("l") ||
+				Input.is_pressed("n")
 			);
 			return;
 		}
@@ -73,6 +74,7 @@ class LightManager {
 		var toggled = {
 			switchPointLights      : Input.is_pressed("c"),
 			switchMaterials        : Input.is_pressed("g"),
+			switchHeadlights       : Input.is_pressed("h"),
 			disableLightUpdates    : Input.is_pressed("l"),
 			switchDirectionalLight : Input.is_pressed("n"),
 		};
@@ -118,6 +120,15 @@ class LightManager {
     }
     raceTrack.lights.lampsOn();
   }
+
+	switchHeadlights() {
+		// FIXME: FIX THIS CODE
+		if (car.headlights1.power != 0) {
+			car.headlights1.power = car.headlights2.power = 0;
+		} else {
+			car.headlights1.power = car.headlights2.power = 5 * Math.PI;
+		}
+	}
 
 	switchMaterials() {
 		scene.traverse(function (node) {

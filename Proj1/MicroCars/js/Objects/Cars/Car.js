@@ -108,15 +108,6 @@ class Car extends MotionBody {
 		}
 	}
 
-	switchHeadlights() {
-		// FIXME: FIX THIS CODE
-		if (this.headlights1.power != 0) {
-			this.headlights1.power = this.headlights2.power = 0;
-		} else {
-			this.headlights1.power = this.headlights2.power = 5 * Math.PI;
-		}
-	}
-
 	respawn(position=this.userData.initialPosition) {
 		this.position.copy(position);
 		this.rotation.set(0, 0, 0);
