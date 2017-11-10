@@ -1,5 +1,8 @@
 class Game {
 	constructor(numberOfLives=5, boardSize=BOARD_WIDTH) {
+		// Setting pause value
+		this.is_paused = false;
+
 		// Defining immutable maximum values
 		Object.defineProperty(this, "maximumLives", {
 			value: numberOfLives-1, // XXX: show off one fewer life, and yet still living it
@@ -11,7 +14,7 @@ class Game {
 		// them invisible first
 		var carWidth = 20;
 		var carLength = 10;
-		var pos = {x:BOARD_WIDTH/2 + 25, y:0, z:-BOARD_WIDTH/2 + 100}
+		var pos = {x:boardSize/2 + 25, y:0, z:-boardSize/2 + 100}
 
 		this.carLiveReps = []
 		for (var i = 0; i < this.maximumLives; i++) {
@@ -37,6 +40,7 @@ class Game {
 	** @param number: the exact number of lives to show
 	*/
 	resetLives(number) {
+		number = this.limitNumber(this.numberOfLives + number);
 		for (var i = 0; i < this.carLiveReps.length; i++) {
 			this.carLiveReps[i].visible = i < number;
 		}
@@ -47,7 +51,6 @@ class Game {
 	** @param amount: the amount of lives to add upon our current numberOfLives
 	*/
 	addLives(amount) {
-		amount = this.limitNumber(this.numberOfLives + amount);
 		this.resetLives(amount);
 	}
 
@@ -55,12 +58,10 @@ class Game {
 	** @param amount: the amount of lives to remove upon our current numberOfLives
 	*/
 	removeLives(amount) {
-		amount = this.limitNumber(this.numberOfLives - amount);
-		this.resetLives(amount);
+		this.resetLives(-amount);
 	}
 
 	/** @function restart
-	** @param amount: the amount of lives to add upon our current numberOfLives
 	*/
 	restart() {
 		this.resetLives(this.maximumLives);
@@ -90,6 +91,6 @@ class Game {
 	}
 
 	togglePause() {
-		isGamePaused = !isGamePaused;
+		this.is_paused = !this.is_paused;
 	}
 }

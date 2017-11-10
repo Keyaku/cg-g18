@@ -5,7 +5,6 @@ var renderer, cameraManager, controls;
 var lightManager;
 var game, gameBoard, raceTrack, car;
 var clock = new THREE.Clock(false);
-var isGamePaused = false;
 
 var LocalTextures = new THREE.TextureLoader();
 LocalTextures.setPath('textures/');
@@ -18,7 +17,7 @@ function render() {
 	// Animation and physics updates to all visible PhysicsBody
 	var delta = clock.getDelta();
 
-	if (!isGamePaused) {
+	if (!game.is_paused) {
 		scene.traverseVisible(function(node) {
 			if (node instanceof PhysicsBody) {
 				node.update(delta);
