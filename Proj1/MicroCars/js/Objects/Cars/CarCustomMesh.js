@@ -1,7 +1,7 @@
 function createCarMesh(carWidth, carLength) {
 	// Wheels
 	var pneuWidth = 2;
-	var geometry = new WheelGeometry(3, pneuWidth);
+	var geometry = new WheelGeometry(3, pneuWidth, 45);
 	var wheel1 = new THREE.Mesh(geometry);
 	var wheel2 = new THREE.Mesh(geometry);
 	var wheel3 = new THREE.Mesh(geometry);

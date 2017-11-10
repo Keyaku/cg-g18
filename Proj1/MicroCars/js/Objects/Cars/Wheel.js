@@ -1,8 +1,8 @@
 class WheelGeometry extends THREE.Geometry {
-  constructor(wheelradius, depth) {
+  constructor(wheelradius, depth, points=360) {
 	super();
 	var wcc = new THREE.Mesh(new CenterCapGeometry(wheelradius, depth));
-	var wt = new THREE.Mesh(new TireGeometry(wheelradius, depth));
+	var wt = new THREE.Mesh(new TireGeometry(wheelradius, depth, points));
 
 	wcc.updateMatrix();
 	wt.updateMatrix();
@@ -14,7 +14,7 @@ class WheelGeometry extends THREE.Geometry {
 }
 
 class TireGeometry extends THREE.Geometry {
-	constructor(wheelradius, depth) {
+	constructor(wheelradius, depth, circlePoints=360) {
 		super();
 		this.innerRadius = wheelradius;
 		this.outerRatio = 1.2;
@@ -22,7 +22,6 @@ class TireGeometry extends THREE.Geometry {
 
 		//Create vertices
 		var outsideRatio = 1.2;
-		var circlePoints = 360;
 		var degreeSeparation = THREE_HUNDRED_SIXTY_DEGREES / circlePoints;
 		var geometry = new THREE.Geometry();
 		var geometry2 = new THREE.Geometry();
@@ -46,13 +45,13 @@ class TireGeometry extends THREE.Geometry {
 			var pointB2 = {x:pointB1.x*this.outerRatio, y:pointB1.y*this.outerRatio, z:pointB1.z}
 			var pointC2 = {x:pointC1.x*this.outerRatio, y:pointC1.y*this.outerRatio, z:pointC1.z}
 			var pointD2 = {x:pointD1.x*this.outerRatio, y:pointD1.y*this.outerRatio, z:pointD1.z}
-	
+
 			geometry.vertices.push(new THREE.Vector3(pointA1.x, pointA1.y, pointA1.z)); //0
 			geometry.vertices.push(new THREE.Vector3(pointC1.x, pointC1.y, pointC1.z)); //1
 			geometry.vertices.push(new THREE.Vector3(pointB1.x, pointB1.y, pointB1.z)); //2
 			geometry.vertices.push(new THREE.Vector3(pointD1.x, pointD1.y, pointD1.z)); //3
 			geometry.faces.push(new THREE.Face3(0 + side, 2 + side, 1 + side));
-			geometry.faces.push(new THREE.Face3(1 + side, 2 + side, 3 + side));	
+			geometry.faces.push(new THREE.Face3(1 + side, 2 + side, 3 + side));
 
 			geometry2.vertices.push(new THREE.Vector3(pointA2.x, pointA2.y, pointA2.z)); //0
 			geometry2.vertices.push(new THREE.Vector3(pointC2.x, pointC2.y, pointC2.z)); //1
@@ -82,7 +81,7 @@ class TireGeometry extends THREE.Geometry {
 				geometry4.faces.push(new THREE.Face3(0 + side, -1 + side, -3 + side));
 			}
 		}
-	
+
 		THREE.GeometryUtils.merge(geometry, geometry2);
 		THREE.GeometryUtils.merge(geometry, geometry3);
 		THREE.GeometryUtils.merge(geometry, geometry4);
