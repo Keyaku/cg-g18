@@ -28,7 +28,7 @@ class ButterBox extends THREE.Mesh {
 		var geometry = new THREE.BoxGeometry(size.x, size.y, size.z);
 
 		super(geometry);
-		var tex = RemoteTextures.load('https://i.imgur.com/KKvp36A.png');
+		var tex = RemoteTextures.load('https://i.imgur.com/4jH2zMv.png');
 		createMaterials(this, { map: tex });
 
 		obj.add(this);
