@@ -91,21 +91,21 @@ class Car extends MotionBody {
 
 	addHeadLigths() {
 		var targetObject = new THREE.Object3D();
-		targetObject.position.set(-50, 10, 4);
-		this.add(targetObject);
+		targetObject.position.set(-50, 0, 0);
 
-		var spotLight1 = new THREE.SpotLight( 0xffffff, 5, 200, 45 * TO_RADIANS);
-		spotLight1.position.set(0, 5, 0);
-		spotLight1.target = targetObject;
-		this.add(spotLight1);
+		var spotLight = new THREE.SpotLight(0xffffff, 5, 200, 35 * TO_RADIANS);
+		spotLight.add(targetObject);
 
-		var spotLight2 = new THREE.SpotLight( 0xffffff, 5, 200, 45 * TO_RADIANS);
-		spotLight2.position.set(0, 5, 8);
-		spotLight2.target = targetObject;
-		this.add(spotLight2);
+		spotLight.position.set(0, 5, 0);
+		spotLight.target = spotLight.children[0];
+		this.add(spotLight);
+		this.headlights1 = spotLight;
 
-		this.headlights1 = spotLight1;
-		this.headlights2 = spotLight2;
+		spotLight = spotLight.clone();
+		spotLight.position.set(0, 5, 4);
+		spotLight.target = spotLight.children[0];
+		this.add(spotLight);
+		this.headlights2 = spotLight;
 	}
 
 	switchHeadlights() {
