@@ -23,11 +23,9 @@ class TireGeometry extends THREE.Geometry {
 		//Create vertices
 		var outsideRatio = 1.2;
 		var degreeSeparation = THREE_HUNDRED_SIXTY_DEGREES / circlePoints;
-		var geometry = new THREE.Geometry();
 		var geometry2 = new THREE.Geometry();
 		var geometry3 = new THREE.Geometry();
 		var geometry4 = new THREE.Geometry();
-		var material = new THREE.MeshStandardMaterial({color : 0x040309});
 
 		for (var side = 0; side < circlePoints * 2; side+=2) {
 			var angle = degreeSeparation * side;
@@ -46,12 +44,12 @@ class TireGeometry extends THREE.Geometry {
 			var pointC2 = {x:pointC1.x*this.outerRatio, y:pointC1.y*this.outerRatio, z:pointC1.z}
 			var pointD2 = {x:pointD1.x*this.outerRatio, y:pointD1.y*this.outerRatio, z:pointD1.z}
 
-			geometry.vertices.push(new THREE.Vector3(pointA1.x, pointA1.y, pointA1.z)); //0
-			geometry.vertices.push(new THREE.Vector3(pointC1.x, pointC1.y, pointC1.z)); //1
-			geometry.vertices.push(new THREE.Vector3(pointB1.x, pointB1.y, pointB1.z)); //2
-			geometry.vertices.push(new THREE.Vector3(pointD1.x, pointD1.y, pointD1.z)); //3
-			geometry.faces.push(new THREE.Face3(0 + side, 2 + side, 1 + side));
-			geometry.faces.push(new THREE.Face3(1 + side, 2 + side, 3 + side));
+			this.vertices.push(new THREE.Vector3(pointA1.x, pointA1.y, pointA1.z)); //0
+			this.vertices.push(new THREE.Vector3(pointC1.x, pointC1.y, pointC1.z)); //1
+			this.vertices.push(new THREE.Vector3(pointB1.x, pointB1.y, pointB1.z)); //2
+			this.vertices.push(new THREE.Vector3(pointD1.x, pointD1.y, pointD1.z)); //3
+			this.faces.push(new THREE.Face3(0 + side, 2 + side, 1 + side));
+			this.faces.push(new THREE.Face3(1 + side, 2 + side, 3 + side));
 
 			geometry2.vertices.push(new THREE.Vector3(pointA2.x, pointA2.y, pointA2.z)); //0
 			geometry2.vertices.push(new THREE.Vector3(pointC2.x, pointC2.y, pointC2.z)); //1
@@ -82,12 +80,14 @@ class TireGeometry extends THREE.Geometry {
 			}
 		}
 
-		THREE.GeometryUtils.merge(geometry, geometry2);
-		THREE.GeometryUtils.merge(geometry, geometry3);
-		THREE.GeometryUtils.merge(geometry, geometry4);
-		geometry.computeFaceNormals();
-		geometry.computeVertexNormals();
-		return geometry;
+		this.merge(geometry2);
+		this.merge(geometry3);
+		this.merge(geometry4);
+
+		this.mergeVertices();
+		this.computeFaceNormals();
+		this.computeVertexNormals();
+		return this;
 	}
 }
 
@@ -231,8 +231,10 @@ class CenterCapGeometry extends THREE.Geometry {
 		this.faces.push(new THREE.Face3(face[0], face[1], face[2]));
 	}
 
+	this.mergeVertices();
 	this.computeFaceNormals();
 	this.computeVertexNormals();
+
 	return this;
   }
 }
