@@ -136,10 +136,6 @@ class Car extends MotionBody {
 		var up    = Input.is_pressed("ArrowUp");
 		var down  = Input.is_pressed("ArrowDown");
 
-		if (Input.is_pressed("h")) {
-			this.switchHeadlights();
-		}
-
 		this.acceleration = 0;
 		if (up && !down && this.userData.canMoveForward) {
 			this.acceleration = -CAR_ACCELERATION;
