@@ -71,9 +71,15 @@ function onKeyDown(e) {
 
 		case 83:
 		case 115:
-			game.togglePause();
+			if (!game.is_gameover) {
+				game.togglePause();
+			}
 			break;
 
+		case 82:
+		case 114:
+			game.restart();
+			break;
 	}
 }
 
