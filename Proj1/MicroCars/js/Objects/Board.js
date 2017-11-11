@@ -3,8 +3,8 @@ class Board extends THREE.Mesh {
 		var grassTexture;
 		var geometry      = new THREE.PlaneGeometry(size, size)
 		var textureLoader = new THREE.TextureLoader();
-												textureLoader.crossOrigin = 'anonymous'
-				grassTexture  = textureLoader.load('https://i.imgur.com/J4sDs4b.jpg')
+		textureLoader.crossOrigin = 'anonymous'
+		grassTexture  = textureLoader.load('https://i.imgur.com/J4sDs4b.jpg')
 
 		super(geometry);
 		this.type = 'Board';
