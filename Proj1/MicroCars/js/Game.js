@@ -2,6 +2,7 @@ class Game {
 	constructor(numberOfLives=5, boardSize=BOARD_WIDTH) {
 		// Setting pause value
 		this.is_paused = false;
+		this.is_gameover = false;
 
 		// Defining immutable maximum values
 		Object.defineProperty(this, "maximumLives", {
@@ -30,6 +31,71 @@ class Game {
 		// Showing off our lives
 		this.numberOfLives = 0;
 		this.resetLives(numberOfLives);
+
+		this.createPauseText();
+		this.createGameOverText();
+	}
+
+	createPauseText() {
+		var loader = new THREE.FontLoader();
+			loader.load( 'fonts/helvetiker_regular.typeface.json', function ( font ) {
+				var textGeometry = new THREE.TextGeometry('Paused', {
+					font: font,
+					size: 80,
+					height: 20,
+					curveSegments: 12,
+					bevelEnabled: true,
+					bevelThickness: 10,
+					bevelSize: 5,
+					bevelSegments: 3
+				});
+				var textMaterial = new THREE.MeshPhongMaterial({color: 0x000000, specular: 0x000000 });
+				var mesh = new THREE.Mesh( textGeometry, textMaterial );
+				var box = new THREE.Box3().setFromObject(mesh);
+				var textWidth = box.getSize().x
+				mesh.rotation.set(-NINETY_DEGREES, 0, 0);
+				mesh.position.set(-textWidth / 2, 0, 0)
+				
+				var basicMaterial = new THREE.MeshBasicMaterial({color:0x000000});
+				var phongMaterial = new THREE.MeshPhongMaterial({color: 0x000000, specular: 0x000000 });
+				var lambertMaterial = new THREE.MeshLambertMaterial({color:0x000000});
+				createMaterialsTwo(mesh, basicMaterial, phongMaterial, lambertMaterial);
+
+				scene.add(mesh);
+				pauseText = mesh;
+				pauseText.visible = false;
+			}); 
+	}
+
+	createGameOverText() {
+		var loader = new THREE.FontLoader();
+			loader.load( 'fonts/helvetiker_regular.typeface.json', function ( font ) {
+				var textGeometry = new THREE.TextGeometry('Game Over', {
+					font: font,
+					size: 80,
+					height: 20,
+					curveSegments: 12,
+					bevelEnabled: true,
+					bevelThickness: 10,
+					bevelSize: 3,
+					bevelSegments: 3
+				});
+				var textMaterial = new THREE.MeshPhongMaterial({color: 0x000000, specular: 0x000000 });
+				var mesh = new THREE.Mesh( textGeometry, textMaterial );
+				var box = new THREE.Box3().setFromObject(mesh);
+				var textWidth = box.getSize().x
+				mesh.rotation.set(-NINETY_DEGREES, 0, 0);
+				mesh.position.set(-textWidth / 2, 0, 0)
+
+				var basicMaterial = new THREE.MeshBasicMaterial({color:0x000000});
+				var phongMaterial = new THREE.MeshPhongMaterial({color: 0x000000, specular: 0x000000 });
+				var lambertMaterial = new THREE.MeshLambertMaterial({color:0x000000});
+				createMaterialsTwo(mesh, basicMaterial, phongMaterial, lambertMaterial);
+
+				scene.add(mesh);
+				gameoverText = mesh;
+				gameoverText.visible = false;
+			}); 
 	}
 
 	limitNumber(number) {
@@ -64,11 +130,42 @@ class Game {
 	/** @function restart
 	*/
 	restart() {
+		gameoverText.visible = false;
+		this.is_gameover = false;
+		this.togglePause();
 		this.resetLives(this.maximumLives);
 		if (car == undefined) {
 			car = new Car(100, 0, -325);
 		}
-		// TODO: reset Orange speeds and whatnot
+		else {
+			car.position.set(100, 0, -325);
+			car.rotation.set(0, 0, 0)
+			car.velocity = 0;
+		}
+		var oranges = ['Orange1', 'Orange2', 'Orange3'];
+		for (var i = 0; i < oranges.length; i++) {
+			var name = oranges[i]
+			var obj = getEdible(name)
+			var heading;
+			obj.visible = false;
+			var x = Math.random() < 0.5 ? -1 : 1;
+			var z = Math.random() < 0.5 ? -1 : 1;
+			var maskDirection = Math.random();
+			var vector = generateSpawnLocation();
+			vector.setY(obj.bounds.radius);
+			if (0 <= maskDirection && maskDirection < 0.33) {
+				heading = new THREE.Vector3(x, 0, z);
+			} else if (0.33 <= maskDirection && maskDirection < 0.66){
+				heading = new THREE.Vector3(x, 0, 0);
+			} else {
+				heading = new THREE.Vector3(0, 0, z);
+			}
+			obj.velocity = ORANGE_VELOCITY
+			obj.position.copy(vector);
+			obj.mesh.rotation.set(0, 0, 0);
+			obj.heading = heading.normalize();
+			obj.visible = true;			
+		}
 	}
 
 	getCurrentLives() { return this.numberOfLives; }
@@ -84,13 +181,21 @@ class Game {
 
 	gameOver() {
 		if (this.numberOfLives <= 0) {
-			console.log('GAME OVER.');
+			this.is_gameover = true;
+			gameoverText.visible = true;
+			this.togglePause();
 			return true;
 		}
 		return false;
 	}
 
 	togglePause() {
+		if (this.is_paused) {
+			pauseText.visible = false;
+		}
+		else if (!this.is_gameover) {
+			pauseText.visible = true;
+		}
 		this.is_paused = !this.is_paused;
 	}
 }
