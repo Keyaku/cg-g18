@@ -4,6 +4,7 @@
 var renderer, cameraManager, controls;
 var lightManager;
 var game, gameBoard, raceTrack, car;
+var pauseText, gameoverText;
 var clock = new THREE.Clock(false);
 
 var LocalTextures = new THREE.TextureLoader();
