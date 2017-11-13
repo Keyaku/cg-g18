@@ -44,7 +44,7 @@ function animate() {
 	cleanQueue(); // Freeing queued Object3D from scene
 
 	// Requesting a call to this function
-	requestAnimationFrame(render);
+	requestAnimationFrame(animate);
 }
 
 /**
@@ -67,7 +67,7 @@ function init() {
 	game = new Game(5);
 	cameraManager = new CameraManager();
 	lightManager = new LightManager();
-	render();
+	animate();
 
 	window.addEventListener('resize', onWindowResize, false);
 	window.addEventListener('keydown', onKeyDown);
