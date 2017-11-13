@@ -25,8 +25,13 @@ function render() {
 		var camera = cameraManager.viewports[view];
 		var frame = camera.userData.view;
 
-		renderer.setViewport(frame.x, frame.y, frame.width, frame.height);
-		renderer.setScissor(frame.x, frame.y, frame.width, frame.height);
+		var left = Math.floor(window.innerWidth * frame.x);
+		var top = Math.floor(window.innerHeight * frame.y);
+		var width = Math.floor(window.innerWidth * frame.width);
+		var height = Math.floor(window.innerHeight * frame.height);
+
+		renderer.setViewport(left, top, width, height);
+		renderer.setScissor(left, top, width, height);
 		renderer.setScissorTest( true );
 		renderer.setClearColor(camera.userData.background, camera.userData.alpha);
 		renderer.render(scene, camera);

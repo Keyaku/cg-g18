@@ -47,7 +47,7 @@ class CameraManager {
 			camera.userData.alpha = 1;
 			camera.userData.view = {
 				x: 0, y:0,
-				width: window.innerWidth, height: window.innerHeight
+				width: 1.0, height: 1.0
 			}
 		}
 
@@ -60,8 +60,8 @@ class CameraManager {
 		hud.userData.background = cameraColor;
 		hud.userData.alpha = 1;
 		hud.userData.view = {
-			x: 0, y: 10,
-			width: mapWidth, height: mapHeight
+			x: 0, y: 0,
+			width: 0.2, height: 0.1
 		}
 
 		// Assembling viewports
