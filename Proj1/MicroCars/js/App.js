@@ -7,6 +7,8 @@ var game, gameBoard, raceTrack, car;
 var pauseText, gameoverText;
 var clock = new THREE.Clock(false);
 
+var mapWidth = 200, mapHeight = 80;
+
 var LocalTextures = new THREE.TextureLoader();
 LocalTextures.setPath('textures/');
 var RemoteTextures = new THREE.TextureLoader();

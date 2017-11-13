@@ -52,7 +52,6 @@ class CameraManager {
 		}
 
 		// Preparing Heads-Up Display
-		var mapWidth = 200, mapHeight = 80;
 		var hud = this.createOrthographicCamera("HUD", -mapWidth / 2, mapWidth / 2, mapHeight / 2, -mapHeight / 2);
 		var cameraX = HALF_BOARD_WIDTH + 550, cameraY = 200, cameraZ = -HALF_BOARD_WIDTH + 90;
 		hud.position.set(cameraX, cameraY, cameraZ);
@@ -102,28 +101,47 @@ class CameraManager {
 
 	// Updates
 	updateCamera() {
-		var camera = this.getCurrentCamera();
-		if (camera instanceof THREE.OrthographicCamera) {
-			if (this.windowHeight > this.windowWidth) {
-				camera.left   = - this.frustumSize / 2;
-				camera.right  =   this.frustumSize / 2;
-				camera.top    =   this.frustumSize / this.aspectRatio / 2;
-				camera.bottom = - this.frustumSize / this.aspectRatio / 2;
-			}
-			else {
-				camera.left   = - this.frustumSize * this.aspectRatio / 2;
-				camera.right  =   this.frustumSize * this.aspectRatio / 2;
-				camera.top    =   this.frustumSize / 2;
-				camera.bottom = - this.frustumSize / 2;
-			}
-		}
+		for (var view in this.viewports) {
+			var camera = this.viewports[view];
 
-		else {
-			camera.aspect = renderer.getSize().width / renderer.getSize().height;
-		}
+			if (camera.name == "Top Camera" || camera.name == "Orbit Camera") {
+				if (this.windowHeight > this.windowWidth) {
+					camera.left   = - this.frustumSize / 2;
+					camera.right  =   this.frustumSize / 2;
+					camera.top    =   this.frustumSize / this.aspectRatio / 2;
+					camera.bottom = - this.frustumSize / this.aspectRatio / 2;
+				}
+				else {
+					camera.left   = - this.frustumSize * this.aspectRatio / 2;
+					camera.right  =   this.frustumSize * this.aspectRatio / 2;
+					camera.top    =   this.frustumSize / 2;
+					camera.bottom = - this.frustumSize / 2;
+				}
+			}
 
-		// Updating projection matrix (absolutely required)
-		camera.updateProjectionMatrix();
+			else if (camera instanceof THREE.PerspectiveCamera){
+				camera.aspect = renderer.getSize().width / renderer.getSize().height;
+			}
+
+			else if (camera.name == "HUD") {
+				var aspectRatio = mapWidth / mapHeight;
+				if (this.windowHeight > this.windowWidth) {
+					camera.left   = - mapWidth / 2;
+					camera.right  =   mapWidth / 2;
+					camera.top    =   mapHeight / 2;
+					camera.bottom = - mapHeight / 2;
+				}
+				else {
+					camera.left   = - mapWidth / 2;
+					camera.right  =   mapWidth / 2;
+					camera.top    =   mapHeight / 2;
+					camera.bottom = - mapHeight / 2;
+				}
+			}
+
+			// Updating projection matrix (absolutely required)
+			camera.updateProjectionMatrix();
+		}
 	}
 
 	update() {
