@@ -15,6 +15,19 @@ var RemoteTextures = new THREE.TextureLoader();
 * Render method allows system to handle all the rendering.
 */
 function render() {
+	// Updating camera projections and light calculations
+	cameraManager.update();
+	lightManager.update();
+
+	// ThreeJS updates (OrbitControls, renderer)
+	controls.update();
+	renderer.render(scene, cameraManager.getCurrentCamera());
+}
+
+/**
+* Animate updates all necessary data, and calls the rendering logic
+*/
+function animate() {
 	// Animation and physics updates to all visible PhysicsBody
 	var delta = clock.getDelta();
 
@@ -25,16 +38,13 @@ function render() {
 			}
 		});
 	}
-	cameraManager.update();
-	lightManager.update();
 
-	// ThreeJS updates (OrbitControls, renderer)
-	controls.update();
-	renderer.render(scene, cameraManager.getCurrentCamera());
+	render(); // Rendering
+
+	cleanQueue(); // Freeing queued Object3D from scene
+
+	// Requesting a call to this function
 	requestAnimationFrame(render);
-
-	// Freeing queued Object3D from scene
-	cleanQueue();
 }
 
 /**

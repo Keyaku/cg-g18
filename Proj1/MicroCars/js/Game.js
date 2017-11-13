@@ -55,7 +55,7 @@ class Game {
 				var textWidth = box.getSize().x
 				mesh.rotation.set(-NINETY_DEGREES, 0, 0);
 				mesh.position.set(-textWidth / 2, 0, 0)
-				
+
 				var basicMaterial = new THREE.MeshBasicMaterial({color:0x000000});
 				var phongMaterial = new THREE.MeshPhongMaterial({color: 0x000000, specular: 0x000000 });
 				var lambertMaterial = new THREE.MeshLambertMaterial({color:0x000000});
@@ -64,7 +64,7 @@ class Game {
 				scene.add(mesh);
 				pauseText = mesh;
 				pauseText.visible = false;
-			}); 
+			});
 	}
 
 	createGameOverText() {
@@ -95,7 +95,7 @@ class Game {
 				scene.add(mesh);
 				gameoverText = mesh;
 				gameoverText.visible = false;
-			}); 
+			});
 	}
 
 	limitNumber(number) {
@@ -164,7 +164,7 @@ class Game {
 			obj.position.copy(vector);
 			obj.mesh.rotation.set(0, 0, 0);
 			obj.heading = heading.normalize();
-			obj.visible = true;			
+			obj.visible = true;
 		}
 	}
 
