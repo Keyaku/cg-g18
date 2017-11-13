@@ -21,7 +21,11 @@ function render() {
 
 	// ThreeJS updates (OrbitControls, renderer)
 	controls.update();
-	renderer.render(scene, cameraManager.getCurrentCamera());
+	for (var view in cameraManager.viewports) {
+		var camera = cameraManager.viewports[view];
+		renderer.setClearColor(camera.userData.background, camera.userData.alpha);
+		renderer.render(scene, camera);
+	}
 }
 
 /**

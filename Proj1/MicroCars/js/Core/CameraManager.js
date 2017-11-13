@@ -9,7 +9,6 @@ class CameraManager {
 		this.frustumSize = BOARD_WIDTH;
 
 		// Creating ALL cameras now
-		this.cameraNumber = 0;
 		this.cameras = [];
 		var camera;
 
@@ -39,6 +38,20 @@ class CameraManager {
 		camera.position.set(40, 30, 2); // FIXME: fix Car's position, THEN come back here and remove this line
 		camera.lookAt(car.bounds.position); // FIXME
 		this.cameras.push(camera);
+
+		// Final settings for all cameras
+		var cameraColor = new THREE.Color(102, 152, 255);
+		for (var i in this.cameras) {
+			camera = this.cameras[i];
+			camera.userData.scene = scene;
+			camera.userData.background = cameraColor;
+			camera.userData.alpha = 1;
+		}
+
+		// Assembling viewports
+		this.viewports = {
+			camera : this.cameras[1],
+		};
 	}
 
 	createPerspectiveCamera(name="", fov=75) {
@@ -61,7 +74,7 @@ class CameraManager {
 	}
 
 	getCurrentCamera() {
-		return this.cameras[this.cameraNumber];
+		return this.viewports.camera;
 	}
 
 	updateValues(w, h, aspect) {
@@ -116,7 +129,7 @@ class CameraManager {
 	changeTo(index) {
 		if (0 <= index && index < this.cameras.length) {
 			controls.enabled = index == 0;
-			this.cameraNumber = index;
+			this.viewports.camera = this.cameras[index];
 			this.updateCamera();
 		}
 	}
