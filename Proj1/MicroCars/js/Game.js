@@ -15,7 +15,7 @@ class Game {
 		// them invisible first
 		var carWidth = 20;
 		var carLength = 10;
-		var pos = {x:boardSize/2 + 25, y:0, z:-boardSize/2 + 100}
+		var pos = {x:boardSize/2 + 500, y:0, z:-boardSize/2 + 100}
 
 		this.carLiveReps = []
 		for (var i = 0; i < this.maximumLives; i++) {

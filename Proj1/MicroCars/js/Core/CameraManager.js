@@ -43,14 +43,31 @@ class CameraManager {
 		var cameraColor = new THREE.Color(102, 152, 255);
 		for (var i in this.cameras) {
 			camera = this.cameras[i];
-			camera.userData.scene = scene;
 			camera.userData.background = cameraColor;
 			camera.userData.alpha = 1;
+			camera.userData.view = {
+				x: 0, y:0,
+				width: window.innerWidth, height: window.innerHeight
+			}
+		}
+
+		// Preparing Heads-Up Display
+		var mapWidth = 200, mapHeight = 80;
+		var hud = this.createOrthographicCamera("HUD", -mapWidth / 2, mapWidth / 2, mapHeight / 2, -mapHeight / 2);
+		var cameraX = HALF_BOARD_WIDTH + 550, cameraY = 200, cameraZ = -HALF_BOARD_WIDTH + 90;
+		hud.position.set(cameraX, cameraY, cameraZ);
+		hud.lookAt(cameraX, 0, cameraZ);
+		hud.userData.background = cameraColor;
+		hud.userData.alpha = 1;
+		hud.userData.view = {
+			x: 0, y: 10,
+			width: mapWidth, height: mapHeight
 		}
 
 		// Assembling viewports
 		this.viewports = {
 			camera : this.cameras[1],
+			hud    : hud,
 		};
 	}
 
@@ -60,8 +77,8 @@ class CameraManager {
 		return cam;
 	}
 
-	createOrthographicCamera(name="") {
-		var cam = new THREE.OrthographicCamera(0, 0, 0, 0, this.near, this.far);
+	createOrthographicCamera(name="", left=0, right=0, top=0, bottom=0) {
+		var cam = new THREE.OrthographicCamera(left, right, top, bottom, this.near, this.far);
 		cam.name = name;
 		return cam;
 	}

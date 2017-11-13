@@ -23,6 +23,11 @@ function render() {
 	controls.update();
 	for (var view in cameraManager.viewports) {
 		var camera = cameraManager.viewports[view];
+		var frame = camera.userData.view;
+
+		renderer.setViewport(frame.x, frame.y, frame.width, frame.height);
+		renderer.setScissor(frame.x, frame.y, frame.width, frame.height);
+		renderer.setScissorTest( true );
 		renderer.setClearColor(camera.userData.background, camera.userData.alpha);
 		renderer.render(scene, camera);
 	}
