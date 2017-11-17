@@ -32,6 +32,7 @@ class Game {
 		this.numberOfLives = 0;
 		this.resetLives(numberOfLives);
 
+		// FIXME: use textures of Power of 2
 		pauseObj = this.createCubeMsg('https://pbs.twimg.com/profile_images/551468212349845505/NJrwfoib.jpeg');
 		gameoverObj = this.createCubeMsg('https://www.walldevil.com/wallpapers/w01/556098-brown-game-over-text.jpg');
 
@@ -73,40 +74,8 @@ class Game {
 		this.is_gameover = false;
 		this.togglePause();
 		this.resetLives(this.maximumLives);
-		if (car == undefined) {
-			car = new Car(100, 0, -325);
-			var chaseCamera = cameraManager.cameras[3];
-			cameraManager.attachCameraTo(chaseCamera, car)
-		}
-		else {
-			car.position.set(100, 0, -325);
-			car.rotation.set(0, 0, 0)
-			car.velocity = 0;
-		}
-		var oranges = ['Orange1', 'Orange2', 'Orange3'];
-		for (var i = 0; i < oranges.length; i++) {
-			var name = oranges[i]
-			var obj = getEdible(name)
-			var heading;
-			obj.visible = false;
-			var x = Math.random() < 0.5 ? -1 : 1;
-			var z = Math.random() < 0.5 ? -1 : 1;
-			var maskDirection = Math.random();
-			var vector = generateSpawnLocation();
-			vector.setY(obj.bounds.radius);
-			if (0 <= maskDirection && maskDirection < 0.33) {
-				heading = new THREE.Vector3(x, 0, z);
-			} else if (0.33 <= maskDirection && maskDirection < 0.66){
-				heading = new THREE.Vector3(x, 0, 0);
-			} else {
-				heading = new THREE.Vector3(0, 0, z);
-			}
-			obj.velocity = ORANGE_VELOCITY
-			obj.position.copy(vector);
-			obj.mesh.rotation.set(0, 0, 0);
-			obj.heading = heading.normalize();
-			obj.visible = true;
-		}
+
+		reloadScene();
 	}
 
 	getCurrentLives() { return this.numberOfLives; }
@@ -164,11 +133,11 @@ class Game {
 		var objPos;
 		obj.scale.set(1, 1, 1)
 		if (camera.name == "Top Camera" || camera.name == "Orbit Camera") {
-			objPos = {x:camPos.x+camDir.x*100, y:camPos.y+camDir.y*100, z:camPos.z+camDir.z*100}	
+			objPos = {x:camPos.x+camDir.x*100, y:camPos.y+camDir.y*100, z:camPos.z+camDir.z*100}
 			obj.scale.set(10, 10, 10);
 		}
-		else if (camera.name == "Table Camera") {		
-			objPos = {x:camPos.x+camDir.x*50, y:camPos.y+camDir.y*50, z:camPos.z+camDir.z*50}	
+		else if (camera.name == "Table Camera") {
+			objPos = {x:camPos.x+camDir.x*50, y:camPos.y+camDir.y*50, z:camPos.z+camDir.z*50}
 		}
 		else if (camera.name == "Chase Camera") {
 			var carPos = car.position;

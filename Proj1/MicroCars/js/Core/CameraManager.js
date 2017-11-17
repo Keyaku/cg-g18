@@ -34,9 +34,6 @@ class CameraManager {
 
 		// Creating 3rd camera: Perspective Chase
 		camera = this.createPerspectiveCamera("Chase Camera");
-		this.attachCameraTo(camera, car);
-		camera.position.set(40, 30, 2); // FIXME: fix Car's position, THEN come back here and remove this line
-		camera.lookAt(car.bounds.position); // FIXME
 		this.cameras.push(camera);
 
 		// Final settings for all cameras
@@ -86,7 +83,7 @@ class CameraManager {
 		obj.add(camera);
 		camera.position.set(0, 30, 40);
 		camera.rotation.set(0, 0, 0);
-		camera.lookAt(obj.getWorldPosition());
+		camera.lookAt(obj.bounds.position);
 	}
 
 	getCurrentCamera() {
@@ -169,12 +166,12 @@ class CameraManager {
 		}
 
 		if (game.is_gameover) {
-			game.showCubeMsg(gameoverObj)	
+			game.showCubeMsg(gameoverObj)
 		}
 		else if (game.is_paused) {
 			game.showCubeMsg(pauseObj)
 		}
-		
+
 	}
 
 	changeToOrbit() {

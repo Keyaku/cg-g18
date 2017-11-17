@@ -83,6 +83,7 @@ function init() {
 	game = new Game(5);
 	cameraManager = new CameraManager();
 	lightManager = new LightManager();
+	reloadScene(); // Setting content to their initial position
 	animate();
 
 	window.addEventListener('resize', onWindowResize, false);

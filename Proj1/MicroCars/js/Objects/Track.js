@@ -1,11 +1,9 @@
 class Track extends THREE.Object3D {
-	constructor() {
+	constructor(trackWidth) {
 		super()
 		this.type = 'Track'
 		this.lights = new Lamp(this);
 
-		//Sets how wide the track is.
-		var trackWidth = 45
 		//Sets the position of the curves that compose the track.
 		var points = [
 			{x:0, z:0}, {x:200, z:0},
@@ -21,14 +19,16 @@ class Track extends THREE.Object3D {
 		]
 		//Offsets the points to be alligned with the camera and converts them
 		//to be THREE.Vector3 to be used by THREE.CatmullRomCurve3.
-		points = this.pointsOffset(points, 400)
+		points = this.pointsOffset(points, 400);
 		//Draws the track.
-		var track = this.trackCreate(this, points, trackWidth, 0x13294B)
+		var track = this.trackCreate(this, points, trackWidth, 0x13294B);
 		//Adds the tori on the track.
-		this.trackAddTorus(this, track.geometry.vertices)
+		this.torusGroup = new THREE.Group();
+		this.add(this.torusGroup);
+		this.addTorus(this.torusGroup, track.geometry.vertices);
 		//Adds all to the scene.
-		scene.add(this)
-		return this
+		scene.add(this);
+		return this;
 	}
 
 	pointsOffset(points, offset) {
@@ -39,6 +39,7 @@ class Track extends THREE.Object3D {
 		}
 		return p2
 	}
+
 	trackCreate(obj, points, width, color) {
 		//Creates a Curve to be the shape of the track defined by the points.
 		var closedSpline = new THREE.CatmullRomCurve3(points)
@@ -64,7 +65,8 @@ class Track extends THREE.Object3D {
 		obj.add(mesh)
 		return mesh
 	}
-	trackAddTorus(obj, vertices) {
+
+	addTorus(obj, vertices) {
 		//Creates the torus material.
 		var basicMaterial   = new THREE.MeshBasicMaterial({color:0xAA1111});
 		var lambertMaterial = new THREE.MeshLambertMaterial({color:0xAA1111});
@@ -74,13 +76,22 @@ class Track extends THREE.Object3D {
 		//Adds the tires to the track's sides.
 		for (var i = 0; i < vertices.length; i += step) {
 			var tire = new Tire(obj, vertices[i]);
+			tire.userData.initialPosition = vertices[i].clone();
 			addMaterials(tire.mesh, basicMaterial, lambertMaterial, phongMaterial);
+		}
+	}
+
+	resetTorus() {
+		var tori = this.torusGroup.children;
+		for (var i in tori) {
+			var torus = tori[i];
+			torus.position.copy(torus.userData.initialPosition);
 		}
 	}
 }
 
 class Tire extends RigidBody {
-	constructor(obj, p) {
+	constructor(obj, p=new THREE.Vector3()) {
 		super(7)
 		this.type = 'Tire'
 
