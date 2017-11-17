@@ -4,7 +4,7 @@
 var renderer, cameraManager, controls;
 var lightManager;
 var game, gameBoard, raceTrack, car;
-var pauseText, gameoverText;
+var pauseObj, gameoverObj;
 var clock = new THREE.Clock(false);
 
 var mapWidth = 200, mapHeight = 80;

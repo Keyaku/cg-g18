@@ -167,6 +167,14 @@ class CameraManager {
 			this.viewports.camera = this.cameras[index];
 			this.updateCamera();
 		}
+
+		if (game.is_gameover) {
+			game.showCubeMsg(gameoverObj)	
+		}
+		else if (game.is_paused) {
+			game.showCubeMsg(pauseObj)
+		}
+		
 	}
 
 	changeToOrbit() {
@@ -182,6 +190,8 @@ class CameraManager {
 	}
 
 	changeToPerspectiveFollow() {
-		this.changeTo(3);
+		if (!game.is_gameover) {
+			this.changeTo(3);
+		}
 	}
 }

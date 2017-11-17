@@ -32,70 +32,9 @@ class Game {
 		this.numberOfLives = 0;
 		this.resetLives(numberOfLives);
 
-		this.createPauseText();
-		this.createGameOverText();
-	}
+		pauseObj = this.createCubeMsg('https://pbs.twimg.com/profile_images/551468212349845505/NJrwfoib.jpeg');
+		gameoverObj = this.createCubeMsg('https://www.walldevil.com/wallpapers/w01/556098-brown-game-over-text.jpg');
 
-	createPauseText() {
-		var loader = new THREE.FontLoader();
-			loader.load( 'fonts/helvetiker_regular.typeface.json', function ( font ) {
-				var textGeometry = new THREE.TextGeometry('Paused', {
-					font: font,
-					size: 80,
-					height: 20,
-					curveSegments: 12,
-					bevelEnabled: true,
-					bevelThickness: 10,
-					bevelSize: 5,
-					bevelSegments: 3
-				});
-				var textMaterial = new THREE.MeshPhongMaterial({color: 0x000000, specular: 0x000000 });
-				var mesh = new THREE.Mesh( textGeometry, textMaterial );
-				var box = new THREE.Box3().setFromObject(mesh);
-				var textWidth = box.getSize().x
-				mesh.rotation.set(-NINETY_DEGREES, 0, 0);
-				mesh.position.set(-textWidth / 2, 0, 0)
-
-				var basicMaterial = new THREE.MeshBasicMaterial({color:0x000000});
-				var phongMaterial = new THREE.MeshPhongMaterial({color: 0x000000, specular: 0x000000 });
-				var lambertMaterial = new THREE.MeshLambertMaterial({color:0x000000});
-				createMaterialsTwo(mesh, basicMaterial, phongMaterial, lambertMaterial);
-
-				scene.add(mesh);
-				pauseText = mesh;
-				pauseText.visible = false;
-			});
-	}
-
-	createGameOverText() {
-		var loader = new THREE.FontLoader();
-			loader.load( 'fonts/helvetiker_regular.typeface.json', function ( font ) {
-				var textGeometry = new THREE.TextGeometry('Game Over', {
-					font: font,
-					size: 80,
-					height: 20,
-					curveSegments: 12,
-					bevelEnabled: true,
-					bevelThickness: 10,
-					bevelSize: 3,
-					bevelSegments: 3
-				});
-				var textMaterial = new THREE.MeshPhongMaterial({color: 0x000000, specular: 0x000000 });
-				var mesh = new THREE.Mesh( textGeometry, textMaterial );
-				var box = new THREE.Box3().setFromObject(mesh);
-				var textWidth = box.getSize().x
-				mesh.rotation.set(-NINETY_DEGREES, 0, 0);
-				mesh.position.set(-textWidth / 2, 0, 0)
-
-				var basicMaterial = new THREE.MeshBasicMaterial({color:0x000000});
-				var phongMaterial = new THREE.MeshPhongMaterial({color: 0x000000, specular: 0x000000 });
-				var lambertMaterial = new THREE.MeshLambertMaterial({color:0x000000});
-				createMaterialsTwo(mesh, basicMaterial, phongMaterial, lambertMaterial);
-
-				scene.add(mesh);
-				gameoverText = mesh;
-				gameoverText.visible = false;
-			});
 	}
 
 	limitNumber(number) {
@@ -130,12 +69,14 @@ class Game {
 	/** @function restart
 	*/
 	restart() {
-		gameoverText.visible = false;
+		gameoverObj.visible = false;
 		this.is_gameover = false;
 		this.togglePause();
 		this.resetLives(this.maximumLives);
 		if (car == undefined) {
 			car = new Car(100, 0, -325);
+			var chaseCamera = cameraManager.cameras[3];
+			cameraManager.attachCameraTo(chaseCamera, car)
 		}
 		else {
 			car.position.set(100, 0, -325);
@@ -181,9 +122,10 @@ class Game {
 
 	gameOver() {
 		if (this.numberOfLives <= 0) {
+			cameraManager.changeToOrthographic();
 			this.is_gameover = true;
-			gameoverText.visible = true;
 			this.togglePause();
+			this.showCubeMsg(gameoverObj);
 			return true;
 		}
 		return false;
@@ -191,11 +133,48 @@ class Game {
 
 	togglePause() {
 		if (this.is_paused) {
-			pauseText.visible = false;
+			pauseObj.visible = false;
 		}
 		else if (!this.is_gameover) {
-			pauseText.visible = true;
+			this.showCubeMsg(pauseObj);
 		}
 		this.is_paused = !this.is_paused;
+	}
+
+	createCubeMsg(textureUrl) {
+		var geometry = new THREE.BoxGeometry(10, 10, 10);
+		var material = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
+		var mesh = new THREE.Mesh( geometry, material );
+		var textureLoader = new THREE.TextureLoader();
+		textureLoader.crossOrigin = 'anonymous';
+		var texture = textureLoader.load(textureUrl);
+		var basicMat = {map:texture, side: THREE.DoubleSide};
+		var phongMat = {map:texture, side: THREE.DoubleSide, shininess: 5, specular: new THREE.Color("rgb(5%, 5%, 5%)")};
+		var lambertMat = {map:texture, side: THREE.DoubleSide, emissive: 0x002200, emissiveIntensity: 0.5};
+		createMaterialsTwo(mesh, basicMat, phongMat, lambertMat);
+		mesh.visible = false;
+		scene.add(mesh);
+		return mesh;
+	}
+
+	showCubeMsg(obj) {
+		var camera = cameraManager.getCurrentCamera();
+		var camPos = camera.position;
+		var camDir = camera.getWorldDirection();
+		var objPos;
+		obj.scale.set(1, 1, 1)
+		if (camera.name == "Top Camera" || camera.name == "Orbit Camera") {
+			objPos = {x:camPos.x+camDir.x*100, y:camPos.y+camDir.y*100, z:camPos.z+camDir.z*100}	
+			obj.scale.set(10, 10, 10);
+		}
+		else if (camera.name == "Table Camera") {		
+			objPos = {x:camPos.x+camDir.x*50, y:camPos.y+camDir.y*50, z:camPos.z+camDir.z*50}	
+		}
+		else if (camera.name == "Chase Camera") {
+			var carPos = car.position;
+			objPos = {x:carPos.x, y:carPos.y+20, z:carPos.z}
+		}
+		obj.visible = true;
+		obj.position.set(objPos.x, objPos.y, objPos.z)
 	}
 }
