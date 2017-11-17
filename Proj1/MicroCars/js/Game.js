@@ -94,7 +94,7 @@ class Game {
 			cameraManager.changeToOrthographic();
 			this.is_gameover = true;
 			this.togglePause();
-			this.showCubeMsg(gameoverObj);
+			this.setMsgVisibility(gameoverObj, true);
 			return true;
 		}
 		return false;
