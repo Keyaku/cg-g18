@@ -101,6 +101,15 @@ function addMaterials(mesh, basicMaterial, lambertMaterial, phongMaterial) {
 	mesh.userData.phongMaterial    = phongMaterial;
 }
 
+
+/**
+* @method isMultiMaterial Checks if given mesh is multi-material
+* @param mesh: The mesh to examine
+*/
+function isMultiMaterial(mesh) {
+	return mesh.userData.hasOwnProperty("previousMaterial");
+}
+
 /**
 * objectNeedsRespawn verifies if an object is within the boundaries of the board
 * @param x: x position of the object subject to verification.

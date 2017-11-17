@@ -132,7 +132,10 @@ class LightManager {
 
 	switchMaterials() {
 		scene.traverse(function (node) {
-			if (node instanceof THREE.Mesh && !(node instanceof BoundingGeometry)) {
+			if (node instanceof THREE.Mesh &&
+				!(node instanceof BoundingGeometry) &&
+				isMultiMaterial(node)
+			) {
 				if (node.material instanceof THREE.MeshLambertMaterial) {
 					node.userData.previousMaterial = node.material;
 					node.material = node.userData.phongMaterial;
