@@ -1,4 +1,4 @@
-function createCarMesh(carWidth, carLength) {
+function createCarMesh(carWidth, carLength, basic=false) {
 	// Wheels
 	var pneuWidth = 2;
 	var geometry = new WheelGeometry(3, pneuWidth, 45);
@@ -8,7 +8,11 @@ function createCarMesh(carWidth, carLength) {
 	var wheel4 = new THREE.Mesh(geometry);
 	var wheels = [wheel1, wheel2, wheel3, wheel4];
 	for (var i in wheels) {
-		createMaterials(wheels[i], {color: 0x001111});
+		if (basic) {
+			wheels[i].material = new THREE.MeshBasicMaterial({color: 0x001111});
+		} else {
+			createMaterials(wheels[i], {color: 0x001111});
+		}
 	}
 	wheel1.position.set(0, 5, 0);
 	wheel2.position.set(0, 5, carLength + pneuWidth);
@@ -19,12 +23,20 @@ function createCarMesh(carWidth, carLength) {
 	var bodyGeometry = new CarBody(carWidth, carLength);
 	var geometry = new CarBody(carWidth, carLength);
 	var carBody = new THREE.Mesh(geometry);
-	createMaterials(carBody, {color : 0xff0000});
+	if (basic) {
+		carBody.material = new THREE.MeshBasicMaterial({color : 0xff0000});
+	} else {
+		createMaterials(carBody, {color : 0xff0000});
+	}
 
 	// Bumper
 	var geometry = new BumperGeometry(10, 3, 3);
 	var bumper = new THREE.Mesh(geometry);
-	createMaterials(bumper, {color: 0xFFFF000});
+	if (basic) {
+		bumper.material = new THREE.MeshBasicMaterial({color: 0xFFFF000});
+	} else {
+		createMaterials(bumper, {color: 0xFFFF000});
+	}
 	bumper.rotation.set(0, -Math.PI/2, 0);
 	bumper.position.set(0, 5, 5);
 
