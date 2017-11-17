@@ -72,7 +72,7 @@ class Game {
 	restart() {
 		gameoverObj.visible = false;
 		this.is_gameover = false;
-		this.togglePause();
+		this.is_paused = false;
 		this.resetLives(this.maximumLives);
 
 		reloadScene();
