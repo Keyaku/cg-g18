@@ -101,7 +101,6 @@ function addMaterials(mesh, basicMaterial, lambertMaterial, phongMaterial) {
 	mesh.userData.phongMaterial    = phongMaterial;
 }
 
-
 /**
 * @method isMultiMaterial Checks if given mesh is multi-material
 * @param mesh: The mesh to examine

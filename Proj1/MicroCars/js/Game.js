@@ -115,10 +115,6 @@ class Game {
 		var texture = LocalTextures.load(textureUrl); // FIXME: use remote texture
 		var material = new THREE.MeshBasicMaterial( {map:texture, side: THREE.DoubleSide} );
 		var mesh = new THREE.Mesh( geometry, material );
-		var basicMat = {map:texture, side: THREE.DoubleSide};
-		var phongMat = {map:texture, side: THREE.DoubleSide, shininess: 5, specular: new THREE.Color("rgb(5%, 5%, 5%)")};
-		var lambertMat = {map:texture, side: THREE.DoubleSide, emissive: 0x002200, emissiveIntensity: 0.5};
-		createMaterialsTwo(mesh, basicMat, phongMat, lambertMat);
 		mesh.visible = false;
 		return mesh;
 	}
