@@ -9,10 +9,6 @@ var clock = new THREE.Clock(false);
 
 var mapWidth = 200, mapHeight = 80;
 
-var LocalTextures = new THREE.TextureLoader();
-LocalTextures.setPath('textures/');
-var RemoteTextures = new THREE.TextureLoader();
-
 /**
 * Render method allows system to handle all the rendering.
 */

@@ -46,6 +46,7 @@ class CameraManager {
 				x: 0, y:0,
 				width: 1.0, height: 1.0
 			}
+			scene.add(camera);
 		}
 
 		// Preparing Heads-Up Display
@@ -159,19 +160,15 @@ class CameraManager {
 	}
 
 	changeTo(index) {
+		var oldCamera = this.viewports.camera;
+
 		if (0 <= index && index < this.cameras.length) {
 			controls.enabled = index == 0;
 			this.viewports.camera = this.cameras[index];
 			this.updateCamera();
 		}
 
-		if (game.is_gameover) {
-			game.showCubeMsg(gameoverObj)
-		}
-		else if (game.is_paused) {
-			game.showCubeMsg(pauseObj)
-		}
-
+		game.updateMsgCamera(oldCamera, this.viewports.camera);
 	}
 
 	changeToOrbit() {

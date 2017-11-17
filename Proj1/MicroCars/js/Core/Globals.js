@@ -49,6 +49,14 @@ const POINT_LIGHT_DISTANCE = 1000;
 const POINT_LIGHT_REAL = 2;
 
 /*******************************************************************************
+* Textures
+*******************************************************************************/
+var LocalTextures = new THREE.TextureLoader();
+LocalTextures.setPath('textures/');
+var RemoteTextures = new THREE.TextureLoader();
+RemoteTextures.crossOrigin = 'anonymous';
+
+/*******************************************************************************
 * Helper methods
 *******************************************************************************/
 

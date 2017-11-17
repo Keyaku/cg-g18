@@ -33,8 +33,8 @@ class Game {
 		this.resetLives(numberOfLives);
 
 		// FIXME: use textures of Power of 2
-		pauseObj = this.createCubeMsg('https://pbs.twimg.com/profile_images/551468212349845505/NJrwfoib.jpeg');
-		gameoverObj = this.createCubeMsg('https://www.walldevil.com/wallpapers/w01/556098-brown-game-over-text.jpg');
+		pauseObj = this.createCubeMsg('text_pause.png');
+		gameoverObj = this.createCubeMsg('text_gameover.png');
 
 	}
 
@@ -102,48 +102,46 @@ class Game {
 
 	togglePause() {
 		if (this.is_paused) {
-			pauseObj.visible = false;
+			this.setMsgVisibility(pauseObj, false);
 		}
 		else if (!this.is_gameover) {
-			this.showCubeMsg(pauseObj);
+			this.setMsgVisibility(pauseObj, true);
 		}
 		this.is_paused = !this.is_paused;
 	}
 
 	createCubeMsg(textureUrl) {
-		var geometry = new THREE.BoxGeometry(10, 10, 10);
-		var material = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
+		var geometry = new THREE.PlaneGeometry(512, 128);
+		var texture = LocalTextures.load(textureUrl); // FIXME: use remote texture
+		var material = new THREE.MeshBasicMaterial( {map:texture, side: THREE.DoubleSide} );
 		var mesh = new THREE.Mesh( geometry, material );
-		var textureLoader = new THREE.TextureLoader();
-		textureLoader.crossOrigin = 'anonymous';
-		var texture = textureLoader.load(textureUrl);
 		var basicMat = {map:texture, side: THREE.DoubleSide};
 		var phongMat = {map:texture, side: THREE.DoubleSide, shininess: 5, specular: new THREE.Color("rgb(5%, 5%, 5%)")};
 		var lambertMat = {map:texture, side: THREE.DoubleSide, emissive: 0x002200, emissiveIntensity: 0.5};
 		createMaterialsTwo(mesh, basicMat, phongMat, lambertMat);
 		mesh.visible = false;
-		scene.add(mesh);
 		return mesh;
 	}
 
-	showCubeMsg(obj) {
+	setMsgVisibility(obj, value) {
 		var camera = cameraManager.getCurrentCamera();
-		var camPos = camera.position;
-		var camDir = camera.getWorldDirection();
-		var objPos;
-		obj.scale.set(1, 1, 1)
-		if (camera.name == "Top Camera" || camera.name == "Orbit Camera") {
-			objPos = {x:camPos.x+camDir.x*100, y:camPos.y+camDir.y*100, z:camPos.z+camDir.z*100}
-			obj.scale.set(10, 10, 10);
+		if (value) {
+			camera.add(obj);
+			obj.position.set(0, 0, -10);
+		} else {
+			camera.remove(obj);
 		}
-		else if (camera.name == "Table Camera") {
-			objPos = {x:camPos.x+camDir.x*50, y:camPos.y+camDir.y*50, z:camPos.z+camDir.z*50}
+		obj.visible = value;
+	}
+
+	updateMsgCamera(oldCamera, camera) {
+		if (this.is_gameover) {
+			oldCamera.remove(gameoverObj);
+			camera.add(gameoverObj);
 		}
-		else if (camera.name == "Chase Camera") {
-			var carPos = car.position;
-			objPos = {x:carPos.x, y:carPos.y+20, z:carPos.z}
+		else if (this.is_paused) {
+			oldCamera.remove(pauseObj);
+			camera.add(pauseObj);
 		}
-		obj.visible = true;
-		obj.position.set(objPos.x, objPos.y, objPos.z)
 	}
 }
