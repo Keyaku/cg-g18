@@ -1,15 +1,14 @@
 /**
-* Message is tied to CameraManager, as it requires an instanced CameraManager to work.
-* It's an object to which we apply a texture.
+* An object to which we apply a texture.
 */
 class MessageBox extends THREE.Mesh {
-	constructor() {
-		var geometry = new THREE.PlaneGeometry(512, 128);
+	constructor(width=1, height=1, x=0, y=0) {
+		var geometry = new THREE.PlaneGeometry(width, height);
 		super(geometry);
 
 		// Setting initial data
 		this.visible = false;
-		this.position.set(0, 0, -1);
+		this.position.set(x, y, -1); // z = -1 to be in front of the camera
 
 		// Setting texture map
 		this.material = new THREE.MeshBasicMaterial( { side: THREE.DoubleSide } );

@@ -34,9 +34,12 @@ class Game {
 		this.numberOfLives = 0;
 		this.resetLives(numberOfLives);
 
-		msgBox = new MessageBox();
+		// Adding main MessageBox
+		msgBox = new MessageBox(512, 128);
 		msgBox.add('text_pause.png');
 		msgBox.add('text_gameover.png');
+		// Adding subBox
+		subBox = new MessageBox(256, 64, 0, -100);
 	}
 
 	limitNumber(number) {

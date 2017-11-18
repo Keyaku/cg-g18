@@ -6,7 +6,7 @@ var lightManager;
 var game, gameBoard, raceTrack, car;
 var clock = new THREE.Clock(false);
 
-var msgBox;
+var msgBox, subBox;
 var mapWidth = 200, mapHeight = 80;
 
 /**
