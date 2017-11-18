@@ -36,5 +36,11 @@ class MessageBox extends THREE.Mesh {
 			oldCamera.remove(this);
 		}
 		camera.add(this);
+
+		if (camera instanceof THREE.PerspectiveCamera) {
+			this.scale.set(0.0015, 0.0015, 0.0015); // FIXME: calculate values
+		} else if (camera instanceof THREE.OrthographicCamera) {
+			this.scale.set(1, 1, 1);
+		}
 	}
 }
