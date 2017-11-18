@@ -14,6 +14,18 @@ class PhysicsBody extends THREE.Object3D {
 		this.heading = new THREE.Vector3();
 	}
 
+	/* Method for collision calculation and sharing. Called via EventDispatcher */
+	_colliding(event) { /* do nothing */ }
+
+	/* Enables/disables collision events */
+	setColliding(value) {
+		if (value) {
+			this.addEventListener('collided', this._colliding);
+		} else {
+			this.removeEventListener('collided', this._colliding);
+		}
+	}
+
 	// Callback for every frame
 	update(delta) { /* do nothing */ }
 
@@ -64,19 +76,22 @@ class RigidBody extends PhysicsBody {
 		this.velocity = 0;
 
 		// Creating event for collision
-		this.addEventListener('collided', function (event) {
-			// if the colliding body is a StaticBody, bounce against it
-			if (event.body.isStaticBody) {
-				this.getHeading(event.body, event.body.heading);
-				this.velocity = -this.velocity;
-			}
-			// if the colliding body is a RigidBody, share velocity with this one
-			else if (event.body.isRigidBody) {
-				this.getHeading(event.body, event.body.heading);
-				event.body.velocity = Math.abs(this.velocity);
-			}
-		});
+		this.addEventListener('collided', this._colliding);
 		this.collide = this.collide.bind(this);
+	}
+
+	/* Method for collision calculation and sharing. Called via EventDispatcher */
+	_colliding(event) {
+		// if the colliding body is a StaticBody, bounce against it
+		if (event.body.isStaticBody) {
+			this.getHeading(event.body, event.body.heading);
+			this.velocity = -this.velocity;
+		}
+		// if the colliding body is a RigidBody, share velocity with this one
+		else if (event.body.isRigidBody) {
+			this.getHeading(event.body, event.body.heading);
+			event.body.velocity = Math.abs(this.velocity);
+		}
 	}
 
 	collide(node) {
@@ -110,13 +125,16 @@ class MotionBody extends PhysicsBody {
 		this.velocity = 0;
 
 		// Creating event for collision
-		this.addEventListener('collided', function (event) {
-			// if the colliding body is a RigidBody, share velocity with this one
-			if (event.body.isRigidBody) {
-				this.getHeading(event.body, event.body.heading);
-				event.body.velocity = Math.abs(this.velocity);
-			}
-		});
+		this.setColliding(true);
+	}
+
+	/* Method for collision calculation and sharing. Called via EventDispatcher */
+	_colliding(event) {
+		// if the colliding body is a RigidBody, share velocity with this one
+		if (event.body.isRigidBody) {
+			this.getHeading(event.body, event.body.heading);
+			event.body.velocity = Math.abs(this.velocity);
+		}
 	}
 
 	/**
