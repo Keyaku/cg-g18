@@ -9,6 +9,8 @@ class MessageBox extends THREE.Mesh {
 		// Setting initial data
 		this.visible = false;
 		this.position.set(x, y, -1); // z = -1 to be in front of the camera
+		this.userData.ortho = this.position.clone();
+		this.userData.persp = this.position.clone();
 
 		// Setting texture map
 		this.material = new THREE.MeshBasicMaterial( { side: THREE.DoubleSide } );
@@ -38,8 +40,10 @@ class MessageBox extends THREE.Mesh {
 
 		if (camera instanceof THREE.PerspectiveCamera) {
 			this.scale.set(0.0015, 0.0015, 0.0015); // FIXME: calculate values
+			this.position.copy(this.userData.persp);
 		} else if (camera instanceof THREE.OrthographicCamera) {
 			this.scale.set(1, 1, 1);
+			this.position.copy(this.userData.ortho);
 		}
 	}
 }

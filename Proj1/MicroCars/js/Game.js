@@ -41,6 +41,7 @@ class Game {
 		// Adding subBox
 		subBox = new MessageBox(256, 64, 0, -100);
 		subBox.add('text_start.png');
+		subBox.userData.persp.setY(-0.15); // FIXME: calculate appropriate value
 	}
 
 	limitNumber(number) {
