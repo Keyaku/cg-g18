@@ -40,6 +40,7 @@ class Game {
 		msgBox.add('text_gameover.png');
 		// Adding subBox
 		subBox = new MessageBox(256, 64, 0, -100);
+		subBox.add('text_start.png');
 	}
 
 	limitNumber(number) {
@@ -79,6 +80,8 @@ class Game {
 		this.is_paused = false;
 		this.resetLives(this.maximumLives);
 
+		msgBox.visible = subBox.visible = false;
+
 		reloadScene();
 	}
 
@@ -100,7 +103,8 @@ class Game {
 			this.togglePause();
 
 			msgBox.apply('text_gameover.png');
-			msgBox.visible = true;
+			subBox.apply('text_start.png');
+			msgBox.visible = subBox.visible = true;
 
 			return true;
 		}

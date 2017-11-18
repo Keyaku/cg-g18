@@ -68,9 +68,8 @@ class CameraManager {
 		};
 
 		// Final touches
-		if (msgBox != undefined) {
-			this.cameras[1].add(msgBox);
-		}
+		if (msgBox != undefined) { this.cameras[1].add(msgBox); }
+		if (subBox != undefined) { this.cameras[1].add(subBox); }
 	}
 
 	createPerspectiveCamera(name="", fov=75) {
@@ -172,6 +171,7 @@ class CameraManager {
 		}
 
 		msgBox.switchCamera(this.viewports.camera);
+		subBox.switchCamera(this.viewports.camera);
 	}
 
 	changeToOrbit() {
