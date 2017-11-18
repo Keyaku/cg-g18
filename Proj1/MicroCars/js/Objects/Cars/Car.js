@@ -9,6 +9,9 @@ class Car extends MotionBody {
 		this.userData.canMoveBack = true;
 		this.userData.colliding = false;
 
+		this.userData.timer = new THREE.Clock(false);
+		this.userData.timer_end = 0;
+
 		addHeadLigths(this);
 
 		// Collision function
@@ -118,6 +121,12 @@ class Car extends MotionBody {
 		}
 	}
 
+	timer(seconds, callback=undefined) {
+		this.userData.timer_end = seconds;
+		this.userData.timer_cb = callback;
+		this.userData.timer.start();
+	}
+
 	free() {
 		queueFree(this);
 		car = undefined;
@@ -170,6 +179,19 @@ class Car extends MotionBody {
 		if (objectNeedsRespawn(this)) {
 			game.playerDied();
 			this.respawn();
+		}
+
+		// Handling timer callback
+		if (this.userData.timer.running) {
+			var elapsed = this.userData.timer.getElapsedTime();
+			if (elapsed > this.userData.timer_end) {
+				this.userData.timer.stop();
+				this.userData.timer_end = 0;
+				// Call callback (if available)
+				if (this.userData.timer_cb != undefined) {
+					this.userData.timer_cb();
+				}
+			}
 		}
 	}
 }
