@@ -90,10 +90,7 @@ class Game {
 	getMaxLives() { return this.maximumLives; }
 
 	playerDied() {
-		if (this.gameOver()) {
-			if (car != undefined) { car.free(); }
-			return;
-		}
+		if (this.gameOver()) { return true; }
 		this.removeLives(1);
 	}
 

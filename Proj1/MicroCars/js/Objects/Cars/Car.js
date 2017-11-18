@@ -109,9 +109,13 @@ class Car extends MotionBody {
 	}
 
 	respawn(position=this.userData.initialPosition) {
-		this.position.copy(position);
-		this.rotation.set(0, 0, 0);
-		this.velocity = 0;
+		if (!game.is_gameover) {
+			this.position.copy(position);
+			this.rotation.set(0, 0, 0);
+			this.velocity = 0;
+		} else {
+			this.position.set(0, -100, 0); // XXX: just a ridiculous number
+		}
 	}
 
 	free() {
