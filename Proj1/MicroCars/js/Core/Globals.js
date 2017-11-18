@@ -66,6 +66,7 @@ RemoteTextures.crossOrigin = 'anonymous';
 * @param parameters: THREE.Material parameters
 */
 function createMaterials(mesh, parameters={}) {
+	parameters.transparent = true;
 	addMaterials(mesh,
 		new THREE.MeshBasicMaterial(parameters),
 		new THREE.MeshLambertMaterial(parameters),
@@ -79,6 +80,9 @@ function createMaterials(mesh, parameters={}) {
 * @param parameters: THREE.Material parameters distinguished by inheritance
 */
 function createMaterialsTwo(mesh, basicParam={}, phongParam={}, lambertParam={}) {
+	basicParam.transparent   = true;
+	phongParam.transparent   = true;
+	lambertParam.transparent = true;
 	addMaterials(mesh,
 		new THREE.MeshBasicMaterial(basicParam),
 		new THREE.MeshLambertMaterial(lambertParam),
