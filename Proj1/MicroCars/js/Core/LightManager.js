@@ -97,7 +97,7 @@ class LightManager {
 
 	disableLightUpdates() {
 		scene.traverse(function (node) {
-			if (node instanceof THREE.Mesh && !(node instanceof BoundingGeometry)) {
+			if (isMultiMaterial(node)) {
 				if (!(node.material instanceof THREE.MeshBasicMaterial)) {
 					node.userData.previousMaterial = node.material;
 					node.material = node.userData.basicMaterial;
@@ -111,12 +111,12 @@ class LightManager {
   switchPointLights() {
     var lights = raceTrack.lights.getLightsArray();
     for (var i = 0; i < lights.length; i++) {
-      var light = lights[i];
-      if (light.intensity != 0) {
-        light.intensity = 0;
-      } else {
-        light.intensity = POINT_LIGHT_INTENSITY;
-      }
+		var light = lights[i];
+		if (light.intensity != 0) {
+			light.intensity = 0;
+		} else {
+			light.intensity = POINT_LIGHT_INTENSITY;
+		}
     }
     raceTrack.lights.lampsOn();
   }
@@ -132,10 +132,7 @@ class LightManager {
 
 	switchMaterials() {
 		scene.traverse(function (node) {
-			if (node instanceof THREE.Mesh &&
-				!(node instanceof BoundingGeometry) &&
-				isMultiMaterial(node)
-			) {
+			if (isMultiMaterial(node)) {
 				if (node.material instanceof THREE.MeshLambertMaterial) {
 					node.userData.previousMaterial = node.material;
 					node.material = node.userData.phongMaterial;

@@ -110,7 +110,9 @@ function addMaterials(mesh, basicMaterial, lambertMaterial, phongMaterial) {
 * @param mesh: The mesh to examine
 */
 function isMultiMaterial(mesh) {
-	return mesh.userData.hasOwnProperty("previousMaterial");
+	return mesh instanceof THREE.Mesh &&
+		!(mesh instanceof BoundingGeometry) &&
+		mesh.userData.hasOwnProperty("previousMaterial");
 }
 
 function changeOpacity(mesh, opacity=1.0) {
