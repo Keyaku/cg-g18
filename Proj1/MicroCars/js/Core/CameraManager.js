@@ -66,6 +66,11 @@ class CameraManager {
 			camera : this.cameras[1],
 			hud    : hud,
 		};
+
+		// Final touches
+		if (msgBox != undefined) {
+			this.cameras[1].add(msgBox);
+		}
 	}
 
 	createPerspectiveCamera(name="", fov=75) {
@@ -160,15 +165,13 @@ class CameraManager {
 	}
 
 	changeTo(index) {
-		var oldCamera = this.viewports.camera;
-
 		if (0 <= index && index < this.cameras.length) {
 			controls.enabled = index == 0;
 			this.viewports.camera = this.cameras[index];
 			this.updateCamera();
 		}
 
-		game.updateMsgCamera(oldCamera, this.viewports.camera);
+		msgBox.switchCamera(this.viewports.camera);
 	}
 
 	changeToOrbit() {

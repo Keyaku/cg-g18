@@ -17,7 +17,7 @@ class Game {
 		var carLength = 10;
 		var pos = {x:boardSize/2 + 500, y:0, z:-boardSize/2 + 100}
 
-		this.carLiveReps = []
+		this.liveReps = []
 		for (var i = 0; i < this.maximumLives; i++) {
 			var mesh = createCarMesh(carWidth, carLength, true);
 			mesh.position.set(pos.x + 30*i, pos.y, pos.z);
@@ -26,7 +26,7 @@ class Game {
 			mesh.material = mesh.userData.basicMaterial;
 			delete mesh.userData.previousMaterial;
 
-			this.carLiveReps.push(mesh);
+			this.liveReps.push(mesh);
 			scene.add(mesh);
 		}
 
@@ -34,10 +34,9 @@ class Game {
 		this.numberOfLives = 0;
 		this.resetLives(numberOfLives);
 
-		// FIXME: use textures of Power of 2
-		pauseObj = this.createCubeMsg('text_pause.png');
-		gameoverObj = this.createCubeMsg('text_gameover.png');
-
+		msgBox = new MessageBox();
+		msgBox.add('text_pause.png');
+		msgBox.add('text_gameover.png');
 	}
 
 	limitNumber(number) {
@@ -49,8 +48,8 @@ class Game {
 	*/
 	resetLives(number) {
 		number = this.limitNumber(this.numberOfLives + number);
-		for (var i = 0; i < this.carLiveReps.length; i++) {
-			this.carLiveReps[i].visible = i < number;
+		for (var i = 0; i < this.liveReps.length; i++) {
+			this.liveReps[i].visible = i < number;
 		}
 		this.numberOfLives = number;
 	}
@@ -72,7 +71,7 @@ class Game {
 	/** @function restart
 	*/
 	restart() {
-		gameoverObj.visible = false;
+		msgBox.visible = false;
 		this.is_gameover = false;
 		this.is_paused = false;
 		this.resetLives(this.maximumLives);
@@ -96,50 +95,18 @@ class Game {
 			cameraManager.changeToOrthographic();
 			this.is_gameover = true;
 			this.togglePause();
-			this.setMsgVisibility(gameoverObj, true);
+
+			msgBox.apply('text_gameover.png');
+			msgBox.visible = true;
+
 			return true;
 		}
 		return false;
 	}
 
 	togglePause() {
-		if (this.is_paused) {
-			this.setMsgVisibility(pauseObj, false);
-		}
-		else if (!this.is_gameover) {
-			this.setMsgVisibility(pauseObj, true);
-		}
+		msgBox.apply('text_pause.png');
 		this.is_paused = !this.is_paused;
-	}
-
-	createCubeMsg(textureUrl) {
-		var geometry = new THREE.PlaneGeometry(512, 128);
-		var texture = LocalTextures.load(textureUrl); // FIXME: use remote texture
-		var material = new THREE.MeshBasicMaterial( {map:texture, side: THREE.DoubleSide} );
-		var mesh = new THREE.Mesh( geometry, material );
-		mesh.visible = false;
-		return mesh;
-	}
-
-	setMsgVisibility(obj, value) {
-		var camera = cameraManager.getCurrentCamera();
-		if (value) {
-			camera.add(obj);
-			obj.position.set(0, 0, -10);
-		} else {
-			camera.remove(obj);
-		}
-		obj.visible = value;
-	}
-
-	updateMsgCamera(oldCamera, camera) {
-		if (this.is_gameover) {
-			oldCamera.remove(gameoverObj);
-			camera.add(gameoverObj);
-		}
-		else if (this.is_paused) {
-			oldCamera.remove(pauseObj);
-			camera.add(pauseObj);
-		}
+		msgBox.visible = this.is_paused;
 	}
 }

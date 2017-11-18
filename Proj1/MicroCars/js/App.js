@@ -4,9 +4,9 @@
 var renderer, cameraManager, controls;
 var lightManager;
 var game, gameBoard, raceTrack, car;
-var pauseObj, gameoverObj;
 var clock = new THREE.Clock(false);
 
+var msgBox;
 var mapWidth = 200, mapHeight = 80;
 
 /**
@@ -52,7 +52,6 @@ function animate() {
 	}
 
 	render(); // Rendering
-
 	cleanQueue(); // Freeing queued Object3D from scene
 
 	// Requesting a call to this function
