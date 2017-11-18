@@ -74,10 +74,11 @@ class Car extends MotionBody {
 
 	collide(node) {
 		if (node == this) { return; }
+		if (!this.hasEventListener('collided', this._colliding)) {
+			return; // No collision is taking place. Ignoring.
+		}
 
 		if (this.intersects(node)) {
-			// Calculate new position
-
 			// Fire the main event
 			this.dispatchEvent({type: 'collided', body: node});
 
@@ -116,8 +117,32 @@ class Car extends MotionBody {
 			this.position.copy(position);
 			this.rotation.set(0, 0, 0);
 			this.velocity = 0;
+
+			// Temporarily activates God mode
+			this.godmode(3);
 		} else {
 			this.position.set(0, -100, 0); // XXX: just a ridiculous number
+		}
+	}
+
+	godmode(seconds=0) {
+		// Enable/disable collisions depending to the amount of seconds
+		this.setColliding(seconds < 0);
+		if (seconds > 0) {
+			// Changing mesh opacity
+			this.mesh.changeOpacity(0.5);
+
+			// Activating our custom timer
+			this.timer(seconds, function() {
+				this.godmode(-1);
+			}.bind(this));
+		}
+		else if (seconds == 0) {
+			// Changing mesh opacity
+			this.mesh.changeOpacity(0.5);
+		}
+		else {
+			this.mesh.changeOpacity(1.0);
 		}
 	}
 

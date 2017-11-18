@@ -58,6 +58,16 @@ function createCarMesh(carWidth, carLength, basic=false) {
 	var phongMaterial = new THREE.MeshPhongMaterial({color:0x111111});
 	var lambertMaterial = new THREE.MeshLambertMaterial({color:0x222222});
 	createMaterialsTwo(mesh, basicMaterial, phongMaterial, lambertMaterial);
+
+	// Adding custom opacity changing method for this crazy mesh.
+	mesh.changeOpacity = function(opacity=1.0) {
+		this.traverse(function (opacity, node) {
+			if (node instanceof THREE.Mesh) {
+				changeOpacity(node, opacity);
+			}
+		}.bind(this, opacity));
+	}.bind(mesh);
+
 	return mesh;
 
 }
