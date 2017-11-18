@@ -109,6 +109,14 @@ function isMultiMaterial(mesh) {
 	return mesh.userData.hasOwnProperty("previousMaterial");
 }
 
+function changeOpacity(mesh, opacity=1.0) {
+	mesh.material.opacity                  = opacity;
+	mesh.userData.previousMaterial.opacity = opacity;
+	mesh.userData.basicMaterial.opacity    = opacity;
+	mesh.userData.lambertMaterial.opacity  = opacity;
+	mesh.userData.phongMaterial.opacity    = opacity;
+}
+
 /**
 * objectNeedsRespawn verifies if an object is within the boundaries of the board
 * @param x: x position of the object subject to verification.
