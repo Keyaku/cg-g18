@@ -60,6 +60,7 @@ class CameraManager {
 			x: 0, y: 0,
 			width: 0.2, height: 0.1
 		}
+		hud.userData.aspect = mapWidth/mapHeight;
 
 		// Assembling viewports
 		this.viewports = {
@@ -126,19 +127,11 @@ class CameraManager {
 			}
 
 			else if (camera.name == "HUD") {
-				var aspectRatio = mapWidth / mapHeight;
-				if (this.windowHeight > this.windowWidth) {
-					camera.left   = - mapWidth / 2;
-					camera.right  =   mapWidth / 2;
-					camera.top    =   mapHeight / 2;
-					camera.bottom = - mapHeight / 2;
-				}
-				else {
-					camera.left   = - mapWidth / 2;
-					camera.right  =   mapWidth / 2;
-					camera.top    =   mapHeight / 2;
-					camera.bottom = - mapHeight / 2;
-				}
+				var aspectRatio = this.aspectRatio * 4;
+				camera.left   = - mapWidth / 2;
+				camera.right  =   mapWidth / 2;
+				camera.top    =   mapWidth / aspectRatio;
+				camera.bottom = - mapWidth / aspectRatio;
 			}
 
 			// Updating projection matrix (absolutely required)
