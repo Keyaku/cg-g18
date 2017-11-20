@@ -61,6 +61,17 @@ function onKeyDown(e) {
 			});
 			break;
 
+		case 73:  // I
+		case 105: // i
+			// TODO: toggle info window
+			var help = document.getElementById("help");
+		    if (help.style.display === "none") {
+		        help.style.display = "block";
+		    } else {
+		        help.style.display = "none";
+		    }
+			break;
+
 		case 81:  // Q
 		case 113: // q
 			scene.traverse(function (node) {
@@ -70,16 +81,16 @@ function onKeyDown(e) {
 			});
 			break;
 
-		case 83:
-		case 115:
+		case 82:  // R
+		case 114: // r
+			game.restart();
+			break;
+
+		case 83:  // S
+		case 115: // s
 			if (!game.is_gameover) {
 				game.togglePause();
 			}
-			break;
-
-		case 82:
-		case 114:
-			game.restart();
 			break;
 	}
 }
