@@ -38,7 +38,6 @@ class PhysicsBody extends THREE.Object3D {
 		var n = vec || new THREE.Vector3();
 		n.copy(b.getWorldPosition());
 		n.sub(this.getWorldPosition());
-		n.set(n.x, n.z, 0);
 		n.normalize();
 		return n;
 	}
@@ -82,14 +81,17 @@ class RigidBody extends PhysicsBody {
 
 	/* Method for collision calculation and sharing. Called via EventDispatcher */
 	_colliding(event) {
+		var v = event.body.heading;
 		// if the colliding body is a StaticBody, bounce against it
 		if (event.body.isStaticBody) {
-			this.getHeading(event.body, event.body.heading);
+			this.getHeading(event.body, v);
+			v.set(v.x, v.z, 0);
 			this.velocity = -this.velocity;
 		}
 		// if the colliding body is a RigidBody, share velocity with this one
 		else if (event.body.isRigidBody) {
-			this.getHeading(event.body, event.body.heading);
+			this.getHeading(event.body, v);
+			v.set(v.x, v.z, 0);
 			event.body.velocity = Math.abs(this.velocity);
 		}
 	}
@@ -132,7 +134,9 @@ class MotionBody extends PhysicsBody {
 	_colliding(event) {
 		// if the colliding body is a RigidBody, share velocity with this one
 		if (event.body.isRigidBody) {
-			this.getHeading(event.body, event.body.heading);
+			var v = event.body.heading;
+			this.getHeading(event.body, v);
+			v.set(v.x, v.z, 0);
 			event.body.velocity = Math.abs(this.velocity);
 		}
 	}

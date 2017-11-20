@@ -86,15 +86,12 @@ class Car extends MotionBody {
 			if (node instanceof StaticBody) {
 				this.userData.colliding = true;
 				this.velocity = 0;
-				var xx = node.position.x - this.position.x;
-				var zz = node.position.z - this.position.z;
-				var vectorCarToButter = new THREE.Vector3(xx, 0, zz);
-				vectorCarToButter.normalize();
+				var vectorCarToButter = this.getHeading(node);
 
-				//The world direction vector is rotated 90º because it point right.
-				var heading = this.getWorldDirection();
-				var rotatedX = Math.cos(NINETY_DEGREES) * heading.x - Math.sin(NINETY_DEGREES) * heading.z;
-				var rotatedZ = Math.sin(NINETY_DEGREES) * heading.x + Math.cos(NINETY_DEGREES) * heading.z;
+				//The world direction vector is rotated 90º because it points to the right.
+				var direction = this.getWorldDirection();
+				var rotatedX = Math.cos(NINETY_DEGREES) * direction.x - Math.sin(NINETY_DEGREES) * direction.z;
+				var rotatedZ = Math.sin(NINETY_DEGREES) * direction.x + Math.cos(NINETY_DEGREES) * direction.z;
 				var carHeading = new THREE.Vector3(rotatedX, 0, rotatedZ);
 				var angleCarButter = carHeading.angleTo(vectorCarToButter) * TO_DEGREES;
 
