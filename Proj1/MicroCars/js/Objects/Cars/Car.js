@@ -84,27 +84,29 @@ class Car extends MotionBody {
 
 			// Stop the car if it's a StaticBody
 			if (node instanceof StaticBody) {
-				this.userData.colliding = true;
-				this.velocity = 0;
 				var vectorCarToButter = this.getHeading(node);
 
-				//The world direction vector is rotated 90º because it points to the right.
+				/* FIXME: The world direction vector is rotated 90º
+				* because it points to the right.
+				* I have no idea why this is the case.
+				*/
 				var direction = this.getWorldDirection();
 				var rotatedX = Math.cos(NINETY_DEGREES) * direction.x - Math.sin(NINETY_DEGREES) * direction.z;
 				var rotatedZ = Math.sin(NINETY_DEGREES) * direction.x + Math.cos(NINETY_DEGREES) * direction.z;
 				var carHeading = new THREE.Vector3(rotatedX, 0, rotatedZ);
 				var angleCarButter = carHeading.angleTo(vectorCarToButter) * TO_DEGREES;
 
-				if (angleCarButter < 90) {
-					this.userData.canMoveForward = false;
-				} else {
-					this.userData.canMoveBack = false;
-				}
+				this.velocity = 0;
+				this.userData.canMoveForward = angleCarButter >= 90;
+				this.userData.canMoveBack = angleCarButter < 90;
 			}
 			// Respawn the car if it's an Orange
 			else if (node instanceof OrangeWrapper) {
 				game.playerDied();
 				this.respawn();
+			}
+			else {
+				this.userData.canMoveForward = this.userData.canMoveBack = true;
 			}
 		}
 	}
@@ -157,13 +159,7 @@ class Car extends MotionBody {
 	// Our mandatory update() function
 	update(delta) {
 		// Handling collisions
-		this.userData.colliding = false;
 		scene.traverseVisible(this.collide);
-
-		if (!this.userData.colliding) {
-			this.userData.canMoveForward = true;
-			this.userData.canMoveBack = true;
-		}
 
 		// Handling input
 		var left  = Input.is_pressed("ArrowLeft");
