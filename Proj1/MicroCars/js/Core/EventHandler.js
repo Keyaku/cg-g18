@@ -55,8 +55,9 @@ function onKeyDown(e) {
 		case 65: // A
 		case 97: // a
 			scene.traverse(function (node) {
-				if (node instanceof THREE.Mesh && !(node instanceof BoundingSphere))
-					node.material.wireframe = !node.material.wireframe;
+				if (isMultiMaterial(node)) {
+					toggleWireframe(node);
+				}
 			});
 			break;
 

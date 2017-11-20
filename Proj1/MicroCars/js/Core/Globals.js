@@ -123,6 +123,15 @@ function changeOpacity(mesh, opacity=1.0) {
 	mesh.userData.phongMaterial.opacity    = opacity;
 }
 
+function toggleWireframe(mesh) {
+	var value = !mesh.material.wireframe;
+	mesh.material.wireframe                  = value;
+	mesh.userData.previousMaterial.wireframe = value;
+	mesh.userData.basicMaterial.wireframe    = value;
+	mesh.userData.lambertMaterial.wireframe  = value;
+	mesh.userData.phongMaterial.wireframe    = value;
+}
+
 /**
 * objectNeedsRespawn verifies if an object is within the boundaries of the board
 * @param x: x position of the object subject to verification.
