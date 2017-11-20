@@ -25,8 +25,6 @@ class OrangeWrapper extends MotionBody {
 		// Setting up scene graph
 		this.add(this.mesh);
 		scene.add(this);
-
-		return this;
 	}
 
 	/**
@@ -80,7 +78,6 @@ class Orange extends THREE.Object3D {
 		this.orangeFruit = new OrangeFruit(this, x, y, z, radius);
 		this.orangeBranch = new OrangeBranch(this, x, y, z);
 		this.position.set(x, y, z);
-		return this;
 	}
 }
 
@@ -103,7 +100,6 @@ class OrangeFruit extends THREE.Mesh {
 		createMaterials(this, basicMat, phongMat, lambertMat);
 
 		obj.add(this);
-		return this;
 	}
 
 }
@@ -123,6 +119,5 @@ class OrangeBranch extends THREE.Mesh {
 		createMaterials(this, {color:0x666633});
 
 		obj.add(this);
-		return this;
 	}
 }

@@ -47,8 +47,6 @@ class CarMesh extends THREE.Group {
 
 		//Scales the car.
 		this.scale.set(0.5, 0.5, 0.5);
-
-		return this;
 	}
 
 	changeOpacity (opacity=1.0) {

@@ -76,8 +76,6 @@ class TrapezoidGeometry extends THREE.Geometry {
 		this.mergeVertices();
 		this.computeFaceNormals();
 		this.computeVertexNormals();
-
-		return this;
 	}
 }
 
@@ -105,7 +103,5 @@ class RoofGeometry extends THREE.Geometry {
 		this.mergeVertices();
 		this.computeFaceNormals();
 		this.computeVertexNormals();
-
-		return this;
 	}
 }

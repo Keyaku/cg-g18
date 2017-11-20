@@ -72,8 +72,6 @@ class TriangularPrismGeometry extends THREE.Geometry {
 		this.mergeVertices();
 		this.computeFaceNormals();
 		this.computeVertexNormals();
-
-		return this;
 	}
 
 	rotateToVertical() {
@@ -107,8 +105,6 @@ class BoxGeometry extends THREE.Geometry {
 		this.mergeVertices();
 		this.computeFaceNormals();
 		this.computeVertexNormals();
-
-		return this;
 	}
 
 	/**
@@ -191,7 +187,5 @@ class BumperGeometry extends THREE.Geometry {
 		this.mergeVertices();
 		this.computeFaceNormals();
 		this.computeVertexNormals();
-
-		return this;
 	}
 }

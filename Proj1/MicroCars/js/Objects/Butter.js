@@ -19,7 +19,6 @@ class Butter extends StaticBody {
 		scene.add(this);
 
 		this.updateMatrix(); // Necessary *once* since this is a StaticBody
-		return this;
 	}
 }
 
@@ -32,6 +31,5 @@ class ButterBox extends THREE.Mesh {
 		createMaterials(this, { map: tex });
 
 		obj.add(this);
-		return this;
 	}
 }

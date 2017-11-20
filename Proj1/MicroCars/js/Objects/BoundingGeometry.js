@@ -16,7 +16,6 @@ class BoundingGeometry extends THREE.Mesh {
 
 		this.material = new THREE.MeshBasicMaterial({wireframe:true});
 		this.scale.copy(mesh.scale);
-		return this;
 	}
 
 	// Lifesavers
@@ -80,8 +79,6 @@ class BoundingBox extends BoundingGeometry {
 		} else {
 			this.updateBounds(min, max);
 		}
-
-		return this;
 	}
 
 	setFromMesh(obj, min, max) {
@@ -122,8 +119,6 @@ class BoundingSphere extends BoundingGeometry {
 		} else { // This goes straight to the point and creates the sphere according to our radius
 			this.updateBounds(radius, center)
 		}
-
-		return this;
 	}
 
 	// Self mesh-altering methods

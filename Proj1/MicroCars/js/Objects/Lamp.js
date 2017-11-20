@@ -1,8 +1,5 @@
 class Lamp {
 	constructor(obj) {
-		this.lightsArray = [];
-		this.candleArray = [];
-		var i, x, y, z;
 		var lightsPositions = [
 			[-QUARTER_BOARD_WIDTH - 50, 50, -QUARTER_BOARD_LENGTH - 50],
 			[ 0, 50,  QUARTER_BOARD_LENGTH],
@@ -12,37 +9,39 @@ class Lamp {
 			[ QUARTER_BOARD_WIDTH + 25, 50, 0]
 		];
 
-		for (i = 0; i < NUMBER_OF_POINT_LIGHTS; i++) {
-				x = lightsPositions[i][0];
-				y = lightsPositions[i][1];
-				z = lightsPositions[i][2];
+		this.lightsArray = [];
+		this.candleArray = [];
 
-				var candle = new ConcreteLamp(obj, x, 0, z);
-        var light = new THREE.PointLight(0xCCFFFF, 0, POINT_LIGHT_DISTANCE, POINT_LIGHT_REAL);
+		for (var i = 0; i < NUMBER_OF_POINT_LIGHTS; i++) {
+			var x = lightsPositions[i][0];
+			var y = lightsPositions[i][1];
+			var z = lightsPositions[i][2];
 
-				candle.position.set(x, 0, z);
+			var candle = new ConcreteLamp(obj, x, 0, z);
+	        var light = new THREE.PointLight(0xCCFFFF, 0, POINT_LIGHT_DISTANCE, POINT_LIGHT_REAL);
 
-				this.candleArray.push(candle);
-				this.lightsArray.push(light);
+			candle.position.set(x, 0, z);
 
-				light.position.set(x, y, z);
+			this.candleArray.push(candle);
+			this.lightsArray.push(light);
 
-        obj.add(light);
-			}
-			return this;
-		}
+			light.position.set(x, y, z);
 
-		getLightsArray() {
-			return this.lightsArray;
-		}
-
-		lampsOn() {
-			var candle;
-			for (candle = 0; candle < NUMBER_OF_POINT_LIGHTS; candle++) {
-				this.candleArray[candle].lampOn();
-			}
+	        obj.add(light);
 		}
 	}
+
+	getLightsArray() {
+		return this.lightsArray;
+	}
+
+	lampsOn() {
+		var candle;
+		for (candle = 0; candle < NUMBER_OF_POINT_LIGHTS; candle++) {
+			this.candleArray[candle].lampOn();
+		}
+	}
+}
 
 class ConcreteLamp extends THREE.Object3D {
 	constructor(obj, x, y, z, radius = 4) {
@@ -51,7 +50,6 @@ class ConcreteLamp extends THREE.Object3D {
 		this.candleBottom = new LampBottom(this, radius);
 		this.candleTop    = new LampTop(this, radius * 5);
 		obj.add(this);
-		return this;
 	}
 
 	lampOn() {
@@ -73,7 +71,6 @@ class LampBottom extends THREE.Mesh {
 
 		this.position.y = 50;
 		obj.add(this);
-		return this;
 	}
 }
 
@@ -94,7 +91,6 @@ class LampTop extends THREE.Mesh {
 
 
 		obj.add(this);
-		return this;
 	}
 
 	meshVisible() {

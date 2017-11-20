@@ -8,14 +8,14 @@ class CarBody extends THREE.Geometry {
 		var carBodyHeight = 5;
 		var lengthDiv = carLength / 3;
 		var vertices = [
-				{x: 0, y: carDistanceFromGround, z: 0}, //A - 0
-				{x: 0, y: carDistanceFromGround, z: carWidth}, //B - 1
-				{x: lengthDiv * 1, y: carDistanceFromGround, z: carWidth}, //C - 2
-				{x: lengthDiv * 1, y: carDistanceFromGround, z: 0}, //D - 3
-				{x: lengthDiv * 2, y: carDistanceFromGround, z: 0}, //E - 4
-				{x: lengthDiv * 2, y: carDistanceFromGround, z: carWidth}, //F - 5
-				{x: lengthDiv * 3, y: carDistanceFromGround, z: carWidth}, //G - 6
-				{x: lengthDiv * 3, y: carDistanceFromGround, z: 0} //H - 7
+			{x: 0, y: carDistanceFromGround, z: 0}, //A - 0
+			{x: 0, y: carDistanceFromGround, z: carWidth}, //B - 1
+			{x: lengthDiv * 1, y: carDistanceFromGround, z: carWidth}, //C - 2
+			{x: lengthDiv * 1, y: carDistanceFromGround, z: 0}, //D - 3
+			{x: lengthDiv * 2, y: carDistanceFromGround, z: 0}, //E - 4
+			{x: lengthDiv * 2, y: carDistanceFromGround, z: carWidth}, //F - 5
+			{x: lengthDiv * 3, y: carDistanceFromGround, z: carWidth}, //G - 6
+			{x: lengthDiv * 3, y: carDistanceFromGround, z: 0} //H - 7
 		];
 		for (var i = 0; i < vertices.length; i++) {
 			var p = vertices[i];
@@ -58,6 +58,7 @@ class CarBody extends THREE.Geometry {
 		//Back Panel
 		geometry3.faces.push(new THREE.Face3(13, 15, 14));
 		geometry3.faces.push(new THREE.Face3(13, 14, 12));
+
 		//Merging all the geometries.
 		this.merge(geometry2);
 		this.merge(geometry3);
@@ -65,9 +66,5 @@ class CarBody extends THREE.Geometry {
 		this.mergeVertices();
 		this.computeFaceNormals();
 		this.computeVertexNormals();
-
-		//Creating and merging the wheels.
-		return this;
-
 	}
 }

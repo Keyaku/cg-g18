@@ -16,8 +16,6 @@ class Table extends THREE.Object3D{
 		new TableLeg(this, legDistance, -1, -legDistance, halfSize);
 
 		scene.add(this);
-
-		return this;
 	}
 }
 
@@ -30,7 +28,6 @@ class TableTop extends THREE.Mesh {
 
 		this.position.set(x, y, z);
 		obj.add(this);
-		return this;
 	}
 }
 
@@ -42,6 +39,5 @@ class TableLeg extends THREE.Mesh  {
 
 		this.position.set(x, y - (size >> 1), z);
 		obj.add(this);
-		return this;
 	}
 }

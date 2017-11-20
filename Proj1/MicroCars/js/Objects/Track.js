@@ -28,7 +28,6 @@ class Track extends THREE.Object3D {
 		this.addTorus(this.torusGroup, track.geometry.vertices);
 		//Adds all to the scene.
 		scene.add(this);
-		return this;
 	}
 
 	pointsOffset(points, offset) {

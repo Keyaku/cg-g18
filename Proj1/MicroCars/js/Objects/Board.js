@@ -19,6 +19,5 @@ class Board extends THREE.Mesh {
 		this.rotateX(90 * TO_RADIANS);
 
 		scene.add(this);
-		return this;
 	}
 }

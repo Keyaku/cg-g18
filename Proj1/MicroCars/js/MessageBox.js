@@ -15,8 +15,6 @@ class MessageBox extends THREE.Mesh {
 		// Setting texture map
 		this.material = new THREE.MeshBasicMaterial( { side: THREE.DoubleSide } );
 		this.textures = {};
-
-		return this;
 	}
 
 	add(path) {
