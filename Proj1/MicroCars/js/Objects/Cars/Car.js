@@ -20,7 +20,7 @@ class Car extends MotionBody {
 		// Creating mesh
 		var carWidth = 20;
 		var carLength = 10;
-		this.mesh = createCarMesh(carWidth, carLength);
+		this.mesh = new CarCustomMesh(carWidth, carLength);
 		this.add(this.mesh);
 
 		// Creating Bounds

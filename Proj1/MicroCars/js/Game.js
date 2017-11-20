@@ -19,7 +19,7 @@ class Game {
 
 		this.liveReps = []
 		for (var i = 0; i < this.maximumLives; i++) {
-			var mesh = createCarMesh(carWidth, carLength, true);
+			var mesh = new CarCustomMesh(carWidth, carLength, true);
 			mesh.position.set(pos.x + 30*i, pos.y, pos.z);
 			mesh.rotation.set(0, NINETY_DEGREES, 0);
 			mesh.visible = false;
