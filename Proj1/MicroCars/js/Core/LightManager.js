@@ -1,63 +1,61 @@
 class LightManager {
-  constructor() {
-    this.lightsNeedUpdate = true;
-    this.directionalLight = this.newDirectionalLight();
-    this.ambientLight = this.newAmbientLight();
-    this.horizonLight = this.newHorizonLight();
-  }
+	constructor() {
+		this.lightsNeedUpdate = true;
+		this.directionalLight = this.newDirectionalLight();
+		this.ambientLight = this.newAmbientLight();
+		this.horizonLight = this.newHorizonLight();
+	}
 
-  /**
-  * A light that uses parallel rays allowing to simulate sunlight, it is the only
-  * light used here that allows shadow casting.
-  */
-  newDirectionalLight() {
-    var directionalLight = new THREE.DirectionalLight(0xFFFFE0);
-    var frustumSize = cameraManager.frustumSize;
-    var halfFrustum = frustumSize / 2;
+	/**
+	* A light that uses parallel rays allowing to simulate sunlight, it is the only
+	* light used here that allows shadow casting.
+	*/
+	newDirectionalLight() {
+		var directionalLight = new THREE.DirectionalLight(0xFFFFE0);
+		var frustumSize = cameraManager.frustumSize;
+		var halfFrustum = frustumSize / 2;
 
-  	directionalLight.name = 'sunLight';
-  	directionalLight.position.set(0, 500, 0);
-  	directionalLight.castShadow = true;
+		directionalLight.name = 'sunLight';
+		directionalLight.position.set(0, 500, 0);
+		directionalLight.castShadow = true;
 
-    directionalLight.shadow.mapSize.width = HALF_BOARD_WIDTH;
-    directionalLight.shadow.mapSize.height = HALF_BOARD_LENGTH;
-  	directionalLight.shadow.camera.near = 1;
-  	directionalLight.shadow.camera.far = frustumSize;
-  	directionalLight.shadow.camera.left = - halfFrustum;
-  	directionalLight.shadow.camera.right = halfFrustum;
-  	directionalLight.shadow.camera.top = halfFrustum;
-  	directionalLight.shadow.camera.bottom = halfFrustum;
+		directionalLight.shadow.mapSize.width = HALF_BOARD_WIDTH;
+		directionalLight.shadow.mapSize.height = HALF_BOARD_LENGTH;
+		directionalLight.shadow.camera.near = 1;
+		directionalLight.shadow.camera.far = frustumSize;
+		directionalLight.shadow.camera.left = - halfFrustum;
+		directionalLight.shadow.camera.right = halfFrustum;
+		directionalLight.shadow.camera.top = halfFrustum;
+		directionalLight.shadow.camera.bottom = halfFrustum;
 
-  	// scene.add(new THREE.CameraHelper(this.directionalLight.shadow.camera));
-  	scene.add(directionalLight);
+		// scene.add(new THREE.CameraHelper(this.directionalLight.shadow.camera));
+		scene.add(directionalLight);
 
-    return directionalLight;
-  }
+		return directionalLight;
+	}
 
-  /**
-  * A light source positioned directly above the scene, color fades from the sky
-  * towards the ground. Simulates horizon.
-  */
-  newHorizonLight() {
-  	var horizonLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.35);
+	/**
+	* A light source positioned directly above the scene, color fades from the sky
+	* towards the ground. Simulates horizon.
+	*/
+	newHorizonLight() {
+		var horizonLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.35);
 
-  	horizonLight.name = 'horizonLight';
-  	horizonLight.position.set( 0, cameraManager.frustumSize, 0 );
+		horizonLight.name = 'horizonLight';
+		horizonLight.position.set( 0, cameraManager.frustumSize, 0 );
 
-  	scene.add(horizonLight);
+		scene.add(horizonLight);
 
-    return horizonLight;
-  }
+	return horizonLight;
+	}
 
-  newAmbientLight() {
-    var ambientLight = new THREE.AmbientLight(0x404040);
+	newAmbientLight() {
+		var ambientLight = new THREE.AmbientLight(0x404040);
+		ambientLight.name = 'ambientLight';
 
-    ambientLight.name = 'ambientLight';
-
-    scene.add(ambientLight);
-
-    return ambientLight;
-  }
+		scene.add(ambientLight);
+		return ambientLight;
+	}
 
 	update() {
 		// While lightsNeedUpdate == false, we shall ignore any of our relevant input
@@ -91,8 +89,8 @@ class LightManager {
 
 	switchDirectionalLight() {
 		this.directionalLight.visible = !this.directionalLight.visible;
-	  this.ambientLight.visible = !this.ambientLight.visible;
-	  this.horizonLight.visible = !this.horizonLight.visible;
+		this.ambientLight.visible = !this.ambientLight.visible;
+		this.horizonLight.visible = !this.horizonLight.visible;
 	}
 
 	disableLightUpdates() {
@@ -108,18 +106,14 @@ class LightManager {
 		});
 	}
 
-  switchPointLights() {
-    var lights = raceTrack.lights.getLightsArray();
-    for (var i = 0; i < lights.length; i++) {
-		var light = lights[i];
-		if (light.intensity != 0) {
-			light.intensity = 0;
-		} else {
-			light.intensity = POINT_LIGHT_INTENSITY;
+	switchPointLights() {
+		var lights = raceTrack.lights.getLightsArray();
+		for (var i in lights) {
+			var light = lights[i];
+			light.intensity = (light.intensity == 0) ? POINT_LIGHT_INTENSITY : 0;
 		}
-    }
-    raceTrack.lights.lampsOn();
-  }
+		raceTrack.lights.lampsOn();
+	}
 
 	switchHeadlights() {
 		// FIXME: FIX THIS CODE
