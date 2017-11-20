@@ -11,8 +11,8 @@ var scene;
 */
 function createScene() {
 	scene = new THREE.Scene();
-	scene.add(new THREE.AxesHelper(HALF_BOARD_WIDTH));
 	scene.background = new THREE.Color(0xAEEEEE);
+	scene.add(new THREE.AxesHelper(HALF_BOARD_WIDTH));
 
 	var size = BOARD_WIDTH;
 	var divisions = BOARD_WIDTH / 10;
@@ -22,9 +22,9 @@ function createScene() {
 	raceTrack = new Track(45);
 
 	// Adding oranges
-	createEdible(OrangeWrapper, "Orange1", 150, 0, 80);
-	createEdible(OrangeWrapper, "Orange2", -200, 0, -100);
-	createEdible(OrangeWrapper, "Orange3", 0, 0, 50);
+	createEdible(OrangeWrapper, "Orange1", 0, 0, 0);
+	createEdible(OrangeWrapper, "Orange2", 0, 0, 0);
+	createEdible(OrangeWrapper, "Orange3", 0, 0, 0);
 	// Adding apples. I mean, butters.
 	createEdible(Butter, "Butter1", 100, 0, -100);
 	createEdible(Butter, "Butter2", -100, 0, -100);
