@@ -85,7 +85,7 @@ class Track extends THREE.Object3D {
 		var tori = this.torusGroup.children;
 		for (var i in tori) {
 			var torus = tori[i];
-			torus.position.copy(torus.userData.initialPosition);
+			torus.reset();
 		}
 	}
 }
@@ -116,5 +116,10 @@ class Tire extends RigidBody {
 		//Adds the mesh to the track class object.
 		obj.add(this)
 		return this
+	}
+
+	reset() {
+		this.position.copy(this.userData.initialPosition);
+		this.velocity = 0;
 	}
 }
