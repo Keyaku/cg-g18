@@ -1,6 +1,8 @@
 class CarCustomMesh extends THREE.Mesh {
 	constructor(carWidth, carLength, basic=false) {
-		super();
+		// Initializing CarCustomMesh with a CarBody
+		super(new CarBody(carWidth, carLength));
+		createMaterials(this, {color : 0xff0000});
 
 		// Wheels
 		var pneuWidth = 2;
@@ -20,15 +22,6 @@ class CarCustomMesh extends THREE.Mesh {
 		wheels[2].position.set(carWidth, 5, 0);
 		wheels[3].position.set(carWidth, 5, carLength + pneuWidth);
 
-		// Body
-		var carBody = new THREE.Mesh(new CarBody(carWidth, carLength));
-		if (basic) {
-			carBody.material = new THREE.MeshBasicMaterial({color : 0xff0000});
-		} else {
-			createMaterials(carBody, {color : 0xff0000});
-		}
-		this.add(carBody);
-
 		// Bumper
 		var bumper = new THREE.Mesh(new BumperGeometry(carLength, carLength/3, carLength/3));
 		if (basic) {
@@ -45,12 +38,6 @@ class CarCustomMesh extends THREE.Mesh {
 			this.children[i].updateMatrix();
 		}
 		this.position.set(0, 0, -2)
-
-		// Associating car materials
-		var basicMaterial = new THREE.MeshBasicMaterial({color:0x000000});
-		var phongMaterial = new THREE.MeshPhongMaterial({color:0x111111});
-		var lambertMaterial = new THREE.MeshLambertMaterial({color:0x222222});
-		createMaterialsTwo(this, basicMaterial, phongMaterial, lambertMaterial);
 
 		// Adding custom opacity changing method for this crazy mesh.
 		this.changeOpacity = function(opacity=1.0) {
