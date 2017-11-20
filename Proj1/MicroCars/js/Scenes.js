@@ -43,37 +43,16 @@ function reloadScene() {
 		camera.lookAt(car.bounds.position); // FIXME
 	}
 	else {
-		car.position.set(100, 0, -325);
-		car.rotation.set(0, 0, 0);
-		car.velocity = 0;
+		car.respawn(new THREE.Vector3(100, 0, -325), false);
 	}
 
 	// Setting Track
 	raceTrack.resetTorus();
 
 	// Setting Oranges
-	var oranges = ['Orange1', 'Orange2', 'Orange3'];
-	for (var i = 0; i < oranges.length; i++) {
-		var name = oranges[i]
-		var obj = getEdible(name)
-		var heading;
-		obj.visible = false;
-		var x = Math.random() < 0.5 ? -1 : 1;
-		var z = Math.random() < 0.5 ? -1 : 1;
-		var maskDirection = Math.random();
-		var vector = generateSpawnLocation();
-		vector.setY(obj.bounds.radius);
-		if (0 <= maskDirection && maskDirection < 0.33) {
-			heading = new THREE.Vector3(x, 0, z);
-		} else if (0.33 <= maskDirection && maskDirection < 0.66){
-			heading = new THREE.Vector3(x, 0, 0);
-		} else {
-			heading = new THREE.Vector3(0, 0, z);
+	scene.traverse(function(orange) {
+		if (orange instanceof OrangeWrapper) {
+			orange.reset();
 		}
-		obj.velocity = ORANGE_VELOCITY
-		obj.position.copy(vector);
-		obj.mesh.rotation.set(0, 0, 0);
-		obj.heading = heading.normalize();
-		obj.visible = true;
-	}
+	});
 }

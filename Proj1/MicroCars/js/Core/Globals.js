@@ -153,9 +153,7 @@ function generateSpawnLocation(min = -HALF_BOARD_WIDTH, max = HALF_BOARD_WIDTH) 
 /** respawnObject(spawnLocation, axis, distance)
 * @param obj: object that is being respawned
 */
-function respawnObject(obj) {
-	var heading;
-
+function respawnObject(obj, timed=true) {
 	obj.visible = false;
 
 	var x = Math.random() < 0.5 ? -1 : 1;
@@ -164,12 +162,13 @@ function respawnObject(obj) {
 	var vector = generateSpawnLocation();
 	vector.setY(obj.bounds.radius);
 
+	var heading = new THREE.Vector3();
 	if (0 <= maskDirection && maskDirection < 0.33) {
-		heading = new THREE.Vector3(x, 0, z);
+		heading.set(x, 0, z);
 	} else if (0.33 <= maskDirection && maskDirection < 0.66){
-		heading = new THREE.Vector3(x, 0, 0);
+		heading.set(x, 0, 0);
 	} else {
-		heading = new THREE.Vector3(0, 0, z);
+		heading.set(0, 0, z);
 	}
 
 	setTimeout(function() {
@@ -177,7 +176,7 @@ function respawnObject(obj) {
 		obj.mesh.rotation.set(0, 0, 0);
 		obj.heading = heading.normalize();
 		obj.visible = true;
-	}, 2000);
+	}, timed ? 2000 : 0);
 
 }
 

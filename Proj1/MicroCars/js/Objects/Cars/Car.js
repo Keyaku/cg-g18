@@ -112,14 +112,14 @@ class Car extends MotionBody {
 		}
 	}
 
-	respawn(position=this.userData.initialPosition) {
+	respawn(position=this.userData.initialPosition, lostLife=true) {
 		if (!game.is_gameover) {
 			this.position.copy(position);
 			this.rotation.set(0, 0, 0);
 			this.velocity = 0;
 
 			// Temporarily activates God mode
-			this.godmode(3);
+			this.godmode(lostLife ? 3 : -1);
 		} else {
 			this.position.set(0, -100, 0); // XXX: just a ridiculous number
 		}

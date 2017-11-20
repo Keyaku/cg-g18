@@ -30,6 +30,14 @@ class OrangeWrapper extends MotionBody {
 	}
 
 	/**
+	* @method reset: Resets this OrangeWrapper's stats to their initial data
+	*/
+	reset() {
+		this.velocity = ORANGE_VELOCITY;
+		respawnObject(this, false);
+	}
+
+	/**
 	* @method update: Recalculates velocity and displacement of this object for the next frame.
 	* @param delta: time interval since last clock.getDelta()
 	* @var displacement: this object center of mass displacement.
