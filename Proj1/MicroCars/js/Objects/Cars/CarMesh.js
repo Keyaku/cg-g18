@@ -50,6 +50,14 @@ class CarMesh extends THREE.Group {
 
 		return this;
 	}
+
+	changeOpacity (opacity=1.0) {
+		this.traverse(function (opacity, node) {
+			if (node instanceof THREE.Mesh) {
+				changeOpacity(node, opacity);
+			}
+		}.bind(this, opacity));
+	}
 }
 
 class CarTriangle {
